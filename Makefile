@@ -5,8 +5,16 @@ SRC = src/main.c src/lista.c
 OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
 BIN = bin/app
 
-# Regla principal
+# Objetivo por defecto: compilar y ejecutar
+.DEFAULT_GOAL := run
+
+# Regla para compilar
 all: $(BIN)
+
+# Ejecutar después de compilar
+run: all
+	@./$(BIN)
+	@rm -rf build bin
 
 # Cómo construir el ejecutable a partir de objetos
 $(BIN): $(OBJ)
@@ -20,4 +28,4 @@ build/%.o: src/%.c
 
 # Limpiar todo lo generado
 clean:
-	rm -rf build bin
+	rm -rf build/*.o $(BIN)
