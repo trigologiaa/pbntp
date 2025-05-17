@@ -6,9 +6,10 @@
 *.so
 *.dll
 
-# Ignorar directorios de compilación
+# Ignorar directorios
 bin/
 build/
+.vscode/
 
 # Ignorar archivos temporales
 *~
