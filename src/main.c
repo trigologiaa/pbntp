@@ -1,8 +1,68 @@
 #include "../include/linked_list.h"
 #include "../include/linked_list_test.h"
 #include <stdio.h>
+#include <wchar.h>
 
-// TODO: Verificar uso de todas las estructuras y métodos.
+void runTestMenu() {
+  int testOption;
+  do {
+    printf("\n<--- Linked List Test Menu --->\n");
+    printf("1. Test: Create Empty List\n");
+    printf("2. Test: Create List With One Element\n");
+    printf("3. Test: Append Element\n");
+    printf("4. Test: Remove First Element\n");
+    printf("5. Test: Remove Data\n");
+    printf("6. Test: Find Element\n");
+    printf("7. Test: Find Unexisting Element\n");
+    printf("8. Test: Size\n");
+    printf("9. Run All Tests\n");
+    printf("0. Return to Main Menu\n");
+    printf("Choose a test option: ");
+    scanf("%d", &testOption);
+
+    switch (testOption) {
+    case 1:
+      test_createEmptyList();
+      break;
+    case 2:
+      test_createListWithOneElement();
+      break;
+    case 3:
+      test_appendElement();
+      break;
+    case 4:
+      test_removeFirstElement();
+      break;
+    case 5:
+      test_removeData();
+      break;
+    case 6:
+      test_findElement();
+      break;
+    case 7:
+      test_findUnexistingElement();
+      break;
+    case 8:
+      test_size();
+      break;
+    case 9:
+      test_createEmptyList();
+      test_createListWithOneElement();
+      test_appendElement();
+      test_removeFirstElement();
+      test_removeData();
+      test_findElement();
+      test_findUnexistingElement();
+      test_size();
+      break;
+    case 0:
+      printf("Returning to main menu...\n");
+      break;
+    default:
+      printf("Invalid test option. Try again.\n");
+    }
+  } while (testOption != 0);
+}
 
 void menu() {
   printf("\n<--- Linked List Menu --->\n");
@@ -18,7 +78,7 @@ void menu() {
   printf("10. Remove the last element\n");
   printf("11. Remove a specific element\n");
   printf("12. Print Linked List\n");
-  printf("13. Execute tests\n");
+  printf("13. Linked List Test Menu\n");
   printf("0. Out\n");
   printf("<--- Linked List Menu --->\n");
   printf("Choose an option: \n");
@@ -139,14 +199,7 @@ int main() {
       }
       break;
     case 13:
-      test_createEmptyList();
-      test_createListWithOneElement();
-      test_appendElement();
-      test_removeFirstElement();
-      test_removeData();
-      test_findElement();
-      test_findUnexistingElement();
-      test_size();
+      runTestMenu();
       break;
     case 0:
       printf("Leaving...\n");
