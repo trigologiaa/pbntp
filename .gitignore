@@ -1,0 +1,16 @@
+# Ignorar archivos de compilación
+*.o
+*.out
+*.exe
+*.a
+*.so
+*.dll
+
+# Ignorar directorios de compilación
+bin/
+build/
+
+# Archivos temporales
+*~
+*.swp
+.DS_Store
