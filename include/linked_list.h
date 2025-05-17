@@ -133,7 +133,12 @@ void removeData(LinkedList *list, int data);
  *
  * @param list a pointer to the linked list
  */
-void printList(const LinkedList *list);
+void printList(LinkedList *list);
+
+/**
+ * @brief pepe
+ */
+char *listToString(LinkedList *list);
 
 /**
  * @brief checks whether the list is empty

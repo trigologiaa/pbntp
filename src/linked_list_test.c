@@ -66,17 +66,29 @@ void test_removeFirstElement() {
 }
 
 /**
+ * @brief tests
+ */
+void test_removeLast() {
+  LinkedList *list = createList();
+  append(list, 1);
+  append(list, 2);
+  removeLast(list);
+  assert(list->tail->data == 1);
+  assert(list->size == 1);
+  removeLast(list);
+  assert(isEmpty(list));
+  assert(list->head == NULL && list->tail == NULL);
+  printf("delete last complete element test\n");
+  destroyList(list);
+}
+
+/**
  * @brief tests removing a specific data value from the list
  *
  * ensures that only the first occurrence of the data is removed and that list
  * links and size remain consistent
  */
 void test_removeData() {
-  char *buffer = NULL;
-  size_t size = 0;
-  FILE *stream = open_memstream(&buffer, &size);
-  FILE *original_stdout = stdout;
-  stdout = stream;
   LinkedList *list = createList();
   append(list, 1);
   append(list, 2);
@@ -84,12 +96,10 @@ void test_removeData() {
   append(list, 4);
   append(list, 3);
   removeData(list, 3);
-  printList(list);
-  fflush(stream);
-  stdout = original_stdout;
-  fclose(stream);
-  assert(strcmp(buffer, "LinkedList: [1] -> [2] -> [4] -> [3]\n") == 0);
+  char *output = listToString(list);
+  assert(strcmp(output, "LinkedList: [1] -> [2] -> [4] -> [3]\n") == 0);
   printf("Test de remover dato completo.\n");
+  free(output);
   destroyList(list);
 }
 

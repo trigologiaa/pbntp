@@ -1,6 +1,7 @@
 #include "../include/linked_list.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
  * @brief creates a new node for a linked list
@@ -213,18 +214,38 @@ void removeData(LinkedList *list, int data) {
 /**
  * @brief prints the contents of the linked list
  *
- * outputs each element in the list in order, formatted as: LinkedList: [data]
- * -> ...
+ * outputs each element in the list in order using the function listToString,
+ * formatted as: LinkedList: [data] -> ...
  *
  * @param list a pointer to the linked list
  */
-void printList(const LinkedList *list) {
-  printf("LinkedList: ");
-  for (LinkedNode *current = list->head; current != NULL;
-       current = current->next) {
-    printf("[%d]%s", current->data, current->next ? " -> " : "");
+void printList(LinkedList *list) {
+  char *output = listToString(list);
+  printf("%s", output);
+}
+
+/**
+ *
+ */
+char *listToString(LinkedList *list) {
+  char *buffer = malloc(1024);
+  if (!buffer) {
+    return NULL;
   }
-  printf("\n");
+  buffer[0] = '\0';
+  strcat(buffer, "LinkedList: ");
+  LinkedNode *current = list->head;
+  while (current != NULL) {
+    char nodeStr[32];
+    sprintf(nodeStr, "[%d]", current->data);
+    strcat(buffer, nodeStr);
+    if (current->next != NULL) {
+      strcat(buffer, " -> ");
+    }
+    current = current->next;
+  }
+  strcat(buffer, "\n");
+  return buffer;
 }
 
 /**
