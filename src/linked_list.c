@@ -1,7 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "../include/linked_list.h"
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define INITIAL_BUFFER_SIZE 128
 
 /**
  * @brief creates a new node for a linked list
@@ -240,23 +245,43 @@ void printList(LinkedList *list) {
  * if memory allocation fails
  */
 char *listToString(LinkedList *list) {
-  char *buffer = malloc(1024);
+  size_t bufferSize = INITIAL_BUFFER_SIZE;
+  char *buffer = malloc(bufferSize);
   if (!buffer) {
     return NULL;
   }
-  buffer[0] = '\0';
-  strcat(buffer, "LinkedList: ");
+  size_t used = 0;
+  int written = snprintf(buffer, bufferSize, "LinkedList: ");
+  if (written < 0) {
+    free(buffer);
+    return NULL;
+  }
+  used += written;
   LinkedNode *current = list->head;
   while (current != NULL) {
     char nodeStr[32];
-    sprintf(nodeStr, "[%d]", current->data);
+    snprintf(nodeStr, sizeof(nodeStr), "[%d]", current->data);
+    size_t needed = strlen(nodeStr) + (current->next ? 4 : 1);
+    if (used + needed >= bufferSize) {
+      bufferSize *= 2;
+      char *newBuffer = realloc(buffer, bufferSize);
+      if (!newBuffer) {
+        free(buffer);
+        return NULL;
+      }
+      buffer = newBuffer;
+    }
     strcat(buffer, nodeStr);
-    if (current->next != NULL) {
+    used += strlen(nodeStr);
+    if (current->next) {
       strcat(buffer, " -> ");
+      used += 4;
+    } else {
+      strcat(buffer, "\n");
+      used += 1;
     }
     current = current->next;
   }
-  strcat(buffer, "\n");
   return buffer;
 }
 
