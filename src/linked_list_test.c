@@ -1,6 +1,12 @@
 #include "../include/linked_list_test.h"
 #include <assert.h>
 
+/**
+ * @brief tests the creation of an empty linked list
+ *
+ * verifies that a new list is initialized correctly with size 0, and both head
+ * and tail set to NULL
+ */
 void test_createEmptyList() {
   LinkedList *list = createList();
   assert(list != NULL);
@@ -11,6 +17,12 @@ void test_createEmptyList() {
   destroyList(list);
 }
 
+/**
+ * @brief tests the creation of a linked list with a single element
+ *
+ * ensures that the list correctly stores the single node and updates head,
+ * tail, and size accordingly
+ */
 void test_createListWithOneElement() {
   LinkedList *list = createList();
   prepend(list, 10);
@@ -19,6 +31,12 @@ void test_createListWithOneElement() {
   destroyList(list);
 }
 
+/**
+ * @brief tests appending elements to the linked list
+ *
+ * validates that elements are added to the end of the list and that tail and
+ * size are updated correctly
+ */
 void test_appendElement() {
   LinkedList *list = createList();
   prepend(list, 3);
@@ -30,6 +48,11 @@ void test_appendElement() {
   destroyList(list);
 }
 
+/**
+ * @brief tests removing the first element of the list
+ *
+ * checks that the head is updated and memory is freed appropriately
+ */
 void test_removeFirstElement() {
   LinkedList *list = createList();
   prepend(list, 1);
@@ -42,6 +65,12 @@ void test_removeFirstElement() {
   destroyList(list);
 }
 
+/**
+ * @brief tests removing a specific data value from the list
+ *
+ * ensures that only the first occurrence of the data is removed and that list
+ * links and size remain consistent
+ */
 void test_removeData() {
   char *buffer = NULL;
   size_t size = 0;
@@ -64,6 +93,12 @@ void test_removeData() {
   destroyList(list);
 }
 
+/**
+ * @brief tests finding an element in the list
+ *
+ * confirms that a pointer to the correct node is returned when the data exists
+ * in the list
+ */
 void test_findElement() {
   LinkedList *list = createList();
   append(list, 1);
@@ -75,6 +110,11 @@ void test_findElement() {
   destroyList(list);
 }
 
+/**
+ * @brief tests searching for a value not present in the list
+ *
+ * ensures that the function returns NULL when the element is not found
+ */
 void test_findUnexistingElement() {
   LinkedList *list = createList();
   append(list, 1);
@@ -86,6 +126,12 @@ void test_findUnexistingElement() {
   destroyList(list);
 }
 
+/**
+ * @brief tests the size reporting function
+ *
+ * validates that the size of the list matches the number of nodes after
+ * operations
+ */
 void test_size() {
   LinkedList *list = createList();
   assert(getSize(list) == 0);
