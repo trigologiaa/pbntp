@@ -64,6 +64,18 @@ LinkedList *createList() {
 }
 
 /**
+ * @brief destroys the list and frees all associated memory
+ *
+ * clears the list and frees the memory allocated for the list structure
+ *
+ * @param list a pointer to the linked list to destroy
+ */
+void destroyList(LinkedList *list) {
+  clear(list);
+  free(list);
+}
+
+/**
  * @brief clears all elements from the list without deallocating the list
  * structure itself
  *
@@ -75,18 +87,6 @@ void clear(LinkedList *list) {
   while (!isEmpty(list)) {
     removeFirst(list);
   }
-}
-
-/**
- * @brief destroys the list and frees all associated memory
- *
- * clears the list and frees the memory allocated for the list structure
- *
- * @param list a pointer to the linked list to destroy
- */
-void destroyList(LinkedList *list) {
-  clear(list);
-  free(list);
 }
 
 /**
@@ -162,7 +162,7 @@ void removeLast(LinkedList *list) {
   if (isEmpty(list)) {
     return;
   }
-  if (list->size == 1) {
+  if (list->head == list->tail) {
     free(list->head);
     list->head = NULL;
     list->tail = NULL;
@@ -220,25 +220,12 @@ void removeData(LinkedList *list, int data) {
  */
 void printList(LinkedList *list) {
   printf("LinkedList: ");
-  LinkedNode *current = list->head;
-  while (current != NULL) {
-    printf("[%d]", current->data);
-    if (current->next != NULL) {
-      printf(" -> ");
-    }
-    current = current->next;
+  for (LinkedNode *current = list->head; current != NULL;
+       current = current->next) {
+    printf("[%d]%s", current->data, current->next ? " -> " : "");
   }
   printf("\n");
 }
-
-/**
- * @brief returns the number of elements in the list
- *
- * @param list a pointer to the linked list
- *
- * @return the number of nodes currently in the list
- */
-int size(LinkedList *list) { return list->size; }
 
 /**
  * @brief checks whether the list is empty
@@ -248,3 +235,12 @@ int size(LinkedList *list) { return list->size; }
  * @return 1 if the list is empty, 0 otherwise
  */
 bool isEmpty(LinkedList *list) { return list->size == 0; }
+
+/**
+ * @brief returns the number of elements in the list
+ *
+ * @param list a pointer to the linked list
+ *
+ * @return the number of nodes currently in the list
+ */
+int getSize(LinkedList *list) { return list->size; }
