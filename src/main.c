@@ -1,7 +1,8 @@
 #include "../include/linked_list.h"
 #include "../include/linked_list_test.h"
 #include <stdio.h>
-#include <stdlib.h>
+
+// TODO: Verificar uso de todas las estructuras y métodos.
 
 void menu() {
   printf("\n<--- Linked List Menu --->\n");
