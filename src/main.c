@@ -60,7 +60,7 @@ int main() {
       if (list == NULL) {
         printf("You have to create a Linked List first\n");
       } else {
-        printf("Size of the Linked List: %d\n", size(list));
+        printf("Size of the Linked List: %d\n", getSize(list));
       }
       break;
     case 5:
