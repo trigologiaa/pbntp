@@ -26,6 +26,9 @@ LinkedNode *find(LinkedList *list, int data) {
 // CreateList crea una nueva lista enlazada vacía.
 LinkedList *createList() {
   LinkedList *list = malloc(sizeof(LinkedList));
+  if (list == NULL) {
+    return NULL;
+  }
   list->head = NULL;
   list->tail = NULL;
   list->size = 0;
