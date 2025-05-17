@@ -2,9 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Find permite encontrar la primera ocurrencia del dato pasado por parámetro.
+LinkedNode *createNode(int data) {
+  LinkedNode *node = malloc(sizeof(LinkedNode));
+  if (node == NULL) {
+    return NULL;
+  }
+  node->data = data;
+  node->next = NULL;
+  return node;
+}
+
+// Find permite encontrar la primera ocurrencia del dato pasado por parámetro.
 LinkedNode *find(LinkedList *list, int data) {
-  for (LinkedNode *current = list->head; current != NULL; current = current->next) {
+  for (LinkedNode *current = list->head; current != NULL;
+       current = current->next) {
     if (current->data == data) {
       return current;
     }
@@ -12,7 +23,7 @@ LinkedNode *find(LinkedList *list, int data) {
   return NULL;
 }
 
-//CreateList crea una nueva lista enlazada vacía.
+// CreateList crea una nueva lista enlazada vacía.
 LinkedList *createList() {
   LinkedList *list = malloc(sizeof(LinkedList));
   list->head = NULL;
@@ -21,7 +32,7 @@ LinkedList *createList() {
   return list;
 }
 
-//Clear limpia la lista sin quitarle su espacio de memoria.
+// Clear limpia la lista sin quitarle su espacio de memoria.
 void clear(LinkedList *list) {
   while (!isEmpty(list)) {
     removeFirst(list);
@@ -30,17 +41,17 @@ void clear(LinkedList *list) {
 
 /* destroyList elimina todos los nodos de la lista
  * y libera espacio de memoria.
-*/
+ */
 void destroyList(LinkedList *list) {
   clear(list);
   free(list);
 }
 
-/* prepend añade un dato al inicio de la lista. 
-*  Ejemplo:
-*  prepend(&list, 10) añade 10 al inicio de la lista.
-*  list es un puntero a la lista donde se añadirá el dato.
-*/
+/* prepend añade un dato al inicio de la lista.
+ *  Ejemplo:
+ *  prepend(&list, 10) añade 10 al inicio de la lista.
+ *  list es un puntero a la lista donde se añadirá el dato.
+ */
 void prepend(LinkedList *list, int data) {
   LinkedNode *node = malloc(sizeof(LinkedNode));
   node->data = data;
@@ -53,10 +64,10 @@ void prepend(LinkedList *list, int data) {
 }
 
 /* append inserta un dato al final de la lista,
-*  reserva espacio en memoria.
-*/
+ *  reserva espacio en memoria.
+ */
 void append(LinkedList *list, int data) {
-  LinkedNode *node = malloc(sizeof(LinkedList));
+  LinkedNode *node = malloc(sizeof(LinkedNode));
   node->data = data;
   node->next = NULL;
   if (isEmpty(list)) {
@@ -68,9 +79,9 @@ void append(LinkedList *list, int data) {
   list->size++;
 }
 
-/* removeFirst remueve el primer elemento 
-*  de la lista y libera memoria.
-*/
+/* removeFirst remueve el primer elemento
+ *  de la lista y libera memoria.
+ */
 void removeFirst(LinkedList *list) {
   if (isEmpty(list)) {
     return;
@@ -85,8 +96,8 @@ void removeFirst(LinkedList *list) {
 }
 
 /* removeLast elimina el último elemento de la lista
-* y libera memoria. Si la lista está vacía no hace nada.
-*/
+ * y libera memoria. Si la lista está vacía no hace nada.
+ */
 void removeLast(LinkedList *list) {
   if (isEmpty(list)) {
     return;
@@ -133,10 +144,10 @@ void removeData(LinkedList *list, int data) {
 }
 
 /* printList imprime la lista enlazada.
-*  Ejemplo:
-*  lista: {1, 2, 3, 4}
-*  printList(lista) = "LinkedList: [1] -> [2] -> [3] -> [4]"
-*/
+ *  Ejemplo:
+ *  lista: {1, 2, 3, 4}
+ *  printList(lista) = "LinkedList: [1] -> [2] -> [3] -> [4]"
+ */
 void printList(LinkedList *list) {
   printf("LinkedList: ");
   LinkedNode *current = list->head;
@@ -150,14 +161,10 @@ void printList(LinkedList *list) {
   printf("\n");
 }
 
-// size retorna el tamaño de la lista. 
-int size(LinkedList *list) {
-  return list->size;
-}
+// size retorna el tamaño de la lista.
+int size(LinkedList *list) { return list->size; }
 
-/* isEmpty devuelve true si la lista está vacía, 
-*  en caso contrario devuelve false. 
-*/ 
-bool isEmpty(LinkedList *list) {
-  return list->size == 0;
-}
+/* isEmpty devuelve true si la lista está vacía,
+ *  en caso contrario devuelve false.
+ */
+bool isEmpty(LinkedList *list) { return list->size == 0; }
