@@ -1,3 +1,4 @@
+#include <wchar.h>
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "../include/linked_list.h"
@@ -41,6 +42,9 @@ LinkedNode *createNode(int data) {
  * @return a pointer to the matching node if found
  */
 LinkedNode *find(const LinkedList *list, int data) {
+  if (list == NULL) {
+    return NULL;
+  }
   for (LinkedNode *current = list->head; current != NULL;
        current = current->next) {
     if (current->data == data) {
@@ -77,6 +81,9 @@ LinkedList *createList() {
  * @param list a pointer to the linked list to destroy
  */
 void destroyList(LinkedList *list) {
+  if (list == NULL) {
+    return;
+  }
   clear(list);
   free(list);
 }
@@ -90,6 +97,9 @@ void destroyList(LinkedList *list) {
  * @param list a pointer to the linked list to clear
  */
 void clear(LinkedList *list) {
+  if (list == NULL) {
+    return;
+  }
   while (!isEmpty(list)) {
     removeFirst(list);
   }
@@ -105,7 +115,13 @@ void clear(LinkedList *list) {
  * @param data the integer data to insert
  */
 void prepend(LinkedList *list, int data) {
+  if (list == NULL) {
+    return;
+  }
   LinkedNode *node = malloc(sizeof(LinkedNode));
+  if (node == NULL) {
+    return;
+  }
   node->data = data;
   node->next = list->head;
   list->head = node;
@@ -124,7 +140,13 @@ void prepend(LinkedList *list, int data) {
  * @param data the integer data to insert
  */
 void append(LinkedList *list, int data) {
+  if (list == NULL) {
+    return;
+  }
   LinkedNode *node = malloc(sizeof(LinkedNode));
+  if (node == NULL) {
+    return;
+  }
   node->data = data;
   node->next = NULL;
   if (isEmpty(list)) {
@@ -145,6 +167,9 @@ void append(LinkedList *list, int data) {
  * @param list a pointer to the linked list
  */
 void removeFirst(LinkedList *list) {
+  if (list == NULL) {
+    return;
+  }
   if (isEmpty(list)) {
     return;
   }
@@ -165,6 +190,9 @@ void removeFirst(LinkedList *list) {
  * @param list a pointer to the linked list
  */
 void removeLast(LinkedList *list) {
+  if (list == NULL) {
+    return;
+  }
   if (isEmpty(list)) {
     return;
   }
@@ -193,6 +221,9 @@ void removeLast(LinkedList *list) {
  * @param data the integer value to remove
  */
 void removeData(LinkedList *list, int data) {
+  if (list == NULL) {
+    return;
+  }
   if (isEmpty(list)) {
     return;
   }
@@ -225,6 +256,9 @@ void removeData(LinkedList *list, int data) {
  * @param list a pointer to the linked list
  */
 void printList(LinkedList *list) {
+  if (list == NULL) {
+    return;
+  }
   char *output = listToString(list);
   if (output != NULL) {
     printf("%s", output);
@@ -292,7 +326,9 @@ char *listToString(LinkedList *list) {
  *
  * @return 1 if the list is empty, 0 otherwise
  */
-bool isEmpty(const LinkedList *list) { return list->size == 0; }
+bool isEmpty(const LinkedList *list) {
+  return (list == NULL || list->size == 0);
+}
 
 /**
  * @brief returns the number of elements in the list
@@ -301,4 +337,9 @@ bool isEmpty(const LinkedList *list) { return list->size == 0; }
  *
  * @return the number of nodes currently in the list
  */
-int getSize(const LinkedList *list) { return list->size; }
+int getSize(const LinkedList *list) {
+  if (list == NULL) {
+    return 0;
+  }
+  return list->size;
+}
