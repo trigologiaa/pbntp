@@ -1,31 +1,37 @@
 # Variables
 CC = gcc
 CFLAGS = -Wall -Iinclude
-SRC = src/main.c src/linked_list.c
+
+# Archivos fuente (agregado linked_list_test.c)
+SRC = src/main.c src/linked_list.c src/linked_list_test.c
+
+# Archivos objeto
 OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
+
+# Binario final
 BIN = bin/app
 
-# Objetivo por defecto: compilar y ejecutar
+# Objetivo por defecto
 .DEFAULT_GOAL := run
 
-# Regla para compilar
+# Compilación
 all: $(BIN)
 
-# Ejecutar después de compilar
+# Regla de ejecución
 run: all
 	@./$(BIN)
 	@rm -rf build bin
 
-# Cómo construir el ejecutable a partir de objetos
+# Regla para enlazar binario
 $(BIN): $(OBJ)
 	@mkdir -p bin
 	$(CC) $(OBJ) -o $(BIN)
 
-# Cómo compilar .c en build/
+# Regla para compilar archivos fuente a objetos
 build/%.o: src/%.c
 	@mkdir -p build
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Limpiar todo lo generado
+# Limpieza
 clean:
 	rm -rf build/*.o $(BIN)
