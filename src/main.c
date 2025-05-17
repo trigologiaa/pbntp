@@ -6,20 +6,20 @@
 void runTestMenu() {
   int testOption;
   do {
-    printf("\n<--- Linked List Test Menu --->\n");
-    printf("1. Test: Create Empty List\n");
-    printf("2. Test: Create List With One Element\n");
-    printf("3. Test: Append Element\n");
-    printf("4. Test: Remove First Element\n");
-    printf("5. Test: Remove Data\n");
-    printf("6. Test: Find Element\n");
-    printf("7. Test: Find Unexisting Element\n");
-    printf("8. Test: Size\n");
-    printf("9. Run All Tests\n");
-    printf("0. Return to Main Menu\n");
-    printf("Choose a test option: ");
+    printf("\n╭─── Linked List Test Menu ─────────────╮\n");
+    printf("│ 1. Test: Create Empty List            │\n");
+    printf("│ 2. Test: Create List With One Element │\n");
+    printf("│ 3. Test: Append Element               │\n");
+    printf("│ 4. Test: Remove First Element         │\n");
+    printf("│ 5. Test: Remove Data                  │\n");
+    printf("│ 6. Test: Find Element                 │\n");
+    printf("│ 7. Test: Find Unexisting Element      │\n");
+    printf("│ 8. Test: Size                         │\n");
+    printf("│ 9. Run All Tests                      │\n");
+    printf("│ 0. Return to Main Menu                │\n");
+    printf("╰───────────────────────────────────────╯\n");
+    printf("\n  -> Choose a test option: ");
     scanf("%d", &testOption);
-
     switch (testOption) {
     case 1:
       test_createEmptyList();
@@ -65,23 +65,23 @@ void runTestMenu() {
 }
 
 void menu() {
-  printf("\n<--- Linked List Menu --->\n");
-  printf("1. Create Linked List\n");
-  printf("2. Destroy Linked List\n");
-  printf("3. Verify if the Linked List is empty\n");
-  printf("4. Get size of Linked List\n");
-  printf("5. Empty Linked List\n");
-  printf("6. Insert at the beginning of the Linked List\n");
-  printf("7. Insert at the end of the Linked List\n");
-  printf("8. Find element\n");
-  printf("9. Remove the first element\n");
-  printf("10. Remove the last element\n");
-  printf("11. Remove a specific element\n");
-  printf("12. Print Linked List\n");
-  printf("13. Linked List Test Menu\n");
-  printf("0. Out\n");
-  printf("<--- Linked List Menu --->\n");
-  printf("Choose an option: \n");
+  printf("\n╭──── Linked List Menu ──────────────────────────╮\n");
+  printf("│  1. Create Linked List                         │\n");
+  printf("│  2. Destroy Linked List                        │\n");
+  printf("│  3. Verify if the Linked List is empty         │\n");
+  printf("│  4. Get size of Linked List                    │\n");
+  printf("│  5. Empty Linked List                          │\n");
+  printf("│  6. Insert at the beginning of the Linked List │\n");
+  printf("│  7. Insert at the end of the Linked List       │\n");
+  printf("│  8. Find element                               │\n");
+  printf("│  9. Remove the first element                   │\n");
+  printf("│ 10. Remove the last element                    │\n");
+  printf("│ 11. Remove a specific element                  │\n");
+  printf("│ 12. Print Linked List                          │\n");
+  printf("│ 13. Linked List Test Menu                      │\n");
+  printf("│  0. Out                                        │\n");
+  printf("╰────────────────────────────────────────────────╯\n");
+  printf("\n  -> Choose an option: ");
 }
 
 int main() {
@@ -202,7 +202,7 @@ int main() {
       runTestMenu();
       break;
     case 0:
-      printf("Leaving...\n");
+      printf("\n ->> Leaving...\n");
       if (list != NULL) {
         destroyList(list);
       }
