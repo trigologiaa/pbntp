@@ -2,28 +2,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Nodo *crearNodo(int dato) {
-  Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
+
+/*  createNode crea un nuevo nodo para listas enlazadas.
+*   Ejemplo:
+*   createNode(10) crea un nuevo nodo con 10 como data
+*/  
+LinkedNode *createNode(int data) {
+  LinkedNode *nuevo = (LinkedNode *)malloc(sizeof(LinkedNode));
   if (nuevo == NULL) {
     printf("Error al asignar memoria\n");
     return NULL;
   }
-  nuevo->dato = dato;
-  nuevo->siguiente = NULL;
+  nuevo->data = data;
+  nuevo->next = NULL;
   return nuevo;
 }
 
-void insertarAlInicio(Nodo **cabeza, int dato) {
-  Nodo *nuevo = crearNodo(dato);
+/*  insertarAlInicio inserta un data al inicio de la lista.
+*   Ejemplo:
+*   insertarAlInicio(&cabeza, 10) inserta 10 al inicio de la lista.actual
+*   &cabeza es un puntero a la cabeza actual de la lista.
+*/
+void insertarAlInicio(LinkedNode **cabeza, int data) {
+  LinkedNode *nuevo = createNode(data);
   if (nuevo == NULL) {
     return;
   }
-  nuevo->siguiente = *cabeza;
+  nuevo->next = *cabeza;
   *cabeza = nuevo;
 }
 
-void insertarAlFinal(Nodo **cabeza, int dato) {
-  Nodo *nuevo = crearNodo(dato);
+/*  insertarAlInicio inserta un data al final de la lista.
+*   Ejemplo:
+*   insertarAlInicio(&cabeza, 10) inserta 10 al final de la lista.actual
+*   &cabeza es un puntero a la cabeza actual de la lista.
+*/
+void insertarAlFinal(LinkedNode **cabeza, int data) {
+  LinkedNode *nuevo = createNode(data);
   if (nuevo == NULL) {
     return;
   }
@@ -31,59 +46,67 @@ void insertarAlFinal(Nodo **cabeza, int dato) {
     *cabeza = nuevo;
     return;
   }
-  Nodo *actual = *cabeza;
-  while (actual->siguiente != NULL) {
-    actual = actual->siguiente;
+  LinkedNode *actual = *cabeza;
+  while (actual->next != NULL) {
+    actual = actual->next;
   }
-  actual->siguiente = nuevo;
+  actual->next = nuevo;
 }
 
-void eliminarNodo(Nodo **cabeza, int dato) {
+
+
+void eliminarNodo(LinkedNode **cabeza, int data) {
   if (*cabeza == NULL) {
     return;
   }
-  Nodo *actual = *cabeza;
-  Nodo *anterior = NULL;
-  while (actual != NULL && actual->dato != dato) {
+  LinkedNode *actual = *cabeza;
+  LinkedNode *anterior = NULL;
+  while (actual != NULL && actual->data != data) {
     anterior = actual;
-    actual = actual->siguiente;
+    actual = actual->next;
   }
   if (actual == NULL) {
     return;
   }
   if (anterior == NULL) {
-    *cabeza = actual->siguiente;
+    *cabeza = actual->next;
   } else {
-    anterior->siguiente = actual->siguiente;
+    anterior->next = actual->next;
   }
   free(actual);
 }
-
-Nodo *buscarNodo(Nodo *cabeza, int dato) {
-  Nodo *actual = cabeza;
-  while (actual != NULL) {
-    if (actual->dato == dato) {
-      return actual;
-    }
-    actual = actual->siguiente;
-  }
-  return NULL;
+/* find busca un dato en la lista, si lo encuentra
+* devuelve el dato correspondiente, sino, 
+* devuelve NULL.
+*/
+LinkedNode *find(LinkedList *list, int data) {
+  // LinkedNode *actual = ;
+  // while (actual != NULL) {
+  //   if (actual->data == data) {
+  //     return actual;
+  //   }
+  //   actual = actual->next;
+  // }
+  // return NULL;
 }
-
-void imprimirLista(Nodo *cabeza) {
-  Nodo *actual = cabeza;
+/* 
+* 
+*/
+void imprimirLista(LinkedNode *cabeza) {
+  LinkedNode *actual = cabeza;
   while (actual != NULL) {
-    printf("%d -> ", actual->dato);
-    actual = actual->siguiente;
+    printf("%d -> ", actual->data);
+    actual = actual->next;
   }
   printf("NULL\n");
 }
 
-void liberarLista(Nodo **cabeza) {
-  Nodo *actual = *cabeza;
+// liberarLista libera el espacio de memoria guardado para la lista.
+void liberarLista(LinkedNode **cabeza) {
+  LinkedNode *actual = *cabeza;
   while (actual != NULL) {
-    Nodo *temp = actual;
-    actual = actual->siguiente;
+    LinkedNode *temp = actual;
+    actual = actual->next;
     free(temp);
   }
   *cabeza = NULL;

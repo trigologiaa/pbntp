@@ -15,13 +15,13 @@
   # Creación carpeta build/
   mkdir -p build
   # Compilación intermedia de lista.c a lista.o
-  gcc -c -Iinclude src/lista.c -o build/lista.o
+  gcc -c -Iinclude src/linked_list.c -o build/linked_list.o
   # Compilación intermedia de main.c a main.o
   gcc -c -Iinclude src/main.c -o build/main.o
   # Creación de carpeta bin/
   mkdir -p bin
   # Compilación de aplicación
-  gcc build/lista.o build/main.o -o bin/app
+  gcc build/linked_list.o build/main.o -o bin/app
   # Ejecución de la aplicación
   ./bin/app
   # Eliminación de carpeta build/ y sus archivos

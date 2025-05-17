@@ -1,7 +1,7 @@
 # Variables
 CC = gcc
 CFLAGS = -Wall -Iinclude
-SRC = src/main.c src/lista.c
+SRC = src/main.c src/linked_list.c
 OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
 BIN = bin/app
 
