@@ -1,5 +1,5 @@
-#ifndef LISTA_H
-#define LISTA_H
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
 #include <stdbool.h>
 
@@ -29,11 +29,5 @@ void removeData(LinkedList *list, int data);
 void printList(LinkedList *list);
 bool isEmpty(LinkedList *list);
 int size(LinkedList *list);
-
-// void insertarAlInicio(LinkedNode **cabeza, int data);
-// void insertarAlFinal(LinkedNode **cabeza, int data);
-// void eliminarNodo(LinkedNode **cabeza, int data);
-// void imprimirLista(LinkedNode *cabeza);
-// void liberarLista(LinkedNode **cabeza);
 
 #endif

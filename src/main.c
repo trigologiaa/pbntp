@@ -1,4 +1,5 @@
 #include "../include/linked_list.h"
+#include "../include/linked_list_test.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,6 +17,7 @@ void menu() {
   printf("10. Remove the last element\n");
   printf("11. Remove a specific element\n");
   printf("12. Print Linked List\n");
+  printf("13. Execute tests\n");
   printf("0. Out\n");
   printf("<--- Linked List Menu --->\n");
   printf("Choose an option: \n");
@@ -134,6 +136,16 @@ int main() {
       } else {
         printList(list);
       }
+      break;
+    case 13:
+      test_createEmptyList();
+      test_createListWithOneElement();
+      test_appendElement();
+      test_removeFirstElement();
+      test_removeData();
+      test_findElement();
+      test_findUnexistingElement();
+      test_size();
       break;
     case 0:
       printf("Leaving...\n");
