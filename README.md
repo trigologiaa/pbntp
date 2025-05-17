@@ -9,21 +9,23 @@
   make
 ```
 
-### Compilación manual
+### Compilación manual y ejecución
 
 ```bash
+  # Creación carpeta build/
   mkdir -p build
+  # Compilación intermedia de lista.c a lista.o
   gcc -c -Iinclude src/lista.c -o build/lista.o
+  # Compilación intermedia de main.c a main.o
   gcc -c -Iinclude src/main.c -o build/main.o
+  # Creación de carpeta bin/
   mkdir -p bin
-  mkdir -p bin
+  # Compilación de aplicación
   gcc build/lista.o build/main.o -o bin/app
-  rm -rf build/*
-  rm -f bin/app
-```
-
-### Ejecución después de compilación
-
-```bash
+  # Ejecución de la aplicación
   ./bin/app
+  # Eliminación de carpeta build/ y sus archivos
+  rm -rf build/*
+  # Eliminación de carpeta bin/
+  rm -f bin/app
 ```
