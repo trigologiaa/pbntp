@@ -151,6 +151,6 @@ bool isEmpty(LinkedList *list);
  *
  * @return the number of nodes currently in the list
  */
-int size(LinkedList *list);
+int getSize(LinkedList *list);
 
 #endif
