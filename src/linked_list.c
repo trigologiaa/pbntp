@@ -1,13 +1,11 @@
 #include <wchar.h>
 #define _CRT_SECURE_NO_WARNINGS
-
 #include "../include/linked_list.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define INITIAL_BUFFER_SIZE 128
+#define INITIAL_BUFFER_SIZE 256
 
 /**
  * @brief creates a new node for a linked list
@@ -118,11 +116,10 @@ void prepend(LinkedList *list, int data) {
   if (list == NULL) {
     return;
   }
-  LinkedNode *node = malloc(sizeof(LinkedNode));
+  LinkedNode *node = createNode(data);
   if (node == NULL) {
     return;
   }
-  node->data = data;
   node->next = list->head;
   list->head = node;
   if (list->tail == NULL) {
@@ -143,11 +140,10 @@ void append(LinkedList *list, int data) {
   if (list == NULL) {
     return;
   }
-  LinkedNode *node = malloc(sizeof(LinkedNode));
+  LinkedNode *node = createNode(data);
   if (node == NULL) {
     return;
   }
-  node->data = data;
   node->next = NULL;
   if (isEmpty(list)) {
     list->head = node;
