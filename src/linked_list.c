@@ -2,6 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief creates a new node for a linked list
+ *
+ * allocates dynamic memory for a new node of type LinkedNode, assigns the
+ * supplied data value, and sets the 'next' pointer to NULL
+ *
+ * @param data the integer value to be stored in the node
+ *
+ * @return a pointer to the newly created node, or NULL if memory alocation
+ * fails
+ */
 LinkedNode *createNode(int data) {
   LinkedNode *node = malloc(sizeof(LinkedNode));
   if (node == NULL) {
@@ -12,7 +23,17 @@ LinkedNode *createNode(int data) {
   return node;
 }
 
-// Find permite encontrar la primera ocurrencia del dato pasado por parámetro.
+/**
+ * @brief searches for the first node in the list with the given data
+ *
+ * iterates through the linked list starting from the head and returns a pointer
+ * to the first node that contains the specified data
+ *
+ * @param list the pointer to the linked list to search
+ * @param data the integer value to search for
+ *
+ * @return a pointer to the matching node if found
+ */
 LinkedNode *find(LinkedList *list, int data) {
   for (LinkedNode *current = list->head; current != NULL;
        current = current->next) {
@@ -23,7 +44,14 @@ LinkedNode *find(LinkedList *list, int data) {
   return NULL;
 }
 
-// CreateList crea una nueva lista enlazada vacía.
+/**
+ * @brief creates a new empty linked list
+ *
+ * allocates memory for a new LinkedList structure and initializes its members
+ *
+ * @return a pointer to the newly created list, or NULL if memory allocation
+ * fails
+ */
 LinkedList *createList() {
   LinkedList *list = malloc(sizeof(LinkedList));
   if (list == NULL) {
@@ -35,25 +63,40 @@ LinkedList *createList() {
   return list;
 }
 
-// Clear limpia la lista sin quitarle su espacio de memoria.
+/**
+ * @brief clears all elements from the list without deallocating the list
+ * structure itself
+ *
+ * removes all nodes from the list and frees their memory
+ *
+ * @param list a pointer to the linked list to clear
+ */
 void clear(LinkedList *list) {
   while (!isEmpty(list)) {
     removeFirst(list);
   }
 }
 
-/* destroyList elimina todos los nodos de la lista
- * y libera espacio de memoria.
+/**
+ * @brief destroys the list and frees all associated memory
+ *
+ * clears the list and frees the memory allocated for the list structure
+ *
+ * @param list a pointer to the linked list to destroy
  */
 void destroyList(LinkedList *list) {
   clear(list);
   free(list);
 }
 
-/* prepend añade un dato al inicio de la lista.
- *  Ejemplo:
- *  prepend(&list, 10) añade 10 al inicio de la lista.
- *  list es un puntero a la lista donde se añadirá el dato.
+/**
+ * @brief adds a new node containing the given data at the beginning of the
+ * list
+ *
+ * allocates memory for a new node and inserts it at the head of the list
+ *
+ * @param list a pointer to the linked list
+ * @param data the integer data to insert
  */
 void prepend(LinkedList *list, int data) {
   LinkedNode *node = malloc(sizeof(LinkedNode));
@@ -66,8 +109,13 @@ void prepend(LinkedList *list, int data) {
   list->size++;
 }
 
-/* append inserta un dato al final de la lista,
- *  reserva espacio en memoria.
+/**
+ * @brief adds a new node containing the given data at the end of the list
+ *
+ * allocates memory for a new node and appends it to the tail of the list
+ *
+ * @param list a pointer to the linked list
+ * @param data the integer data to insert
  */
 void append(LinkedList *list, int data) {
   LinkedNode *node = malloc(sizeof(LinkedNode));
@@ -82,8 +130,13 @@ void append(LinkedList *list, int data) {
   list->size++;
 }
 
-/* removeFirst remueve el primer elemento
- *  de la lista y libera memoria.
+/**
+ * @brief removes the first node from the list and frees its memory
+ *
+ * updates the head pointer and list size, if the list becomes empty, also
+ * updates the tail
+ *
+ * @param list a pointer to the linked list
  */
 void removeFirst(LinkedList *list) {
   if (isEmpty(list)) {
@@ -98,8 +151,12 @@ void removeFirst(LinkedList *list) {
   list->size--;
 }
 
-/* removeLast elimina el último elemento de la lista
- * y libera memoria. Si la lista está vacía no hace nada.
+/**
+ * @brief removes the last node from the list and frees its memory
+ *
+ * if the list is empty, the function does nothing
+ *
+ * @param list a pointer to the linked list
  */
 void removeLast(LinkedList *list) {
   if (isEmpty(list)) {
@@ -121,7 +178,14 @@ void removeLast(LinkedList *list) {
   list->size--;
 }
 
-// removeData elimina la primera ocurrencia del dato pasado por parámetro.
+/**
+ * @brief removes the first occurrence of the specified data from the list
+ *
+ * searches the list for a node with matching data and removes it
+ *
+ * @param list a pointer to the linked list
+ * @param data the integer value to remove
+ */
 void removeData(LinkedList *list, int data) {
   if (isEmpty(list)) {
     return;
@@ -146,10 +210,13 @@ void removeData(LinkedList *list, int data) {
   list->size--;
 }
 
-/* printList imprime la lista enlazada.
- *  Ejemplo:
- *  lista: {1, 2, 3, 4}
- *  printList(lista) = "LinkedList: [1] -> [2] -> [3] -> [4]"
+/**
+ * @brief prints the contents of the linked list
+ *
+ * outputs each element in the list in order, formatted as: LinkedList: [data]
+ * -> ...
+ *
+ * @param list a pointer to the linked list
  */
 void printList(LinkedList *list) {
   printf("LinkedList: ");
@@ -164,10 +231,20 @@ void printList(LinkedList *list) {
   printf("\n");
 }
 
-// size retorna el tamaño de la lista.
+/**
+ * @brief returns the number of elements in the list
+ *
+ * @param list a pointer to the linked list
+ *
+ * @return the number of nodes currently in the list
+ */
 int size(LinkedList *list) { return list->size; }
 
-/* isEmpty devuelve true si la lista está vacía,
- *  en caso contrario devuelve false.
+/**
+ * @brief checks whether the list is empty
+ *
+ * @param list a pointer to the linked list
+ *
+ * @return 1 if the list is empty, 0 otherwise
  */
 bool isEmpty(LinkedList *list) { return list->size == 0; }
