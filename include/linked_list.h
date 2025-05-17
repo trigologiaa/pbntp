@@ -44,7 +44,7 @@ LinkedNode *createNode(int data);
  *
  * @return a pointer to the matching node if found
  */
-LinkedNode *find(LinkedList *list, int data);
+LinkedNode *find(const LinkedList *list, int data);
 
 /**
  * @brief creates a new empty linked list
@@ -133,7 +133,7 @@ void removeData(LinkedList *list, int data);
  *
  * @param list a pointer to the linked list
  */
-void printList(LinkedList *list);
+void printList(const LinkedList *list);
 
 /**
  * @brief checks whether the list is empty
@@ -142,7 +142,7 @@ void printList(LinkedList *list);
  *
  * @return 1 if the list is empty, 0 otherwise
  */
-bool isEmpty(LinkedList *list);
+bool isEmpty(const LinkedList *list);
 
 /**
  * @brief returns the number of elements in the list
@@ -151,6 +151,6 @@ bool isEmpty(LinkedList *list);
  *
  * @return the number of nodes currently in the list
  */
-int getSize(LinkedList *list);
+int getSize(const LinkedList *list);
 
 #endif
