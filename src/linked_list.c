@@ -279,6 +279,9 @@ void printList(LinkedList *list) {
  * if memory allocation fails
  */
 char *listToString(LinkedList *list) {
+  if (list == NULL) {
+    return NULL;
+  }
   size_t bufferSize = INITIAL_BUFFER_SIZE;
   char *buffer = malloc(bufferSize);
   if (!buffer) {
@@ -293,11 +296,14 @@ char *listToString(LinkedList *list) {
   used += written;
   LinkedNode *current = list->head;
   while (current != NULL) {
-    char nodeStr[32];
-    snprintf(nodeStr, sizeof(nodeStr), "[%d]", current->data);
-    size_t needed = strlen(nodeStr) + (current->next ? 4 : 1);
-    if (used + needed >= bufferSize) {
-      bufferSize *= 2;
+    int nodeLen = snprintf(NULL, 0, "[%d]", current->data);
+    if (nodeLen < 0) {
+      free(buffer);
+      return NULL;
+    }
+    size_t needed = used + nodeLen + (current->next ? 4 : 1) + 1;
+    if (needed > bufferSize) {
+      bufferSize = needed;
       char *newBuffer = realloc(buffer, bufferSize);
       if (!newBuffer) {
         free(buffer);
@@ -305,14 +311,18 @@ char *listToString(LinkedList *list) {
       }
       buffer = newBuffer;
     }
-    strcat(buffer, nodeStr);
-    used += strlen(nodeStr);
+    written = snprintf(buffer + used, bufferSize - used, "[%d]", current->data);
+    if (written < 0) {
+      free(buffer);
+      return NULL;
+    }
+    used += written;
     if (current->next) {
-      strcat(buffer, " -> ");
-      used += 4;
+      written = snprintf(buffer + used, bufferSize - used, " -> ");
+      used += written;
     } else {
-      strcat(buffer, "\n");
-      used += 1;
+      written = snprintf(buffer + used, bufferSize - used, "\n");
+      used += written;
     }
     current = current->next;
   }
