@@ -221,11 +221,23 @@ void removeData(LinkedList *list, int data) {
  */
 void printList(LinkedList *list) {
   char *output = listToString(list);
-  printf("%s", output);
+  if (output != NULL) {
+    printf("%s", output);
+    free(output);
+  }
 }
 
 /**
+ * @brief converts the linked list to a string representation
  *
+ * allocates and returns a string describing the contents of the linked list
+ * the format is: "LinkedList: [data1] -> [data2] -> ...\n"
+ * the caller is responsible for freeing the returned string
+ *
+ * @param list a pointer to the linked list
+ *
+ * @return a pointer to thenewly allocated string representing the list, or NULL
+ * if memory allocation fails
  */
 char *listToString(LinkedList *list) {
   char *buffer = malloc(1024);
