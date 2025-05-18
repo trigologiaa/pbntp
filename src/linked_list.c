@@ -36,19 +36,25 @@ LinkedNode *createNode(int data) {
  *
  * @param list the pointer to the linked list to search
  * @param data the integer value to search for
+ * @param position the pointer to the position in the linked list
  *
  * @return a pointer to the matching node if found
  */
-LinkedNode *find(const LinkedList *list, int data) {
+LinkedNode *find(const LinkedList *list, int data, int *position) {
   if (list == NULL) {
     return NULL;
   }
-  for (LinkedNode *current = list->head; current != NULL;
-       current = current->next) {
+  int currentPosition = 0;
+  for (LinkedNode *current = list->head; current != NULL; current = current->next) {
     if (current->data == data) {
+      if (position != NULL) {
+        *position = currentPosition;
+      }
       return current;
     }
+    currentPosition++;
   }
+
   return NULL;
 }
 
@@ -163,10 +169,8 @@ void append(LinkedList *list, int data) {
  * @param list a pointer to the linked list
  */
 void removeFirst(LinkedList *list) {
-  if (list == NULL) {
-    return;
-  }
-  if (isEmpty(list)) {
+  if (list == NULL || isEmpty(list)) {
+    printf("\n ->> The list is empty, no element to remove\n");
     return;
   }
   LinkedNode *temp = list->head;
@@ -186,10 +190,8 @@ void removeFirst(LinkedList *list) {
  * @param list a pointer to the linked list
  */
 void removeLast(LinkedList *list) {
-  if (list == NULL) {
-    return;
-  }
-  if (isEmpty(list)) {
+  if (list == NULL || isEmpty(list)) {
+    printf("\n ->> The list is empty, no element to remove\n");
     return;
   }
   if (list->head == list->tail) {
@@ -215,24 +217,24 @@ void removeLast(LinkedList *list) {
  *
  * @param list a pointer to the linked list
  * @param data the integer value to remove
+ * 
+ * @return true if the element was removed, false otherwise
  */
-void removeData(LinkedList *list, int data) {
-  if (list == NULL) {
-    return;
-  }
-  if (isEmpty(list)) {
-    return;
+bool removeData(LinkedList *list, int data) {
+  if (list == NULL || isEmpty(list)) {
+    printf("\n ->> The list is empty, no element to remove\n");
+    return false;
   }
   if (list->head->data == data) {
     removeFirst(list);
-    return;
+    return true;
   }
   LinkedNode *current = list->head;
   while (current->next != NULL && current->next->data != data) {
     current = current->next;
   }
   if (current->next == NULL) {
-    return;
+    return false;
   }
   LinkedNode *temp = current->next;
   current->next = temp->next;
@@ -241,6 +243,7 @@ void removeData(LinkedList *list, int data) {
   }
   free(temp);
   list->size--;
+  return true;
 }
 
 /**

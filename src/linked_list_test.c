@@ -155,10 +155,11 @@ void test_findElement() {
   printf(" ->> Appending 2 to the list\n");
   append(list, 3);
   printf(" ->> Appending 3 to the list\n");
-  LinkedNode *valor = find(list, 2);
-  printf(" ->> Finding element with value 2\n");
-  assert(valor->data == 2);
-  printf(" ->> Found element: %d\n", valor->data);
+  int position = -1;
+  LinkedNode *value = find(list, 2, &position);
+  printf(" ->> Finding element with value 2 at index %d\n", position);
+  assert(value->data == 2);
+  printf(" ->> Found element: %d\n", value->data);
   destroyList(list);
   printf(" ->> test_findElement completed successfully\n");
 }
@@ -177,9 +178,10 @@ void test_findUnexistingElement() {
   printf(" ->> Appending 2 to the list\n");
   append(list, 3);
   printf(" ->> Appending 3 to the list\n");
-  LinkedNode *valor = find(list, 5);
-  printf(" ->> Finding element with value 5\n");
-  assert(valor == NULL);
+  int position = -1;
+  LinkedNode *value = find(list, 5, &position);
+  printf(" ->> Finding element with value 5 at index%d\n", position);
+  assert(value == NULL);
   printf(" ->> Element not found\n");
   destroyList(list);
   printf(" ->> test_findUnexistingElement completed successfully\n");
