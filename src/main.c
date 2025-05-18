@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <wchar.h>
 
-void runAllOperations(LinkedList *list) {
+void runAllOperations(DoubleLinkedList *list) {
   int value;
   if (list == NULL) {
     list = createList();
-    printf("\n ->> Linked List created\n");
+    printf("\n ->> Double Linked List created\n");
   }
   printf("\n ->> Inserting 5 elements at the beginning...\n");
   for (value = 5; value > 0; value--) {
@@ -23,13 +23,13 @@ void runAllOperations(LinkedList *list) {
     printf("    -> Current ");
     printList(list);
   }
-  printf("\n ->> Size of the Linked List: %d\n", getSize(list));
+  printf("\n ->> Size of the Double Linked List: %d\n", getSize(list));
   value = 5;
   printf("\n ->> Searching for element %d...\n", value);
   int position = -1;
-  LinkedNode *node = find(list, value, &position);
+  DoubleLinkedNode *node = find(list, value, &position);
   if (node != NULL) {
-    printf("\n ->> Element %d found at index %d in the Linked List\n", value,
+    printf("\n ->> Element %d found at index %d in the Double Linked List\n", value,
            position);
   } else {
     printf("\n ->> Element %d not found\n", value);
@@ -61,28 +61,28 @@ void runAllOperations(LinkedList *list) {
   }
   printf("\n ->> Current ");
   printList(list);
-  printf("\n ->> Clearing the Linked List...\n");
+  printf("\n ->> Clearing the Double Linked List...\n");
   clear(list);
-  printf("\n ->> Linked List cleared\n");
-  printf("\n ->> Final Linked List (should be empty): ");
+  printf("\n ->> Double Linked List cleared\n");
+  printf("\n ->> Final Double Linked List (should be empty): ");
   printList(list);
 }
 
 void runTestMenu() {
   int testOption;
   do {
-    printf("\n╭─── Linked List Test Menu ─────────────╮\n");
-    printf("│ 1. Test: Create Empty List            │\n");
-    printf("│ 2. Test: Create List With One Element │\n");
-    printf("│ 3. Test: Append Element               │\n");
-    printf("│ 4. Test: Remove First Element         │\n");
-    printf("│ 5. Test: Remove Data                  │\n");
-    printf("│ 6. Test: Find Element                 │\n");
-    printf("│ 7. Test: Find Unexisting Element      │\n");
-    printf("│ 8. Test: Size                         │\n");
-    printf("│ 9. Run All Tests                      │\n");
-    printf("│ 0. Return to Main Menu                │\n");
-    printf("╰───────────────────────────────────────╯\n");
+    printf("\n╭─── Double Linked List Test Menu ─────────────╮\n");
+    printf("│ 1. Test: Create Empty List                   │\n");
+    printf("│ 2. Test: Create List With One Element        │\n");
+    printf("│ 3. Test: Append Element                      │\n");
+    printf("│ 4. Test: Remove First Element                │\n");
+    printf("│ 5. Test: Remove Data                         │\n");
+    printf("│ 6. Test: Find Element                        │\n");
+    printf("│ 7. Test: Find Unexisting Element             │\n");
+    printf("│ 8. Test: Size                                │\n");
+    printf("│ 9. Run All Tests                             │\n");
+    printf("│ 0. Return to Main Menu                       │\n");
+    printf("╰──────────────────────────────────────────────╯\n");
     printf("\n  -> Choose a test option: ");
     scanf("%d", &testOption);
     switch (testOption) {
@@ -132,28 +132,28 @@ void runTestMenu() {
 }
 
 void menu() {
-  printf("\n╭──── Linked List Menu ──────────────────────────╮\n");
-  printf("│  1. Create Linked List                         │\n");
-  printf("│  2. Destroy Linked List                        │\n");
-  printf("│  3. Verify if the Linked List is empty         │\n");
-  printf("│  4. Get size of Linked List                    │\n");
-  printf("│  5. Empty Linked List                          │\n");
-  printf("│  6. Insert at the beginning of the Linked List │\n");
-  printf("│  7. Insert at the end of the Linked List       │\n");
-  printf("│  8. Find element                               │\n");
-  printf("│  9. Remove the first element                   │\n");
-  printf("│ 10. Remove the last element                    │\n");
-  printf("│ 11. Remove a specific element                  │\n");
-  printf("│ 12. Print Linked List                          │\n");
-  printf("│ 13. Linked List Test Menu                      │\n");
-  printf("│ 14. Run all operations (simulation of use)     │\n");
-  printf("│  0. Out                                        │\n");
-  printf("╰────────────────────────────────────────────────╯\n");
+  printf("\n╭──── Double Linked List Menu ──────────────────────────╮\n");
+  printf("│  1. Create Double Linked List                         │\n");
+  printf("│  2. Destroy Double Linked List                        │\n");
+  printf("│  3. Verify if the Double Linked List is empty         │\n");
+  printf("│  4. Get size of Double Linked List                    │\n");
+  printf("│  5. Empty Double Linked List                          │\n");
+  printf("│  6. Insert at the beginning of the Double Linked List │\n");
+  printf("│  7. Insert at the end of the Double Linked List       │\n");
+  printf("│  8. Find element                                      │\n");
+  printf("│  9. Remove the first element                          │\n");
+  printf("│ 10. Remove the last element                           │\n");
+  printf("│ 11. Remove a specific element                         │\n");
+  printf("│ 12. Print Double Linked List                          │\n");
+  printf("│ 13. Double Linked List Test Menu                      │\n");
+  printf("│ 14. Run all operations (simulation of use)            │\n");
+  printf("│  0. Out                                               │\n");
+  printf("╰───────────────────────────────────────────────────────╯\n");
   printf("\n  -> Choose an option: ");
 }
 
 int main() {
-  LinkedList *list = NULL;
+  DoubleLinkedList *list = NULL;
   int option, value;
   do {
     menu();
@@ -161,47 +161,47 @@ int main() {
     switch (option) {
     case 1:
       if (list != NULL) {
-        printf("\n ->> There is a Linked List created. Destroy it first\n");
+        printf("\n ->> There is a Double Linked List created. Destroy it first\n");
       } else {
         list = createList();
-        printf("\n ->> Linked List created\n");
+        printf("\n ->> Double Linked List created\n");
       }
       break;
     case 2:
       if (list != NULL) {
         destroyList(list);
         list = NULL;
-        printf("\n ->> Linked List destroyed\n");
+        printf("\n ->> Double Linked List destroyed\n");
       } else {
-        printf("\n ->> There is no Linked List created\n");
+        printf("\n ->> There is no Double Linked List created\n");
       }
       break;
     case 3:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
-        printf(isEmpty(list) ? "\n ->> The Linked List is empty\n"
-                             : "\n ->> The Linked List is not empty\n");
+        printf(isEmpty(list) ? "\n ->> The Double Linked List is empty\n"
+                             : "\n ->> The Double Linked List is not empty\n");
       }
       break;
     case 4:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
-        printf("\n ->> Size of the Linked List: %d\n", getSize(list));
+        printf("\n ->> Size of the Double Linked List: %d\n", getSize(list));
       }
       break;
     case 5:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         clear(list);
-        printf("\n ->> Linked List cleared\n");
+        printf("\n ->> Double Linked List cleared\n");
       }
       break;
     case 6:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         printf("\n  -> Insert a value to insert at the beginning: ");
         scanf("%d", &value);
@@ -213,7 +213,7 @@ int main() {
       break;
     case 7:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         printf("\n  -> Insert a value to insert at the end: ");
         scanf("%d", &value);
@@ -225,14 +225,14 @@ int main() {
       break;
     case 8:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         printf("\n ->> Insert a value to search: ");
         scanf("%d", &value);
         int position = -1;
-        LinkedNode *node = find(list, value, &position);
+        DoubleLinkedNode *node = find(list, value, &position);
         if (node != NULL) {
-          printf("\n ->> Element %d found at index %d in the Linked List\n",
+          printf("\n ->> Element %d found at index %d in the Double Linked List\n",
                  value, position);
         } else {
           printf("\n ->> Element not found\n");
@@ -241,7 +241,7 @@ int main() {
       break;
     case 9:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         if (isEmpty(list)) {
           printf("\n ->> The list is empty, no element to remove\n");
@@ -253,7 +253,7 @@ int main() {
       break;
     case 10:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         if (isEmpty(list)) {
           printf("\n ->> The list is empty, no element to remove\n");
@@ -265,7 +265,7 @@ int main() {
       break;
     case 11:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         printf("\n  -> Insert a value to remove: ");
         scanf("%d", &value);
@@ -278,7 +278,7 @@ int main() {
       break;
     case 12:
       if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Double Linked List first\n");
       } else {
         printf("\n ->> ");
         printList(list);
@@ -290,7 +290,7 @@ int main() {
     case 14:
       if (list == NULL) {
         list = createList();
-        printf("\n --> Linked List created\n");
+        printf("\n --> Double Linked List created\n");
       }
       runAllOperations(list);
       break;

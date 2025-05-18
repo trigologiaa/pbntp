@@ -9,7 +9,7 @@
  */
 void test_createEmptyList() {
   printf("\n ->> test_createEmptyList started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   assert(list != NULL);
   printf(" ->> Created an empty list\n");
   assert(list->head == NULL);
@@ -30,7 +30,7 @@ void test_createEmptyList() {
  */
 void test_createListWithOneElement() {
   printf("\n ->> test_createListWithOneElement started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   prepend(list, 10);
   printf(" ->> Prepending 10 to the list\n");
   assert(list->head->data == 10);
@@ -47,7 +47,7 @@ void test_createListWithOneElement() {
  */
 void test_appendElement() {
   printf("\n ->> test_appendElement started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   prepend(list, 3);
   printf(" ->> Prepending 3 to the list\n");
   prepend(list, 2);
@@ -69,7 +69,7 @@ void test_appendElement() {
  */
 void test_removeFirstElement() {
   printf("\n ->> test_removeFirstElement started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   prepend(list, 1);
   printf(" ->> Prepending 1 to the list\n");
   append(list, 2);
@@ -91,7 +91,7 @@ void test_removeFirstElement() {
  */
 void test_removeLast() {
   printf("\n ->> test_removeLast started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   append(list, 1);
   printf(" ->> Appending 1 to the list\n");
   append(list, 2);
@@ -119,7 +119,7 @@ void test_removeLast() {
  */
 void test_removeData() {
   printf("\n ->> test_removeData started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   append(list, 1);
   printf(" ->> Appending 1 to the list\n");
   append(list, 2);
@@ -134,7 +134,7 @@ void test_removeData() {
   printf(" ->> Removing the first occurrence of 3\n");
   char *output = listToString(list);
   printf(" ->> List after removal: %s", output);
-  assert(strcmp(output, "LinkedList: [1] -> [2] -> [4] -> [3]\n") == 0);
+  assert(strcmp(output, "DoubleLinkedList: [1] <-> [2] <-> [4] <-> [3]\n") == 0);
   free(output);
   destroyList(list);
   printf(" ->> test_removeData completed successfully\n");
@@ -148,7 +148,7 @@ void test_removeData() {
  */
 void test_findElement() {
   printf("\n ->> test_findElement started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   append(list, 1);
   printf(" ->> Appending 1 to the list\n");
   append(list, 2);
@@ -156,7 +156,7 @@ void test_findElement() {
   append(list, 3);
   printf(" ->> Appending 3 to the list\n");
   int position = -1;
-  LinkedNode *value = find(list, 2, &position);
+  DoubleLinkedNode *value = find(list, 2, &position);
   printf(" ->> Finding element with value 2 at index %d\n", position);
   assert(value->data == 2);
   printf(" ->> Found element: %d\n", value->data);
@@ -171,7 +171,7 @@ void test_findElement() {
  */
 void test_findUnexistingElement() {
   printf("\n ->> test_findUnexistingElement started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   append(list, 1);
   printf(" ->> Appending 1 to the list\n");
   append(list, 2);
@@ -179,7 +179,7 @@ void test_findUnexistingElement() {
   append(list, 3);
   printf(" ->> Appending 3 to the list\n");
   int position = -1;
-  LinkedNode *value = find(list, 5, &position);
+  DoubleLinkedNode *value = find(list, 5, &position);
   printf(" ->> Finding element with value 5 at index%d\n", position);
   assert(value == NULL);
   printf(" ->> Element not found\n");
@@ -195,7 +195,7 @@ void test_findUnexistingElement() {
  */
 void test_size() {
   printf("\n ->> test_size started\n");
-  LinkedList *list = createList();
+  DoubleLinkedList *list = createList();
   assert(getSize(list) == 0);
   printf(" ->> Size is 0\n");
   append(list, 1);

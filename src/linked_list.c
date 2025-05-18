@@ -10,7 +10,7 @@
 /**
  * @brief creates a new node for a linked list
  *
- * allocates dynamic memory for a new node of type LinkedNode, assigns the
+ * allocates dynamic memory for a new node of type DoubleLinkedNode, assigns the
  * supplied data value, and sets the 'next' pointer to NULL
  *
  * @param data the integer value to be stored in the node
@@ -18,13 +18,14 @@
  * @return a pointer to the newly created node, or NULL if memory alocation
  * fails
  */
-LinkedNode *createNode(int data) {
-  LinkedNode *node = malloc(sizeof(LinkedNode));
+DoubleLinkedNode *createNode(int data) {
+  DoubleLinkedNode *node = malloc(sizeof(DoubleLinkedNode));
   if (node == NULL) {
     return NULL;
   }
   node->data = data;
   node->next = NULL;
+  node->prev = NULL;
   return node;
 }
 
@@ -40,12 +41,13 @@ LinkedNode *createNode(int data) {
  *
  * @return a pointer to the matching node if found
  */
-LinkedNode *find(const LinkedList *list, int data, int *position) {
+DoubleLinkedNode *find(const DoubleLinkedList *list, int data, int *position) {
   if (list == NULL) {
     return NULL;
   }
   int currentPosition = 0;
-  for (LinkedNode *current = list->head; current != NULL; current = current->next) {
+  for (DoubleLinkedNode *current = list->head; current != NULL;
+       current = current->next) {
     if (current->data == data) {
       if (position != NULL) {
         *position = currentPosition;
@@ -61,13 +63,14 @@ LinkedNode *find(const LinkedList *list, int data, int *position) {
 /**
  * @brief creates a new empty linked list
  *
- * allocates memory for a new LinkedList structure and initializes its members
+ * allocates memory for a new DoubleLinkedList structure and initializes its
+ * members
  *
  * @return a pointer to the newly created list, or NULL if memory allocation
  * fails
  */
-LinkedList *createList() {
-  LinkedList *list = malloc(sizeof(LinkedList));
+DoubleLinkedList *createList() {
+  DoubleLinkedList *list = malloc(sizeof(DoubleLinkedList));
   if (list == NULL) {
     return NULL;
   }
@@ -84,7 +87,7 @@ LinkedList *createList() {
  *
  * @param list a pointer to the linked list to destroy
  */
-void destroyList(LinkedList *list) {
+void destroyList(DoubleLinkedList *list) {
   if (list == NULL) {
     return;
   }
@@ -100,7 +103,7 @@ void destroyList(LinkedList *list) {
  *
  * @param list a pointer to the linked list to clear
  */
-void clear(LinkedList *list) {
+void clear(DoubleLinkedList *list) {
   if (list == NULL) {
     return;
   }
@@ -118,19 +121,21 @@ void clear(LinkedList *list) {
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void prepend(LinkedList *list, int data) {
+void prepend(DoubleLinkedList *list, int data) {
   if (list == NULL) {
     return;
   }
-  LinkedNode *node = createNode(data);
+  DoubleLinkedNode *node = createNode(data);
   if (node == NULL) {
     return;
   }
+  if (isEmpty(list)) {
+    list->tail = node;
+  } else {
+    list->head->prev = node;
+  }
   node->next = list->head;
   list->head = node;
-  if (list->tail == NULL) {
-    list->tail = node;
-  }
   list->size++;
 }
 
@@ -142,19 +147,19 @@ void prepend(LinkedList *list, int data) {
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void append(LinkedList *list, int data) {
+void append(DoubleLinkedList *list, int data) {
   if (list == NULL) {
     return;
   }
-  LinkedNode *node = createNode(data);
+  DoubleLinkedNode *node = createNode(data);
   if (node == NULL) {
     return;
   }
-  node->next = NULL;
   if (isEmpty(list)) {
     list->head = node;
   } else {
     list->tail->next = node;
+    node->prev = list->tail;
   }
   list->tail = node;
   list->size++;
@@ -168,14 +173,15 @@ void append(LinkedList *list, int data) {
  *
  * @param list a pointer to the linked list
  */
-void removeFirst(LinkedList *list) {
+void removeFirst(DoubleLinkedList *list) {
   if (list == NULL || isEmpty(list)) {
-    printf("\n ->> The list is empty, no element to remove\n");
     return;
   }
-  LinkedNode *temp = list->head;
+  DoubleLinkedNode *temp = list->head;
   list->head = list->head->next;
-  if (list->head == NULL) {
+  if (list->head != NULL) {
+    list->head->prev = NULL;
+  } else {
     list->tail = NULL;
   }
   free(temp);
@@ -189,9 +195,8 @@ void removeFirst(LinkedList *list) {
  *
  * @param list a pointer to the linked list
  */
-void removeLast(LinkedList *list) {
+void removeLast(DoubleLinkedList *list) {
   if (list == NULL || isEmpty(list)) {
-    printf("\n ->> The list is empty, no element to remove\n");
     return;
   }
   if (list->head == list->tail) {
@@ -199,13 +204,10 @@ void removeLast(LinkedList *list) {
     list->head = NULL;
     list->tail = NULL;
   } else {
-    LinkedNode *current = list->head;
-    while (current->next != list->tail) {
-      current = current->next;
-    }
-    free(list->tail);
-    current->next = NULL;
-    list->tail = current;
+    DoubleLinkedNode *current = list->tail;
+    list->tail = list->tail->prev;
+    list->tail->next = NULL;
+    free(current);
   }
   list->size--;
 }
@@ -217,31 +219,31 @@ void removeLast(LinkedList *list) {
  *
  * @param list a pointer to the linked list
  * @param data the integer value to remove
- * 
+ *
  * @return true if the element was removed, false otherwise
  */
-bool removeData(LinkedList *list, int data) {
+bool removeData(DoubleLinkedList *list, int data) {
   if (list == NULL || isEmpty(list)) {
-    printf("\n ->> The list is empty, no element to remove\n");
     return false;
   }
-  if (list->head->data == data) {
-    removeFirst(list);
-    return true;
-  }
-  LinkedNode *current = list->head;
-  while (current->next != NULL && current->next->data != data) {
+  DoubleLinkedNode *current = list->head;
+  while (current != NULL && current->data != data) {
     current = current->next;
   }
-  if (current->next == NULL) {
+  if (current == NULL) {
     return false;
   }
-  LinkedNode *temp = current->next;
-  current->next = temp->next;
-  if (temp == list->tail) {
-    list->tail = current;
+  if (current->prev != NULL) {
+    current->prev->next = current->next;
+  } else {
+    list->head = current->next;
   }
-  free(temp);
+  if (current->next != NULL) {
+    current->next->prev = current->prev;
+  } else {
+    list->tail = current->prev;
+  }
+  free(current);
   list->size--;
   return true;
 }
@@ -250,11 +252,11 @@ bool removeData(LinkedList *list, int data) {
  * @brief prints the contents of the linked list
  *
  * outputs each element in the list in order using the function listToString,
- * formatted as: LinkedList: [data] -> ...
+ * formatted as: DoubleLinkedList: [data] -> ...
  *
  * @param list a pointer to the linked list
  */
-void printList(LinkedList *list) {
+void printList(DoubleLinkedList *list) {
   if (list == NULL) {
     return;
   }
@@ -269,7 +271,7 @@ void printList(LinkedList *list) {
  * @brief converts the linked list to a string representation
  *
  * allocates and returns a string describing the contents of the linked list
- * the format is: "LinkedList: [data1] -> [data2] -> ...\n"
+ * the format is: "DoubleLinkedList: [data1] -> [data2] -> ...\n"
  * the caller is responsible for freeing the returned string
  *
  * @param list a pointer to the linked list
@@ -277,7 +279,7 @@ void printList(LinkedList *list) {
  * @return a pointer to thenewly allocated string representing the list, or NULL
  * if memory allocation fails
  */
-char *listToString(LinkedList *list) {
+char *listToString(DoubleLinkedList *list) {
   if (list == NULL) {
     return NULL;
   }
@@ -287,13 +289,13 @@ char *listToString(LinkedList *list) {
     return NULL;
   }
   size_t used = 0;
-  int written = snprintf(buffer, bufferSize, "LinkedList: ");
+  int written = snprintf(buffer, bufferSize, "DoubleLinkedList: ");
   if (written < 0) {
     free(buffer);
     return NULL;
   }
   used += written;
-  LinkedNode *current = list->head;
+  DoubleLinkedNode *current = list->head;
   while (current != NULL) {
     int nodeLen = snprintf(NULL, 0, "[%d]", current->data);
     if (nodeLen < 0) {
@@ -317,7 +319,7 @@ char *listToString(LinkedList *list) {
     }
     used += written;
     if (current->next) {
-      written = snprintf(buffer + used, bufferSize - used, " -> ");
+      written = snprintf(buffer + used, bufferSize - used, " <-> ");
       used += written;
     } else {
       written = snprintf(buffer + used, bufferSize - used, "\n");
@@ -335,7 +337,7 @@ char *listToString(LinkedList *list) {
  *
  * @return 1 if the list is empty, 0 otherwise
  */
-bool isEmpty(const LinkedList *list) {
+bool isEmpty(const DoubleLinkedList *list) {
   return (list == NULL || list->size == 0);
 }
 
@@ -346,7 +348,7 @@ bool isEmpty(const LinkedList *list) {
  *
  * @return the number of nodes currently in the list
  */
-int getSize(const LinkedList *list) {
+int getSize(const DoubleLinkedList *list) {
   if (list == NULL) {
     return 0;
   }

@@ -1,29 +1,29 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
-
 #include <stdbool.h>
 
 /**
  * @brief a node in a singly linked list
  */
-typedef struct LinkedNode {
-  int data;                ///< the integer data stored in the node
-  struct LinkedNode *next; ///< pointer to the next node in the list
-} LinkedNode;
+typedef struct DoubleLinkedNode {
+  int data;                      ///< the integer data stored in the node
+  struct DoubleLinkedNode *next; ///< pointer to the next node in the list
+  struct DoubleLinkedNode *prev; ///< pointer to the previous node in the list
+} DoubleLinkedNode;
 
 /**
  * @brief a singly linked list structure
  */
-typedef struct LinkedList {
-  LinkedNode *head; ///< pointer to the first node in the list
-  LinkedNode *tail; ///< pointer to the last node in the list
-  int size;         ///< number of elements in the list
-} LinkedList;
+typedef struct DoubleLinkedList {
+  DoubleLinkedNode *head; ///< pointer to the first node in the list
+  DoubleLinkedNode *tail; ///< pointer to the last node in the list
+  int size;               ///< number of elements in the list
+} DoubleLinkedList;
 
 /**
  * @brief creates a new node for a linked list
  *
- * allocates dynamic memory for a new node of type LinkedNode, assigns the
+ * allocates dynamic memory for a new node of type DoubleLinkedNode, assigns the
  * supplied data value, and sets the 'next' pointer to NULL
  *
  * @param data the integer value to be stored in the node
@@ -31,7 +31,7 @@ typedef struct LinkedList {
  * @return a pointer to the newly created node, or NULL if memory alocation
  * fails
  */
-LinkedNode *createNode(int data);
+DoubleLinkedNode *createNode(int data);
 
 /**
  * @brief searches for the first node in the list with the given data
@@ -45,17 +45,18 @@ LinkedNode *createNode(int data);
  *
  * @return a pointer to the matching node if found
  */
-LinkedNode *find(const LinkedList *list, int data, int *position);
+DoubleLinkedNode *find(const DoubleLinkedList *list, int data, int *position);
 
 /**
  * @brief creates a new empty linked list
  *
- * allocates memory for a new LinkedList structure and initializes its members
+ * allocates memory for a new DoubleLinkedList structure and initializes its
+ * members
  *
  * @return a pointer to the newly created list, or NULL if memory allocation
  * fails
  */
-LinkedList *createList();
+DoubleLinkedList *createList();
 
 /**
  * @brief destroys the list and frees all associated memory
@@ -64,7 +65,7 @@ LinkedList *createList();
  *
  * @param list a pointer to the linked list to destroy
  */
-void destroyList(LinkedList *list);
+void destroyList(DoubleLinkedList *list);
 
 /**
  * @brief clears all elements from the list without deallocating the list
@@ -74,7 +75,7 @@ void destroyList(LinkedList *list);
  *
  * @param list a pointer to the linked list to clear
  */
-void clear(LinkedList *list);
+void clear(DoubleLinkedList *list);
 
 /**
  * @brief adds a new node containing the given data at the beginning of the
@@ -85,7 +86,7 @@ void clear(LinkedList *list);
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void prepend(LinkedList *list, int data);
+void prepend(DoubleLinkedList *list, int data);
 
 /**
  * @brief adds a new node containing the given data at the end of the list
@@ -95,7 +96,7 @@ void prepend(LinkedList *list, int data);
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void append(LinkedList *list, int data);
+void append(DoubleLinkedList *list, int data);
 
 /**
  * @brief removes the first node from the list and frees its memory
@@ -105,7 +106,7 @@ void append(LinkedList *list, int data);
  *
  * @param list a pointer to the linked list
  */
-void removeFirst(LinkedList *list);
+void removeFirst(DoubleLinkedList *list);
 
 /**
  * @brief removes the last node from the list and frees its memory
@@ -114,7 +115,7 @@ void removeFirst(LinkedList *list);
  *
  * @param list a pointer to the linked list
  */
-void removeLast(LinkedList *list);
+void removeLast(DoubleLinkedList *list);
 
 /**
  * @brief removes the first occurrence of the specified data from the list
@@ -123,26 +124,27 @@ void removeLast(LinkedList *list);
  *
  * @param list a pointer to the linked list
  * @param data the integer value to remove
- * 
+ *
  * @return true if the element was removed, false otherwise
  */
-bool removeData(LinkedList *list, int data);
+bool removeData(DoubleLinkedList *list, int data);
 
 /**
  * @brief prints the contents of the linked list
  *
- * outputs each element in the list in order, formatted as: LinkedList: [data]
+ * outputs each element in the list in order, formatted as: DoubleLinkedList:
+ * [data]
  * -> ...
  *
  * @param list a pointer to the linked list
  */
-void printList(LinkedList *list);
+void printList(DoubleLinkedList *list);
 
 /**
  * @brief converts the linked list to a string representation
  *
  * allocates and returns a string describing the contents of the linked list
- * the format is: "LinkedList: [data1] -> [data2] -> ...\n"
+ * the format is: "DoubleLinkedList: [data1] -> [data2] -> ...\n"
  * the caller is responsible for freeing the returned string
  *
  * @param list a pointer to the linked list
@@ -150,7 +152,7 @@ void printList(LinkedList *list);
  * @return a pointer to thenewly allocated string representing the list, or NULL
  * if memory allocation fails
  */
-char *listToString(LinkedList *list);
+char *listToString(DoubleLinkedList *list);
 
 /**
  * @brief checks whether the list is empty
@@ -159,7 +161,7 @@ char *listToString(LinkedList *list);
  *
  * @return 1 if the list is empty, 0 otherwise
  */
-bool isEmpty(const LinkedList *list);
+bool isEmpty(const DoubleLinkedList *list);
 
 /**
  * @brief returns the number of elements in the list
@@ -168,6 +170,6 @@ bool isEmpty(const LinkedList *list);
  *
  * @return the number of nodes currently in the list
  */
-int getSize(const LinkedList *list);
+int getSize(const DoubleLinkedList *list);
 
 #endif
