@@ -8,13 +8,18 @@
  * and tail set to NULL
  */
 void test_createEmptyList() {
+  printf("\n ->> test_createEmptyList started\n");
   LinkedList *list = createList();
   assert(list != NULL);
+  printf(" ->> Created an empty list\n");
   assert(list->head == NULL);
+  printf(" ->> Head is NULL\n");
   assert(list->tail == NULL);
+  printf(" ->> Tail is NULL\n");
   assert(list->size == 0);
-  printf("Test de list vacía completo.\n");
+  printf(" ->> Size is 0\n");
   destroyList(list);
+  printf(" ->> test_createEmptyList completed successfully\n");
 }
 
 /**
@@ -24,11 +29,14 @@ void test_createEmptyList() {
  * tail, and size accordingly
  */
 void test_createListWithOneElement() {
+  printf("\n ->> test_createListWithOneElement started\n");
   LinkedList *list = createList();
   prepend(list, 10);
+  printf(" ->> Prepending 10 to the list\n");
   assert(list->head->data == 10);
-  printf("Test de list con un elemento completo.\n");
+  printf(" ->> Head data is 10\n");
   destroyList(list);
+  printf(" ->> test_createListWithOneElement completed successfully\n");
 }
 
 /**
@@ -38,14 +46,20 @@ void test_createListWithOneElement() {
  * size are updated correctly
  */
 void test_appendElement() {
+  printf("\n ->> test_appendElement started\n");
   LinkedList *list = createList();
   prepend(list, 3);
+  printf(" ->> Prepending 3 to the list\n");
   prepend(list, 2);
+  printf(" ->> Prepending 2 to the list\n");
   prepend(list, 1);
+  printf(" ->> Prepending 1 to the list\n");
   append(list, 5);
+  printf(" ->> Appending 5 to the list\n");
   assert(list->tail->data == 5);
-  printf("Test de añadir elemento al final completo.\n");
+  printf(" ->> Tail data is 5\n");
   destroyList(list);
+  printf(" ->> test_appendElement completed successfully\n");
 }
 
 /**
@@ -54,32 +68,47 @@ void test_appendElement() {
  * checks that the head is updated and memory is freed appropriately
  */
 void test_removeFirstElement() {
+  printf("\n ->> test_removeFirstElement started\n");
   LinkedList *list = createList();
   prepend(list, 1);
+  printf(" ->> Prepending 1 to the list\n");
   append(list, 2);
+  printf(" ->> Appending 2 to the list\n");
   append(list, 3);
+  printf(" ->> Appending 3 to the list\n");
   append(list, 4);
+  printf(" ->> Appending 4 to the list\n");
   assert(list->head->data == 1);
+  printf(" ->> Head data is 1\n");
   removeFirst(list);
-  printf("Test de eliminar el primer elemento completo.\n");
+  printf(" ->> Removing the first element (1)\n");
   destroyList(list);
+  printf(" ->> test_removeFirstElement completed successfully\n");
 }
 
 /**
- * @brief tests
+ * @brief tests removing the last element of the list
  */
 void test_removeLast() {
+  printf("\n ->> test_removeLast started\n");
   LinkedList *list = createList();
   append(list, 1);
+  printf(" ->> Appending 1 to the list\n");
   append(list, 2);
+  printf(" ->> Appending 2 to the list\n");
   removeLast(list);
+  printf(" ->> Removing the last element (2)\n");
   assert(list->tail->data == 1);
+  printf(" ->> Tail data is 1\n");
   assert(list->size == 1);
+  printf(" ->> Size is 1\n");
   removeLast(list);
+  printf(" ->> Removing the last element (1)\n");
   assert(isEmpty(list));
+  printf(" ->> The list is empty\n");
   assert(list->head == NULL && list->tail == NULL);
-  printf("delete last complete element test\n");
   destroyList(list);
+  printf(" ->> test_removeLast completed successfully\n");
 }
 
 /**
@@ -89,18 +118,26 @@ void test_removeLast() {
  * links and size remain consistent
  */
 void test_removeData() {
+  printf("\n ->> test_removeData started\n");
   LinkedList *list = createList();
   append(list, 1);
+  printf(" ->> Appending 1 to the list\n");
   append(list, 2);
+  printf(" ->> Appending 2 to the list\n");
   append(list, 3);
+  printf(" ->> Appending 3 to the list\n");
   append(list, 4);
+  printf(" ->> Appending 4 to the list\n");
   append(list, 3);
+  printf(" ->> Appending another 3 to the list\n");
   removeData(list, 3);
+  printf(" ->> Removing the first occurrence of 3\n");
   char *output = listToString(list);
+  printf(" ->> List after removal: %s", output);
   assert(strcmp(output, "LinkedList: [1] -> [2] -> [4] -> [3]\n") == 0);
-  printf("Test de remover dato completo.\n");
   free(output);
   destroyList(list);
+  printf(" ->> test_removeData completed successfully\n");
 }
 
 /**
@@ -110,14 +147,20 @@ void test_removeData() {
  * in the list
  */
 void test_findElement() {
+  printf("\n ->> test_findElement started\n");
   LinkedList *list = createList();
   append(list, 1);
+  printf(" ->> Appending 1 to the list\n");
   append(list, 2);
+  printf(" ->> Appending 2 to the list\n");
   append(list, 3);
+  printf(" ->> Appending 3 to the list\n");
   LinkedNode *valor = find(list, 2);
+  printf(" ->> Finding element with value 2\n");
   assert(valor->data == 2);
-  printf("Test de buscar elemento completo.\n");
+  printf(" ->> Found element: %d\n", valor->data);
   destroyList(list);
+  printf(" ->> test_findElement completed successfully\n");
 }
 
 /**
@@ -126,14 +169,20 @@ void test_findElement() {
  * ensures that the function returns NULL when the element is not found
  */
 void test_findUnexistingElement() {
+  printf("\n ->> test_findUnexistingElement started\n");
   LinkedList *list = createList();
   append(list, 1);
+  printf(" ->> Appending 1 to the list\n");
   append(list, 2);
+  printf(" ->> Appending 2 to the list\n");
   append(list, 3);
+  printf(" ->> Appending 3 to the list\n");
   LinkedNode *valor = find(list, 5);
+  printf(" ->> Finding element with value 5\n");
   assert(valor == NULL);
-  printf("Test de encontrar elemento inexistente completo.\n");
+  printf(" ->> Element not found\n");
   destroyList(list);
+  printf(" ->> test_findUnexistingElement completed successfully\n");
 }
 
 /**
@@ -143,12 +192,18 @@ void test_findUnexistingElement() {
  * operations
  */
 void test_size() {
+  printf("\n ->> test_size started\n");
   LinkedList *list = createList();
   assert(getSize(list) == 0);
+  printf(" ->> Size is 0\n");
   append(list, 1);
+  printf(" ->> Appending 1 to the list\n");
   assert(getSize(list) == 1);
+  printf(" ->> Size is 1\n");
   append(list, 2);
+  printf(" ->> Appending 2 to the list\n");
   assert(getSize(list) == 2);
-  printf("Test de verificar tamaño de lista completo.\n");
+  printf(" ->> Size is 2\n");
   destroyList(list);
+  printf(" ->> test_size completed successfully\n");
 }

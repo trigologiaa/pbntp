@@ -93,108 +93,113 @@ int main() {
     switch (option) {
     case 1:
       if (list != NULL) {
-        printf("There is a list created. Destroy it first\n");
+        printf("\n ->> There is a Linked List created. Destroy it first\n");
       } else {
         list = createList();
-        printf("Linked List created\n");
+        printf("\n ->> Linked List created\n");
       }
       break;
     case 2:
       if (list != NULL) {
         destroyList(list);
         list = NULL;
-        printf("Linked List destroyed\n");
+        printf("\n ->> Linked List destroyed\n");
       } else {
-        printf("There is no Linked List created\n");
+        printf("\n ->> There is no Linked List created\n");
       }
       break;
     case 3:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
-        printf(isEmpty(list) ? "The Linked List is empty\n"
-                             : "The Linked List is not empty\n");
+        printf(isEmpty(list) ? "\n ->> The Linked List is empty\n"
+                             : "\n ->> The Linked List is not empty\n");
       }
       break;
     case 4:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
-        printf("Size of the Linked List: %d\n", getSize(list));
+        printf("\n ->> Size of the Linked List: %d\n", getSize(list));
       }
       break;
     case 5:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
         clear(list);
-        printf("Linked List cleared\n");
+        printf("\n ->> Linked List cleared\n");
       }
       break;
     case 6:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
-        printf("Insert a value to insert at the beginning\n");
+        printf("\n  -> Insert a value to insert at the beginning: ");
         scanf("%d", &value);
         prepend(list, value);
-        printf("Value inserted\n");
+        printf("\n ->> Value inserted\n");
+        printf("\n ->> Currently -> ");
+        printList(list);
       }
       break;
     case 7:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
-        printf("Insert a value to insert at the end\n");
+        printf("\n  -> Insert a value to insert at the end: ");
         scanf("%d", &value);
         append(list, value);
-        printf("Value inserted\n");
+        printf("\n ->> Value inserted\n");
+        printf("\n ->> Currently -> ");
+        printList(list);
       }
       break;
     case 8:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
-        printf("Insert a value to search: ");
+        printf("\n ->> Insert a value to search: ");
         scanf("%d", &value);
         LinkedNode *node = find(list, value);
         if (node != NULL) {
-          printf("Element %d found in the Linked List\n", value);
+          printf("\n ->> Element %d found in the Linked List\n", value);
         } else {
-          printf("Element not found\n");
+          printf("\n ->> Element not found\n");
         }
       }
       break;
     case 9:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
         removeFirst(list);
-        printf("First element removed (if exist)\n");
+        printf("\n ->> First element removed (if exist)\n");
       }
       break;
     case 10:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
         removeLast(list);
-        printf("Last element removed (if exist)\n");
+        printf("\n ->> Last element removed (if exist)\n");
       }
       break;
     case 11:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
-        printf("Insert a value to remove: ");
+        printf("\n ->> Insert a value to remove: ");
         scanf("%d", &value);
         removeData(list, value);
-        printf("The element was removed (if existed)\n");
+        printf("\n ->> The element was removed (if existed)\n");
       }
       break;
     case 12:
       if (list == NULL) {
-        printf("You have to create a Linked List first\n");
+        printf("\n ->> You have to create a Linked List first\n");
       } else {
+        printf("\n ->> ");
         printList(list);
       }
       break;
@@ -208,7 +213,7 @@ int main() {
       }
       break;
     default:
-      printf("Invalid option. Try again.\n");
+      printf("\n ->> Invalid option. Try again.\n");
     }
   } while (option != 0);
   return 0;
