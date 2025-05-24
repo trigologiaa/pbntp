@@ -25,7 +25,7 @@ DoubleLinkedNode *createNode(int data) {
   }
   node->data = data;
   node->next = NULL;
-  node->prev = NULL;
+  node->next = NULL;
   return node;
 }
 
@@ -56,7 +56,6 @@ DoubleLinkedNode *find(const DoubleLinkedList *list, int data, int *position) {
     }
     currentPosition++;
   }
-
   return NULL;
 }
 
@@ -289,7 +288,7 @@ char *listToString(DoubleLinkedList *list) {
     return NULL;
   }
   size_t used = 0;
-  int written = snprintf(buffer, bufferSize, "DoubleLinkedList: ");
+  int written = snprintf(buffer, bufferSize, "LinkedList: ");
   if (written < 0) {
     free(buffer);
     return NULL;
