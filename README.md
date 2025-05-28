@@ -1,18 +1,19 @@
-# Practical Work - Programación de Bajo Nivel - UNTREF (Universidad Nacional de Tres de Febrero)
+# Trabajo Práctico - Programación de Bajo Nivel - UNTREF (Universidad Nacional de Tres de Febrero)
 
-In this assignment, we were tasked with implementing a *Singly Linked List* in the programming language **C**. The goal was to create a data structure with basic functionalities, including inserting, deleting, searching, and printing elements. The project aimed to improve our understanding of pointers, dynamic memory management, and structuring data in a linked list format.
+En este trabajo, se nos asignó la implementación de una *Lista Enlazada Simple* en el lenguaje de programación **C**. El objetivo es crear una estructura de datos con funcionalidades básicas, incluyendo inserción, eliminación, búsqueda e impresión de elementos. El proyecto apunta a mejorar nuestro entendimiento del uso de punteros, la gestión dinámica de memoria y la estructuración de datos en formato de lista enlazada.
 
-## Group: int _(_(_(\*\*x[])(char_, int*(*)(char*)))[])(char\*\*, char*(\*)());
+## Grupo: int _(_(_(\*\*x[])(char_, int*(*)(char*)))[])(char\*\*, char*(\*)());
 
-The name of the group can be read as "x is an array of pointers to functions that take as parameters a pointer to a character and a pointer to a function that takes a pointer to a character and returns a pointer to an integer. These functions return a pointer to an array of pointers to functions that take as parameters a pointer to a pointer to a character and a pointer to a function that returns a pointer to a character, and return a pointer to an integer"... it is just for fun.
+El nombre del grupo puede leerse como "x es un arreglo de punteros a funciones que reciben como parámetros un puntero a un caracter y un puntero a una función que recibe un puntero a un caracter y retorna un puntero a un entero. Estas funciones retornan un puntero a un arreglo de punteros a funciones que reciben como parámetros un puntero a un puntero a un caracter y un puntero a una función que retorna un puntero a un caracter, y devuelven un puntero a un entero"... solo por diversión.
 
-## Members:
+
+## Miembros:
   - [Basso Natale, Delfina Emma](https://github.com/delfina-basso)
   - [Bueno, Mateo Andrés](https://github.com/MateoBueno)
   - [Reinaga, Abril](https://github.com/makochipa)
   - [Ribero, Gastón Augusto](https://github.com/trigologiaa)
 
-## Table of Contents:
+## Tabla de contenidos:
 - [Compilation with Makefile](#compilation-with-makefile)
 - [Commands Made by Makefile](#commands-made-by-makefile)
   - [bash (Linux or macOS)](#bash-linux-or-macos)
@@ -74,32 +75,31 @@ The name of the group can be read as "x is an array of pointers to functions tha
   Remove-Item -Recurse -Force .\build\*.o, .\bin\app.exe
 ```
 
-## Implementation Overview
+## Resumen de Implementación
+Este proyecto consiste en implementar una *Lista Enlazada Simple* en **C**. La implementación incluye la creación de nodos, inserción y eliminación de elementos tanto al principio como al final de la lista, búsqueda de un elemento específico y la impresión del contenido de la lista.
 
-This project consists of implementing a *Singly Linked List* in **C**. The implementation includes the creation of nodes, insertion and removal of elements at the beginning and end of the list, searching for a specific element, and printing the list contents.
+### Funcionalidades Claves
 
-### Key Features Implemented
-
-1. **Node Structure**:
-    - A node (*LinkedNode*) contains an integer (data) and a pointer to the next node.
-2. **Linked List Structure**:
-    - A linked list (*LinkedList*) contains a pointer to the head and tail of the list and an integer tracking the size.
-3. **Functions Implemented**:
-    - *createNode*(*int* *data*): Creates a new node with a given integer value.
-    - *prepend*(*LinkedList* **list*, *int* *data*): Adds a node at the beginning of the list.
-    - *append*(*LinkedList* **list*, *int* *data*): Adds a node at the end of the list.
-    - *removeFirst*(*LinkedList* **list*): Removes the first node of the list.
-    - *removeLast*(*LinkedList* **list*): Removes the last node of the list.
-    - *removeData*(*LinkedList* **list*, *int* *data*): Removes the first occurrence of a specific value.
-    - *find*(*LinkedList* **list*, *int* *data*, *int* **position*): Finds the first occurrence of a value.
-    - *printList*(*LinkedList* **list*): Prints the contents of the list.
-4. **Memory Management**:
-    - Functions such as *destroyList*(*LinkedList* **list*) and *clear*(*LinkedList* **list*) ensure proper memory management, freeing all allocated memory when needed.
-5. **Interactive Menu**:
-    - A simple menu-based interface allows users to interact with the linked list, testing various operations like inserting, removing, and searching for elements.
+1. **Estructura del nodo**:
+    - Un nodo (*LinkedNode*) contiene un entero (data) y un puntero al siguiente nodo.
+2. **Estructura de la lista**:
+    - Una lista enlazada (*LinkedList*) contiene un puntero a la cabeza y cola de la lista y un entero que representa su tamaño actual.
+3. **Funciones implementadas**:
+    - *createNode*(*int* *data*): Crea un nuevo nodo con un valor entero pasado por parámetro.
+    - *prepend*(*LinkedList* **list*, *int* *data*): Inserta un nodo al principio de la lista.
+    - *append*(*LinkedList* **list*, *int* *data*): Inserta un nodo al final de la lista.
+    - *removeFirst*(*LinkedList* **list*): Elimina el primer nodo de la lista.
+    - *removeLast*(*LinkedList* **list*): Elimina el último nodo de la lista.
+    - *removeData*(*LinkedList* **list*, *int* *data*): Elimina la primera ocurrencia de un valor pasado por parámetro.
+    - *find*(*LinkedList* **list*, *int* *data*, *int* **position*): Encuentra la primera ocurrencia del valor dado.
+    - *printList*(*LinkedList* **list*): Imprime el contenido de la lista.
+4. **Gestión de memoria**:
+    - Funciones como *destroyList*(*LinkedList* **list*) y *clear*(*LinkedList* **list*) aseguran una correcta gestión de memoria, liberando toda la memoria asignada cuando sea necesario.
+5. **Menú interactivo**:
+    - Una interfaz simple de tipo menú le permite al usuario interactuar con la lista y testear diversas operaciones como insertar, eliminar y buscar elementos.
 
 ### Header Files
 
-1. The project contains two primary header files:
-    - linked_list.h: Defines the linked list and node structures, as well as all the function prototype used to manage the linked list.
-    - linked_list_test.h: Declares unit test functions used to validate the behavior of the linked list functions. These tests cover scenarios such as list creation, element insertion, and data removal.
+1. El poyecto contiene dos header files principales:
+    - linked_list.h: Define las estructuras lista enlazada simple y nodo, así como los prototipos de funciones para gestionar la lista.
+    - linked_list_test.h: Declara tests unitarios utilizados para corroborar el correcto funcionamiento de las funcionalidades de la lista enlazada. Estos tests cubren diversos escenarios como la creación de listas, la inserción de elementos y la eliminación de datos.
