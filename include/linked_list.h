@@ -14,11 +14,11 @@ typedef struct DoubleLinkedNode {
 /**
  * @brief a singly linked list structure
  */
-typedef struct DoubleLinkedList {
+typedef struct CircularList {
   DoubleLinkedNode *head; ///< pointer to the first node in the list
   DoubleLinkedNode *tail; ///< pointer to the last node in the list
   int size;               ///< number of elements in the list
-} DoubleLinkedList;
+} CircularList;
 
 /**
  * @brief creates a new node for a linked list
@@ -45,18 +45,18 @@ DoubleLinkedNode *createNode(int data);
  *
  * @return a pointer to the matching node if found
  */
-DoubleLinkedNode *find(const DoubleLinkedList *list, int data, int *position);
+DoubleLinkedNode *find(const CircularList *list, int data, int *position);
 
 /**
  * @brief creates a new empty linked list
  *
- * allocates memory for a new DoubleLinkedList structure and initializes its
+ * allocates memory for a new CircularList structure and initializes its
  * members
  *
  * @return a pointer to the newly created list, or NULL if memory allocation
  * fails
  */
-DoubleLinkedList *createList();
+CircularList *createList();
 
 /**
  * @brief destroys the list and frees all associated memory
@@ -65,7 +65,7 @@ DoubleLinkedList *createList();
  *
  * @param list a pointer to the linked list to destroy
  */
-void destroyList(DoubleLinkedList *list);
+void destroyList(CircularList *list);
 
 /**
  * @brief clears all elements from the list without deallocating the list
@@ -75,7 +75,7 @@ void destroyList(DoubleLinkedList *list);
  *
  * @param list a pointer to the linked list to clear
  */
-void clear(DoubleLinkedList *list);
+void clear(CircularList *list);
 
 /**
  * @brief adds a new node containing the given data at the beginning of the
@@ -86,7 +86,7 @@ void clear(DoubleLinkedList *list);
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void prepend(DoubleLinkedList *list, int data);
+void prepend(CircularList *list, int data);
 
 /**
  * @brief adds a new node containing the given data at the end of the list
@@ -96,7 +96,7 @@ void prepend(DoubleLinkedList *list, int data);
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void append(DoubleLinkedList *list, int data);
+void append(CircularList *list, int data);
 
 /**
  * @brief removes the first node from the list and frees its memory
@@ -106,7 +106,7 @@ void append(DoubleLinkedList *list, int data);
  *
  * @param list a pointer to the linked list
  */
-void removeFirst(DoubleLinkedList *list);
+void removeFirst(CircularList *list);
 
 /**
  * @brief removes the last node from the list and frees its memory
@@ -115,7 +115,7 @@ void removeFirst(DoubleLinkedList *list);
  *
  * @param list a pointer to the linked list
  */
-void removeLast(DoubleLinkedList *list);
+void removeLast(CircularList *list);
 
 /**
  * @brief removes the first occurrence of the specified data from the list
@@ -127,24 +127,24 @@ void removeLast(DoubleLinkedList *list);
  *
  * @return true if the element was removed, false otherwise
  */
-bool removeData(DoubleLinkedList *list, int data);
+bool removeData(CircularList *list, int data);
 
 /**
  * @brief prints the contents of the linked list
  *
- * outputs each element in the list in order, formatted as: DoubleLinkedList:
+ * outputs each element in the list in order, formatted as: CircularList:
  * [data]
  * -> ...
  *
  * @param list a pointer to the linked list
  */
-void printList(DoubleLinkedList *list);
+void printList(CircularList *list);
 
 /**
  * @brief converts the linked list to a string representation
  *
  * allocates and returns a string describing the contents of the linked list
- * the format is: "DoubleLinkedList: [data1] -> [data2] -> ...\n"
+ * the format is: "CircularList: [data1] -> [data2] -> ...\n"
  * the caller is responsible for freeing the returned string
  *
  * @param list a pointer to the linked list
@@ -152,7 +152,7 @@ void printList(DoubleLinkedList *list);
  * @return a pointer to thenewly allocated string representing the list, or NULL
  * if memory allocation fails
  */
-char *listToString(DoubleLinkedList *list);
+char *listToString(CircularList *list);
 
 /**
  * @brief checks whether the list is empty
@@ -161,7 +161,7 @@ char *listToString(DoubleLinkedList *list);
  *
  * @return 1 if the list is empty, 0 otherwise
  */
-bool isEmpty(const DoubleLinkedList *list);
+bool isEmpty(const CircularList *list);
 
 /**
  * @brief returns the number of elements in the list
@@ -170,6 +170,6 @@ bool isEmpty(const DoubleLinkedList *list);
  *
  * @return the number of nodes currently in the list
  */
-int getSize(const DoubleLinkedList *list);
+int getSize(const CircularList *list);
 
 #endif

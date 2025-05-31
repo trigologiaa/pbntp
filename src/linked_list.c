@@ -19,13 +19,12 @@
  * fails
  */
 DoubleLinkedNode *createNode(int data) {
-  DoubleLinkedNode *node = malloc(sizeof(DoubleLinkedNode));
-  if (node == NULL) {
+  DoubleLinkedNode *node = (DoubleLinkedNode *)malloc(sizeof(DoubleLinkedNode));
+  if (!node) {
     return NULL;
   }
   node->data = data;
-  node->next = NULL;
-  node->next = NULL;
+  node->next = node->prev = NULL;
   return node;
 }
 
@@ -41,40 +40,39 @@ DoubleLinkedNode *createNode(int data) {
  *
  * @return a pointer to the matching node if found
  */
-DoubleLinkedNode *find(const DoubleLinkedList *list, int data, int *position) {
-  if (list == NULL) {
+DoubleLinkedNode *find(const CircularList *list, int data, int *position) {
+  if (list == NULL || list->head == NULL) {
     return NULL;
   }
-  int currentPosition = 0;
-  for (DoubleLinkedNode *current = list->head; current != NULL;
-       current = current->next) {
+  DoubleLinkedNode *current = list->head;
+  int index = 0;
+  do {
     if (current->data == data) {
-      if (position != NULL) {
-        *position = currentPosition;
-      }
+      if (position)
+        *position = index;
       return current;
     }
-    currentPosition++;
-  }
+    current = current->next;
+    index++;
+  } while (current != list->head);
   return NULL;
 }
 
 /**
  * @brief creates a new empty linked list
  *
- * allocates memory for a new DoubleLinkedList structure and initializes its
+ * allocates memory for a new CircularList structure and initializes its
  * members
  *
  * @return a pointer to the newly created list, or NULL if memory allocation
  * fails
  */
-DoubleLinkedList *createList() {
-  DoubleLinkedList *list = malloc(sizeof(DoubleLinkedList));
-  if (list == NULL) {
+CircularList *createList() {
+  CircularList *list = (CircularList *)malloc(sizeof(CircularList));
+  if (!list) {
     return NULL;
   }
-  list->head = NULL;
-  list->tail = NULL;
+  list->head = list->tail = NULL;
   list->size = 0;
   return list;
 }
@@ -86,7 +84,7 @@ DoubleLinkedList *createList() {
  *
  * @param list a pointer to the linked list to destroy
  */
-void destroyList(DoubleLinkedList *list) {
+void destroyList(CircularList *list) {
   if (list == NULL) {
     return;
   }
@@ -102,7 +100,7 @@ void destroyList(DoubleLinkedList *list) {
  *
  * @param list a pointer to the linked list to clear
  */
-void clear(DoubleLinkedList *list) {
+void clear(CircularList *list) {
   if (list == NULL) {
     return;
   }
@@ -120,21 +118,24 @@ void clear(DoubleLinkedList *list) {
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void prepend(DoubleLinkedList *list, int data) {
+void prepend(CircularList *list, int data) {
   if (list == NULL) {
     return;
   }
   DoubleLinkedNode *node = createNode(data);
-  if (node == NULL) {
+  if (!node) {
     return;
   }
   if (isEmpty(list)) {
-    list->tail = node;
+    node->next = node->prev = node;
+    list->head = list->tail = node;
   } else {
+    node->next = list->head;
+    node->prev = list->tail;
     list->head->prev = node;
+    list->tail->next = node;
+    list->head = node;
   }
-  node->next = list->head;
-  list->head = node;
   list->size++;
 }
 
@@ -146,21 +147,24 @@ void prepend(DoubleLinkedList *list, int data) {
  * @param list a pointer to the linked list
  * @param data the integer data to insert
  */
-void append(DoubleLinkedList *list, int data) {
+void append(CircularList *list, int data) {
   if (list == NULL) {
     return;
   }
   DoubleLinkedNode *node = createNode(data);
-  if (node == NULL) {
+  if (!node) {
     return;
   }
   if (isEmpty(list)) {
-    list->head = node;
+    node->next = node->prev = node;
+    list->head = list->tail = node;
   } else {
-    list->tail->next = node;
     node->prev = list->tail;
+    node->next = list->head;
+    list->tail->next = node;
+    list->head->prev = node;
+    list->tail = node;
   }
-  list->tail = node;
   list->size++;
 }
 
@@ -172,16 +176,17 @@ void append(DoubleLinkedList *list, int data) {
  *
  * @param list a pointer to the linked list
  */
-void removeFirst(DoubleLinkedList *list) {
+void removeFirst(CircularList *list) {
   if (list == NULL || isEmpty(list)) {
     return;
   }
   DoubleLinkedNode *temp = list->head;
-  list->head = list->head->next;
-  if (list->head != NULL) {
-    list->head->prev = NULL;
+  if (getSize(list) == 1) {
+    list->head = list->tail = NULL;
   } else {
-    list->tail = NULL;
+    list->head = list->head->next;
+    list->head->prev = list->tail;
+    list->tail->next = list->head;
   }
   free(temp);
   list->size--;
@@ -194,20 +199,19 @@ void removeFirst(DoubleLinkedList *list) {
  *
  * @param list a pointer to the linked list
  */
-void removeLast(DoubleLinkedList *list) {
+void removeLast(CircularList *list) {
   if (list == NULL || isEmpty(list)) {
     return;
   }
-  if (list->head == list->tail) {
-    free(list->head);
-    list->head = NULL;
-    list->tail = NULL;
+  DoubleLinkedNode *temp = list->tail;
+  if (getSize(list) == 1) {
+    list->head = list->tail = NULL;
   } else {
-    DoubleLinkedNode *current = list->tail;
     list->tail = list->tail->prev;
-    list->tail->next = NULL;
-    free(current);
+    list->tail->next = list->head;
+    list->head->prev = list->tail;
   }
+  free(temp);
   list->size--;
 }
 
@@ -221,41 +225,46 @@ void removeLast(DoubleLinkedList *list) {
  *
  * @return true if the element was removed, false otherwise
  */
-bool removeData(DoubleLinkedList *list, int data) {
+bool removeData(CircularList *list, int data) {
   if (list == NULL || isEmpty(list)) {
     return false;
   }
   DoubleLinkedNode *current = list->head;
-  while (current != NULL && current->data != data) {
+
+  do {
+    if (current->data == data) {
+      if (list->size == 1) {
+        // Only one node
+        list->head = list->tail = NULL;
+      } else {
+        if (current == list->head)
+          list->head = current->next;
+        if (current == list->tail)
+          list->tail = current->prev;
+
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+      }
+
+      free(current);
+      list->size--;
+      return true;
+    }
     current = current->next;
-  }
-  if (current == NULL) {
-    return false;
-  }
-  if (current->prev != NULL) {
-    current->prev->next = current->next;
-  } else {
-    list->head = current->next;
-  }
-  if (current->next != NULL) {
-    current->next->prev = current->prev;
-  } else {
-    list->tail = current->prev;
-  }
-  free(current);
-  list->size--;
-  return true;
+  } while (current != list->head);
+
+  return false;
 }
 
 /**
  * @brief prints the contents of the linked list
  *
  * outputs each element in the list in order using the function listToString,
- * formatted as: DoubleLinkedList: [data] -> ...
+ * formatted as: CircularList: [data] -> ...
  *
  * @param list a pointer to the linked list
  */
-void printList(DoubleLinkedList *list) {
+void printList(CircularList *list) {
   if (list == NULL) {
     return;
   }
@@ -270,7 +279,7 @@ void printList(DoubleLinkedList *list) {
  * @brief converts the linked list to a string representation
  *
  * allocates and returns a string describing the contents of the linked list
- * the format is: "DoubleLinkedList: [data1] -> [data2] -> ...\n"
+ * the format is: "CircularList: [data1] <-> [data2] <-> ...\n"
  * the caller is responsible for freeing the returned string
  *
  * @param list a pointer to the linked list
@@ -278,9 +287,13 @@ void printList(DoubleLinkedList *list) {
  * @return a pointer to thenewly allocated string representing the list, or NULL
  * if memory allocation fails
  */
-char *listToString(DoubleLinkedList *list) {
-  if (list == NULL) {
-    return NULL;
+char *listToString(CircularList *list) {
+  if (list == NULL || isEmpty(list)) {
+    char *emptyStr = malloc(32);
+    if (emptyStr) {
+      snprintf(emptyStr, 32, "List: (empty)\n");
+    }
+    return emptyStr;
   }
   size_t bufferSize = INITIAL_BUFFER_SIZE;
   char *buffer = malloc(bufferSize);
@@ -288,22 +301,20 @@ char *listToString(DoubleLinkedList *list) {
     return NULL;
   }
   size_t used = 0;
-  int written = snprintf(buffer, bufferSize, "LinkedList: ");
+  int written = snprintf(buffer, bufferSize, "List: -> ");
   if (written < 0) {
     free(buffer);
     return NULL;
   }
   used += written;
   DoubleLinkedNode *current = list->head;
-  while (current != NULL) {
+  do {
     int nodeLen = snprintf(NULL, 0, "[%d]", current->data);
-    if (nodeLen < 0) {
-      free(buffer);
-      return NULL;
-    }
-    size_t needed = used + nodeLen + (current->next ? 4 : 1) + 1;
+    size_t needed = used + nodeLen + 6 + 1; // 6 = len(" <-> ") or " <-\n"
     if (needed > bufferSize) {
-      bufferSize = needed;
+      bufferSize *= 2;
+      if (bufferSize < needed)
+        bufferSize = needed;
       char *newBuffer = realloc(buffer, bufferSize);
       if (!newBuffer) {
         free(buffer);
@@ -317,15 +328,15 @@ char *listToString(DoubleLinkedList *list) {
       return NULL;
     }
     used += written;
-    if (current->next) {
+    current = current->next;
+    if (current != list->head) {
       written = snprintf(buffer + used, bufferSize - used, " <-> ");
       used += written;
     } else {
-      written = snprintf(buffer + used, bufferSize - used, "\n");
+      written = snprintf(buffer + used, bufferSize - used, " <-\n");
       used += written;
     }
-    current = current->next;
-  }
+  } while (current != list->head);
   return buffer;
 }
 
@@ -336,7 +347,7 @@ char *listToString(DoubleLinkedList *list) {
  *
  * @return 1 if the list is empty, 0 otherwise
  */
-bool isEmpty(const DoubleLinkedList *list) {
+bool isEmpty(const CircularList *list) {
   return (list == NULL || list->size == 0);
 }
 
@@ -347,7 +358,7 @@ bool isEmpty(const DoubleLinkedList *list) {
  *
  * @return the number of nodes currently in the list
  */
-int getSize(const DoubleLinkedList *list) {
+int getSize(const CircularList *list) {
   if (list == NULL) {
     return 0;
   }
