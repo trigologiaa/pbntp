@@ -1,6 +1,6 @@
 # Practical Work - Programación de Bajo Nivel - UNTREF (Universidad Nacional de Tres de Febrero)
 
-In this assignment, we were tasked with implementing a *Double Linked List* in the programming language **C**. The goal was to create a data structure with basic functionalities, including inserting, deleting, searching, and printing elements. The project aimed to improve our understanding of pointers, dynamic memory management, and structuring data in a linked list format.
+In this assignment, we were tasked with implementing a *Linked List* in the programming language **C**. The goal was to create a data structure with basic functionalities, including inserting, deleting, searching, and printing elements. The project aimed to improve our understanding of pointers, dynamic memory management, and structuring data in a linked list format.
 
 ## Group: int _(_(_(\*\*x[])(char_, int*(*)(char*)))[])(char\*\*, char*(\*)());
 
@@ -76,25 +76,25 @@ The name of the group can be read as "x is an array of pointers to functions tha
 
 ## Implementation Overview
 
-This project consists of implementing a *Double Linked List* in **C**. The implementation includes the creation of nodes, insertion and removal of elements at the beginning and end of the list, searching for a specific element, and printing the list contents.
+This project consists of implementing a *Linked List* in **C**. The implementation includes the creation of nodes, insertion and removal of elements at the beginning and end of the list, searching for a specific element, and printing the list contents.
 
 ### Key Features Implemented
 
 1. **Node Structure**:
     - A node (*DoubleLinkedNode*) contains an integer (data) and a pointer to the next node.
-2. **Double Linked List Structure**:
-    - A linked list (*DoubleLinkedList*) contains a pointer to the head and tail of the list and an integer tracking the size.
+2. **Linked List Structure**:
+    - A linked list (*CircularList*) contains a pointer to the head and tail of the list and an integer tracking the size.
 3. **Functions Implemented**:
     - *createNode*(*int* *data*): Creates a new node with a given integer value.
-    - *prepend*(*DoubleLinkedList* **list*, *int* *data*): Adds a node at the beginning of the list.
-    - *append*(*DoubleLinkedList* **list*, *int* *data*): Adds a node at the end of the list.
-    - *removeFirst*(*DoubleLinkedList* **list*): Removes the first node of the list.
-    - *removeLast*(*DoubleLinkedList* **list*): Removes the last node of the list.
-    - *removeData*(*DoubleLinkedList* **list*, *int* *data*): Removes the first occurrence of a specific value.
-    - *find*(*DoubleLinkedList* **list*, *int* *data*, *int* **position*): Finds the first occurrence of a value.
-    - *printList*(*DoubleLinkedList* **list*): Prints the contents of the list.
+    - *prepend*(*CircularList* **list*, *int* *data*): Adds a node at the beginning of the list.
+    - *append*(*CircularList* **list*, *int* *data*): Adds a node at the end of the list.
+    - *removeFirst*(*CircularList* **list*): Removes the first node of the list.
+    - *removeLast*(*CircularList* **list*): Removes the last node of the list.
+    - *removeData*(*CircularList* **list*, *int* *data*): Removes the first occurrence of a specific value.
+    - *find*(*CircularList* **list*, *int* *data*, *int* **position*): Finds the first occurrence of a value.
+    - *printList*(*CircularList* **list*): Prints the contents of the list.
 4. **Memory Management**:
-    - Functions such as *destroyList*(*DoubleLinkedList* **list*) and *clear*(*DoubleLinkedList* **list*) ensure proper memory management, freeing all allocated memory when needed.
+    - Functions such as *destroyList*(*CircularList* **list*) and *clear*(*CircularList* **list*) ensure proper memory management, freeing all allocated memory when needed.
 5. **Interactive Menu**:
     - A simple menu-based interface allows users to interact with the linked list, testing various operations like inserting, removing, and searching for elements.
 
