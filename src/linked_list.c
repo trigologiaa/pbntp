@@ -88,11 +88,11 @@ CircularList *createList() {
  *
  * @param list A pointer to the linked list to destroy.
  */
-void destroyList(CircularList *list) {
+void destroyList(CircularList *list, void (*destroyData)(void *)) {
   if (!list) {
     return;
   }
-  clear(list);
+  clear(list, destroyData);
   free(list);
 }
 
@@ -104,12 +104,24 @@ void destroyList(CircularList *list) {
  *
  * @param list A pointer to the linked list to clear.
  */
-void clear(CircularList *list) {
+void clear(CircularList *list, void (*destroyData)(void *)) {
   if (!list) {
     return;
   }
   while (!isEmpty(list)) {
-    removeFirst(list);
+    DoubleLinkedNode *current = list->head;
+    if (list->size == 1) {
+      list->head = list->tail = NULL;
+    } else {
+      list->head = current->next;
+      list->tail->next = list->head;
+      list->head->prev = list->tail;
+    }
+    if (destroyData) {
+      destroyData(current->data);
+    }
+    free(current);
+    list->size--;
   }
 }
 
@@ -342,4 +354,15 @@ int getSize(const CircularList *list) {
     return 0;
   }
   return list->size;
+}
+
+void forEach(CircularList *list, void(*action)(void *)) {
+  if (!list || isEmpty(list) || !action) {
+    return;
+  }
+  DoubleLinkedNode *current = list->head;
+  do {
+    action(current->data);
+    current = current->next;
+  } while (current != list->head);
 }

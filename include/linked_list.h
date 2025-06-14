@@ -10,8 +10,8 @@
  */
 typedef struct DoubleLinkedNode {
   void *data;                    ///< Pointer to the data stored in the node.
-  struct DoubleLinkedNode *next; ///< pointer to the next node in the list
-  struct DoubleLinkedNode *prev; ///< pointer to the previous node in the list
+  struct DoubleLinkedNode *next; ///< Pointer to the next node in the list.
+  struct DoubleLinkedNode *prev; ///< Pointer to the previous node in the list.
 } DoubleLinkedNode;
 
 /**
@@ -74,7 +74,7 @@ CircularList *createList();
  *
  * @param list A pointer to the linked list to destroy.
  */
-void destroyList(CircularList *list);
+void destroyList(CircularList *list, void (*destroyData)(void *));
 
 /**
  * @brief Clears all elements from the list without deallocating the list
@@ -84,7 +84,7 @@ void destroyList(CircularList *list);
  *
  * @param list A pointer to the linked list to clear.
  */
-void clear(CircularList *list);
+void clear(CircularList *list, void (*destroyData)(void *));
 
 /**
  * @brief Adds a new node containing the given data at the beginning of the
@@ -183,5 +183,7 @@ bool isEmpty(const CircularList *list);
  * @return The number of nodes currently in the list.
  */
 int getSize(const CircularList *list);
+
+void forEach(CircularList *ist, void (*action)(void *));
 
 #endif

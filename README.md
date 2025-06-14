@@ -1,105 +1,38 @@
-# Practical Work - Programación de Bajo Nivel - UNTREF (Universidad Nacional de Tres de Febrero)
+Desarrollar un sistema de estudiantes en C. Debe permitir:
 
-In this assignment, we were tasked with implementing a *Linked List* in the programming language **C**. The goal was to create a data structure with basic functionalities, including inserting, deleting, searching, and printing elements. The project aimed to improve our understanding of pointers, dynamic memory management, and structuring data in a linked list format.
+-Dar de alta, modificar, eliminar y listar estudiantes
+-Buscar estudiantes por nombre
+-Buscar estudiantes por rango de edad 
 
-## Group: int _(_(_(\*\*x[])(char_, int*(*)(char*)))[])(char\*\*, char*(\*)());
+Además cada estudiante puede anotarse en N materias.
+-Dar de alta, modificar, eliminar y listar materias
+-Anotarse en una materia
+-Rendir una materia
 
-The name of the group can be read as "x is an array of pointers to functions that take as parameters a pointer to a character and a pointer to a function that takes a pointer to a character and returns a pointer to an integer. These functions return a pointer to an array of pointers to functions that take as parameters a pointer to a pointer to a character and a pointer to a function that returns a pointer to a character, and return a pointer to an integer"... it is just for fun.
+El sistema debe poder soportar un gran listado de estudiantes y materias. Utilizar estructuras de datos para almacenar los listados. Decidir si se utiliza ordenamiento de los datos.
 
-## Members:
-  - [Basso Natale, Delfina Emma](https://github.com/delfina-basso)
-  - [Bueno, Mateo Andrés](https://github.com/MateoBueno)
-  - [Reinaga, Abril](https://github.com/makochipa)
-  - [Ribero, Gastón Augusto](https://github.com/trigologiaa)
+El diseño del sistema y los modelos es libre. Utilizar la creatividad para que el manejo del sistema sea lo más práctico posible.
 
-## Table of Contents:
-- [Compilation with Makefile](#compilation-with-makefile)
-- [Commands Made by Makefile](#commands-made-by-makefile)
-  - [bash (Linux or macOS)](#bash-linux-or-macos)
-  - [powershell (Windows)](#powershell-windows)
-- [Implementation Overview](#implementation-overview)
-  - [Key Features Implemented](#key-features-implemented)
-  - [Header Files](#header-files)
+Si los requerimientos planteados son cumplidos, el ejercicio está aprobado (nota 4). Puede pasar que en situaciones en la que la cantidad de datos sea muy grande, el sistema sea inmanejable. En ese caso, detallar las limitaciones de la solución propuesta (si las limitaciones son reconocidas no se considera desaprobado el punto).
 
-## Compilation with Makefile
+Ideas no-obligatorias de implementar pero que suman puntos:
+utilizar paginado
+poder elegir el estudiante/materia de un listado reducido
+generar estudiantes de prueba y materias aleatorias de forma masiva
+estadísticas de los estudiantes y materias, etc.
+árboles de correlatividad de materias
+qué pasa si una materia anterior está desaprobada? Puede anotarse?
+cálculo de promedios.
+archivo de configuración general donde se especifican las variables del sistema.
+mejoras en la interfaz de usuario
+tests unitarios
+Persistencia en CSV
+(cualquier otra feature que quieran agregar)
 
-```bash
-  make clean
-  make
-```
+En el repositorio hacer un README con los integrantes, las consignas implementadas y los puntos extras que hayan desarrollado.
 
-## Commands made by Makefile
+El trabajo se puede hacer de a cinco, cuatro o tres personas.
+Si el equipo tiene 4 personas deben hacer obligatoriamente un punto extra más para la nota 4.
+Si el equipo tiene 5 personas deben hacer obligatoriamente dos puntos extra más para la nota 4.
 
-### bash (Linux or macOS)
-
-```bash
-  # Create directories
-  mkdir -p build
-  mkdir -p bin
-
-  # Compile the source files
-  gcc -Wall -Iinclude -c src/main.c -o build/main.o
-  gcc -Wall -Iinclude -c src/linked_list.c -o build/linked_list.o
-  gcc -Wall -Iinclude -c src/linked_list_test.c -o build/linked_list_test.o
-
-  # Link the object files into the final binary
-  gcc build/main.o build/linked_list.o build/linked_list_test.o -o bin/app
-
-  # Run the program
-  ./bin/app
-
-  # Clean up generated files
-  rm -rf build/*.o bin/app
-```
-
-### powershell (Windows)
-
-```powershell
-  # Create directories
-  mkdir .\build
-  mkdir .\bin
-
-  # Compile the source files
-  gcc -Wall -Iinclude -c .\src\main.c -o .\build\main.o
-  gcc -Wall -Iinclude -c .\src\linked_list.c -o .\build\linked_list.o
-  gcc -Wall -Iinclude -c .\src\linked_list_test.c -o .\build\linked_list_test.o
-
-  # Link the object files into the final binary
-  gcc .\build\main.o .\build\linked_list.o .\build\linked_list_test.o -o .\bin\app.exe
-
-  # Run the program
-  .\bin\app.exe
-
-  # Clean up generated files
-  Remove-Item -Recurse -Force .\build\*.o, .\bin\app.exe
-```
-
-## Implementation Overview
-
-This project consists of implementing a *Linked List* in **C**. The implementation includes the creation of nodes, insertion and removal of elements at the beginning and end of the list, searching for a specific element, and printing the list contents.
-
-### Key Features Implemented
-
-1. **Node Structure**:
-    - A node (*DoubleLinkedNode*) contains an integer (data) and a pointer to the next node.
-2. **Linked List Structure**:
-    - A linked list (*CircularList*) contains a pointer to the head and tail of the list and an integer tracking the size.
-3. **Functions Implemented**:
-    - *createNode*(*int* *data*): Creates a new node with a given integer value.
-    - *prepend*(*CircularList* **list*, *int* *data*): Adds a node at the beginning of the list.
-    - *append*(*CircularList* **list*, *int* *data*): Adds a node at the end of the list.
-    - *removeFirst*(*CircularList* **list*): Removes the first node of the list.
-    - *removeLast*(*CircularList* **list*): Removes the last node of the list.
-    - *removeData*(*CircularList* **list*, *int* *data*): Removes the first occurrence of a specific value.
-    - *find*(*CircularList* **list*, *int* *data*, *int* **position*): Finds the first occurrence of a value.
-    - *printList*(*CircularList* **list*): Prints the contents of the list.
-4. **Memory Management**:
-    - Functions such as *destroyList*(*CircularList* **list*) and *clear*(*CircularList* **list*) ensure proper memory management, freeing all allocated memory when needed.
-5. **Interactive Menu**:
-    - A simple menu-based interface allows users to interact with the linked list, testing various operations like inserting, removing, and searching for elements.
-
-### Header Files
-
-1. The project contains two primary header files:
-    - linked_list.h: Defines the linked list and node structures, as well as all the function prototype used to manage the linked list.
-    - linked_list_test.h: Declares unit test functions used to validate the behavior of the linked list functions. These tests cover scenarios such as list creation, element insertion, and data removal.
+Grabar un video de máximo 10 minutos (puede ser menos) mostrando el funcionamiento del sistema y los puntos implementados. En esta oportunidad no es necesario enfocarse tanto en el código, ya que se puede ver en el repositorio. Concéntrese en presentar el proyecto funcionando.
