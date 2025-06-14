@@ -3,172 +3,184 @@
 #include <stdbool.h>
 
 /**
- * @brief a node in a singly linked list
+ * @brief A node in a singly linked list.
+ *
+ * This struct represents a single node in a doubly linked list, containing a
+ * pointer to the data, the next node, and the previous node.
  */
 typedef struct DoubleLinkedNode {
-  int data;                      ///< the integer data stored in the node
+  void *data;                    ///< Pointer to the data stored in the node.
   struct DoubleLinkedNode *next; ///< pointer to the next node in the list
   struct DoubleLinkedNode *prev; ///< pointer to the previous node in the list
 } DoubleLinkedNode;
 
 /**
- * @brief a singly linked list structure
+ * @brief A circular doubly linked list structure.
+ *
+ * This struct represents a circular doubly linked list, containing pointers to
+ * the head and tail nodes, as well as the size of the list.
  */
 typedef struct CircularList {
-  DoubleLinkedNode *head; ///< pointer to the first node in the list
-  DoubleLinkedNode *tail; ///< pointer to the last node in the list
-  int size;               ///< number of elements in the list
+  DoubleLinkedNode *head; ///< Pointer to the first node in the list.
+  DoubleLinkedNode *tail; ///< Pointer to the last node in the list.
+  int size;               ///< Number of elements in the list.
 } CircularList;
 
 /**
- * @brief creates a new node for a linked list
+ * @brief Creates a new node for a linked list.
  *
- * allocates dynamic memory for a new node of type DoubleLinkedNode, assigns the
- * supplied data value, and sets the 'next' pointer to NULL
+ * Allocates dynamic memory for a new node of type DoubleLinkedNode, assigns the
+ * supplied data value, and sets the 'next' pointer to NULL.
  *
- * @param data the integer value to be stored in the node
+ * @param data The data value to be stored in the node.
  *
- * @return a pointer to the newly created node, or NULL if memory alocation
- * fails
+ * @return A pointer to the newly created node, or NULL if memory allocation
+ * fails.
  */
-DoubleLinkedNode *createNode(int data);
+DoubleLinkedNode *createNode(void *data);
 
 /**
- * @brief searches for the first node in the list with the given data
+ * @brief Searches for the first node in the list with the given data.
  *
- * iterates through the linked list starting from the head and returns a pointer
- * to the first node that contains the specified data
+ * Iterates through the linked list starting from the head and returns a pointer
+ * to the first node that contains the specified data.
  *
- * @param list the pointer to the linked list to search
- * @param data the integer value to search for
- * @param position the pointer to the position in the linked list
+ * @param list The pointer to the linked list to search.
+ * @param data The data value to search for.
+ * @param position The pointer to the position in the linked list.
+ * @param cmp Comparison function that takes two pointers to data and returns
+ * true if they are equal.
  *
- * @return a pointer to the matching node if found
+ * @return A pointer to the matching node if found, NULL otherwise.
  */
-DoubleLinkedNode *find(const CircularList *list, int data, int *position);
+DoubleLinkedNode *find(const CircularList *list, void *data, int *position,
+                       bool (*cmp)(void *, void *));
 
 /**
- * @brief creates a new empty linked list
+ * @brief Creates a new empty linked list.
  *
- * allocates memory for a new CircularList structure and initializes its
- * members
+ * Allocates memory for a new CircularList structure and initializes its
+ * members.
  *
- * @return a pointer to the newly created list, or NULL if memory allocation
- * fails
+ * @return A pointer to the newly created list, or NULL if memory allocation
+ * fails.
  */
 CircularList *createList();
 
 /**
- * @brief destroys the list and frees all associated memory
+ * @brief Destroys the list and frees all associated memory.
  *
- * clears the list and frees the memory allocated for the list structure
+ * Clears the list and frees the memory allocated for the list structure.
  *
- * @param list a pointer to the linked list to destroy
+ * @param list A pointer to the linked list to destroy.
  */
 void destroyList(CircularList *list);
 
 /**
- * @brief clears all elements from the list without deallocating the list
- * structure itself
+ * @brief Clears all elements from the list without deallocating the list
+ * structure itself.
  *
- * removes all nodes from the list and frees their memory
+ * Removes all nodes from the list and frees their memory.
  *
- * @param list a pointer to the linked list to clear
+ * @param list A pointer to the linked list to clear.
  */
 void clear(CircularList *list);
 
 /**
- * @brief adds a new node containing the given data at the beginning of the
- * list
+ * @brief Adds a new node containing the given data at the beginning of the
+ * list.
  *
- * allocates memory for a new node and inserts it at the head of the list
+ * Allocates memory for a new node and inserts it at the head of the list.
  *
- * @param list a pointer to the linked list
- * @param data the integer data to insert
+ * @param list A pointer to the linked list.
+ * @param data The data to insert in the new node.
  */
-void prepend(CircularList *list, int data);
+void prepend(CircularList *list, void *data);
 
 /**
- * @brief adds a new node containing the given data at the end of the list
+ * @brief Adds a new node containing the given data at the end of the list.
  *
- * allocates memory for a new node and appends it to the tail of the list
+ * Allocates memory for a new node and appends it to the tail of the list.
  *
- * @param list a pointer to the linked list
- * @param data the integer data to insert
+ * @param list A pointer to the linked list.
+ * @param data The data to insert in the new node.
  */
-void append(CircularList *list, int data);
+void append(CircularList *list, void *data);
 
 /**
- * @brief removes the first node from the list and frees its memory
+ * @brief Removes the first node from the list and frees its memory.
  *
- * updates the head pointer and list size, if the list becomes empty, also
- * updates the tail
+ * Updates the head pointer and list size, if the list becomes empty, also
+ * updates the tail.
  *
- * @param list a pointer to the linked list
+ * @param list A pointer to the linked list.
  */
 void removeFirst(CircularList *list);
 
 /**
- * @brief removes the last node from the list and frees its memory
+ * @brief Removes the last node from the list and frees its memory.
  *
- * if the list is empty, the function does nothing
+ * If the list is empty, the function does nothing.
  *
- * @param list a pointer to the linked list
+ * @param list A pointer to the linked list.
  */
 void removeLast(CircularList *list);
 
 /**
- * @brief removes the first occurrence of the specified data from the list
+ * @brief Removes the first occurrence of the specified data from the list.
  *
- * searches the list for a node with matching data and removes it
+ * Searches the list for a node with matching data and removes it.
  *
- * @param list a pointer to the linked list
- * @param data the integer value to remove
+ * @param list A pointer to the linked list.
+ * @param data The data value to remove.
+ * @param cmp Comparison function that takes two pointers to data and returns
+ * true if they are equal.
  *
- * @return true if the element was removed, false otherwise
+ * @return true if the element was removed, false otherwise.
  */
-bool removeData(CircularList *list, int data);
+bool removeData(CircularList *list, void *data, bool (*cmp)(void *, void *));
 
 /**
- * @brief prints the contents of the linked list
+ * @brief Prints the contents of the linked list.
  *
- * outputs each element in the list in order, formatted as: CircularList:
- * [data]
+ * Outputs each element in the list in order, formatted as: CircularList: [data]
  * -> ...
  *
- * @param list a pointer to the linked list
+ * @param list A pointer to the linked list.
+ * @param toString Function that converts the data to a string representation.
  */
-void printList(CircularList *list);
+void printList(CircularList *list, char *(*toString)(void *));
 
 /**
- * @brief converts the linked list to a string representation
+ * @brief Converts the linked list to a string representation.
  *
- * allocates and returns a string describing the contents of the linked list
- * the format is: "CircularList: [data1] -> [data2] -> ...\n"
- * the caller is responsible for freeing the returned string
+ * Allocates and returns a string describing the contents of the linked list.
+ * The format is: "CircularList: [data1] -> [data2] -> ...\n".
+ * The caller is responsible for freeing the returned string.
  *
- * @param list a pointer to the linked list
+ * @param list A pointer to the linked list.
+ * @param toString Function that converts the data to a string representation.
  *
- * @return a pointer to thenewly allocated string representing the list, or NULL
- * if memory allocation fails
+ * @return A pointer to the newly allocated string representing the list, or
+ * NULL if memory allocation fails.
  */
-char *listToString(CircularList *list);
+char *listToString(CircularList *list, char *(*toString)(void *));
 
 /**
- * @brief checks whether the list is empty
+ * @brief Checks whether the list is empty.
  *
- * @param list a pointer to the linked list
+ * @param list A pointer to the linked list.
  *
- * @return 1 if the list is empty, 0 otherwise
+ * @return true if the list is empty, false otherwise.
  */
 bool isEmpty(const CircularList *list);
 
 /**
- * @brief returns the number of elements in the list
+ * @brief Returns the number of elements in the list.
  *
- * @param list a pointer to the linked list
+ * @param list A pointer to the linked list.
  *
- * @return the number of nodes currently in the list
+ * @return The number of nodes currently in the list.
  */
 int getSize(const CircularList *list);
 
