@@ -1,308 +1,355 @@
+#include "../include/enrollment.h"
 #include "../include/linked_list.h"
-#include "../include/linked_list_test.h"
+#include "../include/persistence.h"
+#include "../include/search.h"
+#include "../include/student.h"
+#include "../include/subject.h"
+#include "../include/system_utils.h"
 #include <stdio.h>
-#include <wchar.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-void runAllOperations(LinkedList *list) {
-  int value;
-  if (list == NULL) {
-    list = createList();
-    printf("\n ->> Linked List created\n");
-  }
-  printf("\n ->> Inserting 5 elements at the beginning...\n");
-  for (value = 5; value > 0; value--) {
-    prepend(list, value);
-    printf("    -> Inserted %d at the beginning\n", value);
-    printf("    -> Current ");
-    printList(list);
-  }
-  printf("\n ->> Inserting 5 elements at the end...\n");
-  for (value = 6; value <= 10; value++) {
-    append(list, value);
-    printf("    -> Inserted %d at the end\n", value);
-    printf("    -> Current ");
-    printList(list);
-  }
-  printf("\n ->> Size of the Linked List: %d\n", getSize(list));
-  value = 5;
-  printf("\n ->> Searching for element %d...\n", value);
-  int position = -1;
-  LinkedNode *node = find(list, value, &position);
-  if (node != NULL) {
-    printf("\n ->> Element %d found at index %d in the Linked List\n", value,
-           position);
-  } else {
-    printf("\n ->> Element %d not found\n", value);
-  }
-  printf("\n ->> Removing the first element...\n");
-  if (!isEmpty(list)) {
-    removeFirst(list);
-    printf("\n ->> First element removed\n");
-    printf("    -> Current ");
-    printList(list);
-  } else {
-    printf("\n ->> The list is empty, no element to remove\n");
-  }
-  printf("\n ->> Removing the last element...\n");
-  if (!isEmpty(list)) {
-    removeLast(list);
-    printf("\n ->> Last element removed\n");
-    printf("    -> Current ");
-    printList(list);
-  } else {
-    printf("\n ->> The list is empty, no element to remove\n");
-  }
-  value = 3;
-  printf("\n ->> Removing element %d...\n", value);
-  if (!removeData(list, value)) {
-    printf("\n ->> Element %d not found\n", value);
-  } else {
-    printf("\n ->> Element %d removed\n", value);
-  }
-  printf("\n ->> Current ");
-  printList(list);
-  printf("\n ->> Clearing the Linked List...\n");
-  clear(list);
-  printf("\n ->> Linked List cleared\n");
-  printf("\n ->> Final Linked List (should be empty): ");
-  printList(list);
-}
-
-void runTestMenu() {
-  int testOption;
-  do {
-    printf("\n╭─── Linked List Test Menu ─────────────╮\n");
-    printf("│ 1. Test: Create Empty List            │\n");
-    printf("│ 2. Test: Create List With One Element │\n");
-    printf("│ 3. Test: Append Element               │\n");
-    printf("│ 4. Test: Remove First Element         │\n");
-    printf("│ 5. Test: Remove Data                  │\n");
-    printf("│ 6. Test: Find Element                 │\n");
-    printf("│ 7. Test: Find Unexisting Element      │\n");
-    printf("│ 8. Test: Size                         │\n");
-    printf("│ 9. Run All Tests                      │\n");
-    printf("│ 0. Return to Main Menu                │\n");
-    printf("╰───────────────────────────────────────╯\n");
-    printf("\n  -> Choose a test option: ");
-    scanf("%d", &testOption);
-    switch (testOption) {
-    case 1:
-      test_createEmptyList();
-      break;
-    case 2:
-      test_createListWithOneElement();
-      break;
-    case 3:
-      test_appendElement();
-      break;
-    case 4:
-      test_removeFirstElement();
-      break;
-    case 5:
-      test_removeData();
-      break;
-    case 6:
-      test_findElement();
-      break;
-    case 7:
-      test_findUnexistingElement();
-      break;
-    case 8:
-      test_size();
-      break;
-    case 9:
-      printf("\n ->> Initializing all tests...\n");
-      test_createEmptyList();
-      test_createListWithOneElement();
-      test_appendElement();
-      test_removeFirstElement();
-      test_removeData();
-      test_findElement();
-      test_findUnexistingElement();
-      test_size();
-      printf("\n ->> All tests were executed successfully\n");
-      break;
-    case 0:
-      printf("\n ->> Returning to main menu...\n");
-      break;
-    default:
-      printf("\n ->> Invalid test option. Try again.\n");
-    }
-  } while (testOption != 0);
-}
-
-void menu() {
-  printf("\n╭──── Linked List Menu ──────────────────────────╮\n");
-  printf("│  1. Create Linked List                         │\n");
-  printf("│  2. Destroy Linked List                        │\n");
-  printf("│  3. Verify if the Linked List is empty         │\n");
-  printf("│  4. Get size of Linked List                    │\n");
-  printf("│  5. Empty Linked List                          │\n");
-  printf("│  6. Insert at the beginning of the Linked List │\n");
-  printf("│  7. Insert at the end of the Linked List       │\n");
-  printf("│  8. Find element                               │\n");
-  printf("│  9. Remove the first element                   │\n");
-  printf("│ 10. Remove the last element                    │\n");
-  printf("│ 11. Remove a specific element                  │\n");
-  printf("│ 12. Print Linked List                          │\n");
-  printf("│ 13. Linked List Test Menu                      │\n");
-  printf("│ 14. Run all operations (simulation of use)     │\n");
-  printf("│  0. Out                                        │\n");
-  printf("╰────────────────────────────────────────────────╯\n");
-  printf("\n  -> Choose an option: ");
-}
+void menu(CircularList *students, CircularList *subjects);
+void studentsMenu(CircularList *students, CircularList *subjects);
+void subjectsMenu(CircularList *subjects);
+void show_statistics(CircularList *students, CircularList *subjects);
+void generate_sample_data(CircularList *students, CircularList *subjects, int count);
 
 int main() {
-  LinkedList *list = NULL;
-  int option, value;
+  CircularList *students = createList();
+  CircularList *subjects = createList();
+  load_students_from_csv(students, "students.csv");
+  load_subjects_from_csv(subjects, "subjects.csv");
+  menu(students, subjects);
+  save_students_to_csv(students, "students.csv");
+  save_subjects_to_csv(subjects, "subjects.csv");
+  destroyList(students, destroy_student);
+  destroyList(subjects, destroy_subject);
+  printf("\nData saved. Goodbye!\n");
+  return 0;
+}
+
+void menu(CircularList *students, CircularList *subjects) {
+  int option;
   do {
-    menu();
+    printf("\n╭──────────── Main Menu ────────────╮\n");
+    printf("│  1. Manage students               │\n");
+    printf("│  2. Manage subjects               │\n");
+    printf("│  3. Show statistics               │\n");
+    printf("│  4. Generate test data            │\n");
+    printf("│  0. Exit                          │\n");
+    printf("╰───────────────────────────────────╯\n");
+    printf("\n  -> Choose an option: ");
     scanf("%d", &option);
+    getchar();
     switch (option) {
     case 1:
-      if (list != NULL) {
-        printf("\n ->> There is a Linked List created. Destroy it first\n");
-      } else {
-        list = createList();
-        printf("\n ->> Linked List created\n");
-      }
+      studentsMenu(students, subjects);
       break;
     case 2:
-      if (list != NULL) {
-        destroyList(list);
-        list = NULL;
-        printf("\n ->> Linked List destroyed\n");
+      subjectsMenu(subjects);
+      break;
+    case 3:
+      show_statistics(students, subjects);
+      press_enter_to_continue();
+      break;
+    case 4:
+      generate_sample_data(students, subjects, 5);
+      printf("Test data created.\n");
+      press_enter_to_continue();
+      break;
+    case 0:
+      break;
+    default:
+      printf("Invalid option.\n");
+    }
+  } while (option != 0);
+}
+
+void studentsMenu(CircularList *students, CircularList *subjects) {
+  int option;
+  do {
+    printf("\n╭──────────── Students Menu ─────────────╮\n");
+    printf("│ 1. Register new student                │\n");
+    printf("│ 2. Modify student                      │\n");
+    printf("│ 3. Delete student                      │\n");
+    printf("│ 4. List all students                   │\n");
+    printf("│ 5. Enroll in subject                   │\n");
+    printf("│ 6. Record exam                         │\n");
+    printf("│ 7. Search students by name             │\n");
+    printf("│ 8. Search students by age range        │\n");
+    printf("│ 0. Back to main menu                   │\n");
+    printf("╰────────────────────────────────────────╯\n");
+    printf("\n  -> Choose an option: ");
+    scanf("%d", &option);
+    getchar();
+    int id, age;
+    char name[100];
+    float grade;
+    Student *student;
+    Subject *subject;
+    switch (option) {
+    case 1:
+      printf("Enter name: ");
+      fgets(name, sizeof(name), stdin);
+      name[strcspn(name, "\n")] = 0;
+      printf("Enter age: ");
+      scanf("%d", &age);
+      getchar();
+      student = create_student(name, age);
+      student->id = generate_unique_id();
+      append(students, student);
+      printf("Student registered with ID: %d\n", student->id);
+      break;
+    case 2:
+      printf("Enter student ID to modify: ");
+      scanf("%d", &id);
+      getchar();
+      student = get_student_by_id(students, id);
+      if (student) {
+        printf("New name: ");
+        fgets(name, sizeof(name), stdin);
+        name[strcspn(name, "\n")] = 0;
+        printf("New age: ");
+        scanf("%d", &age);
+        getchar();
+        strcpy(student->name, name);
+        student->age = age;
+        printf("Student updated.\n");
       } else {
-        printf("\n ->> There is no Linked List created\n");
+        printf("Student not found.\n");
       }
       break;
     case 3:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+      printf("Enter student ID to delete: ");
+      scanf("%d", &id);
+      getchar();
+      student = get_student_by_id(students, id);
+      if (student && removeData(students, student, compare_student_by_id)) {
+        destroy_student(student);
+        printf("Student removed.\n");
       } else {
-        printf(isEmpty(list) ? "\n ->> The Linked List is empty\n"
-                             : "\n ->> The Linked List is not empty\n");
+        printf("Student not found.\n");
       }
       break;
     case 4:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        printf("\n ->> Size of the Linked List: %d\n", getSize(list));
-      }
+      paginate_list(students, 5, student_to_string);
       break;
     case 5:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+      printf("Student ID: ");
+      scanf("%d", &id);
+      getchar();
+      student = get_student_by_id(students, id);
+      printf("Subject ID: ");
+      scanf("%d", &id);
+      getchar();
+      subject = get_subject_by_id(subjects, id);
+      if (student && subject) {
+        if (enroll_student(student, subject, subjects)) {
+          printf("Enrolled.\n");
+        } else {
+          printf("Cannot enroll (check correlatives).\n");
+        }
       } else {
-        clear(list);
-        printf("\n ->> Linked List cleared\n");
+        printf("Invalid student or subject.\n");
       }
       break;
     case 6:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
+      printf("Student ID: ");
+      scanf("%d", &id);
+      getchar();
+      student = get_student_by_id(students, id);
+      printf("Subject ID: ");
+      scanf("%d", &id);
+      getchar();
+      printf("Grade: ");
+      scanf("%f", &grade);
+      getchar();
+      if (record_exam(student, id, grade)) {
+        printf("Exam recorded.\n");
       } else {
-        printf("\n  -> Insert a value to insert at the beginning: ");
-        scanf("%d", &value);
-        prepend(list, value);
-        printf("\n ->> Value inserted\n");
-        printf("\n ->> Currently -> ");
-        printList(list);
+        printf("Could not record exam.\n");
       }
       break;
     case 7:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        printf("\n  -> Insert a value to insert at the end: ");
-        scanf("%d", &value);
-        append(list, value);
-        printf("\n ->> Value inserted\n");
-        printf("\n ->> Currently -> ");
-        printList(list);
-      }
+      printf("Enter name: ");
+      fgets(name, sizeof(name), stdin);
+      name[strcspn(name, "\n")] = 0;
+      find_students_by_name(students, name);
       break;
     case 8:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        printf("\n ->> Insert a value to search: ");
-        scanf("%d", &value);
-        int position = -1;
-        LinkedNode *node = find(list, value, &position);
-        if (node != NULL) {
-          printf("\n ->> Element %d found at index %d in the Linked List\n",
-                 value, position);
-        } else {
-          printf("\n ->> Element not found\n");
-        }
-      }
-      break;
-    case 9:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        if (isEmpty(list)) {
-          printf("\n ->> The list is empty, no element to remove\n");
-        } else {
-          removeFirst(list);
-          printf("\n ->> First element removed\n");
-        }
-      }
-      break;
-    case 10:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        if (isEmpty(list)) {
-          printf("\n ->> The list is empty, no element to remove\n");
-        } else {
-          removeLast(list);
-          printf("\n ->> Last element removed\n");
-        }
-      }
-      break;
-    case 11:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        printf("\n  -> Insert a value to remove: ");
-        scanf("%d", &value);
-        if (!removeData(list, value)) {
-          printf("\n ->> Element not found\n");
-        } else {
-          printf("\n ->> The element was removed\n");
-        }
-      }
-      break;
-    case 12:
-      if (list == NULL) {
-        printf("\n ->> You have to create a Linked List first\n");
-      } else {
-        printf("\n ->> ");
-        printList(list);
-      }
-      break;
-    case 13:
-      runTestMenu();
-      break;
-    case 14:
-      if (list == NULL) {
-        list = createList();
-        printf("\n --> Linked List created\n");
-      }
-      runAllOperations(list);
+      printf("Enter min age: ");
+      scanf("%d", &age);
+      getchar();
+      int maxAge;
+      printf("Enter max age: ");
+      scanf("%d", &maxAge);
+      getchar();
+      find_students_by_age_range(students, age, maxAge);
       break;
     case 0:
-      printf("\n ->> Leaving...\n");
-      if (list != NULL) {
-        destroyList(list);
-      }
       break;
     default:
-      printf("\n ->> Invalid option, try again\n");
+      printf("Invalid option.\n");
     }
   } while (option != 0);
-  return 0;
+}
+
+void subjectsMenu(CircularList *subjects) {
+  int option;
+  do {
+    printf("\n╭──────────── Subjects Menu ─────────────╮\n");
+    printf("│ 1. Create new subject                  │\n");
+    printf("│ 2. Modify subject                      │\n");
+    printf("│ 3. Delete subject                      │\n");
+    printf("│ 4. List all subjects                   │\n");
+    printf("│ 0. Back to main menu                   │\n");
+    printf("╰────────────────────────────────────────╯\n");
+    printf("\n  -> Choose an option: ");
+    scanf("%d", &option);
+    getchar();
+    int id, credits;
+    char name[100];
+    Subject *subject;
+    switch (option) {
+    case 1:
+      printf("Subject name: ");
+      fgets(name, sizeof(name), stdin);
+      name[strcspn(name, "\n")] = 0;
+      printf("Credits: ");
+      scanf("%d", &credits);
+      getchar();
+      subject = create_subject(name, credits);
+      subject->id = generate_unique_id();
+      append(subjects, subject);
+      printf("Subject created with ID: %d\n", subject->id);
+      break;
+    case 2:
+      printf("Subject ID to modify: ");
+      scanf("%d", &id);
+      getchar();
+      subject = get_subject_by_id(subjects, id);
+      if (subject) {
+        printf("New name: ");
+        fgets(name, sizeof(name), stdin);
+        name[strcspn(name, "\n")] = 0;
+        printf("New credits: ");
+        scanf("%d", &credits);
+        getchar();
+        strcpy(subject->name, name);
+        subject->credits = credits;
+        printf("Subject updated.\n");
+      } else {
+        printf("Subject not found.\n");
+      }
+      break;
+    case 3:
+      printf("Subject ID to delete: ");
+      scanf("%d", &id);
+      getchar();
+      subject = get_subject_by_id(subjects, id);
+      if (subject && removeData(subjects, subject, compare_subject_by_id)) {
+        destroy_subject(subject);
+        printf("Subject removed.\n");
+      } else {
+        printf("Subject not found.\n");
+      }
+      break;
+    case 4:
+      paginate_list(subjects, 5, subject_to_string);
+      break;
+    case 0:
+      break;
+    default:
+      printf("Invalid option.\n");
+    }
+  } while (option != 0);
+}
+
+void enroll_and_grade(Student *s, CircularList *subjects, CircularList *allSubjects) {
+  DoubleLinkedNode *node = subjects->head;
+  if (!node)
+    return;
+  do {
+    Subject *subject = (Subject *)node->data;
+    if (can_enroll(s, subject, allSubjects)) {
+      enroll_student(s, subject, allSubjects);
+      float grade = (float)(6 + rand() % 5);
+      record_exam(s, subject->id, grade);
+    }
+    node = node->next;
+  } while (node != subjects->head);
+}
+
+void generate_sample_data(CircularList *students, CircularList *subjects, int count) {
+  const char *names[] = {"Juan", "Ana", "Carlos", "Lucía", "Marcos"};
+  const char *subject_names[] = {"Matemática", "Historia", "Física", "Programación", "Química"};
+  for (int i = 0; i < count; i++) {
+    Student *s = create_student(names[i % 5], 18 + rand() % 10);
+    s->id = generate_unique_id();
+    append(students, s);
+  }
+  for (int i = 0; i < count; i++) {
+    Subject *subj = create_subject(subject_names[i % 5], 4 + rand() % 3);
+    subj->id = generate_unique_id();
+    append(subjects, subj);
+  }
+  for (int i = 1; i < count; i++) {
+    Subject *subject = get_subject_by_id(subjects, i + 1);
+    Subject *prev = get_subject_by_id(subjects, i);
+    if (subject && prev) {
+      append(subject->correlatives, prev);
+    }
+  }
+  DoubleLinkedNode *node = students->head;
+  if (!node) {
+    return;
+  }
+  do {
+    Student *s = (Student *)node->data;
+    enroll_and_grade(s, subjects, subjects);
+    node = node->next;
+  } while (node != students->head);
+}
+
+void show_statistics(CircularList *students, CircularList *subjects) {
+  printf("\n─── Student Rankings by Average ───\n");
+  sort_students_by_average(students);
+  int shown = 0;
+  DoubleLinkedNode *node = students->head;
+  if (!node) {
+    return;
+  }
+  do {
+    Student *s = (Student *)node->data;
+    printf("• %s (avg: %.2f)\n", s->name, s->average);
+    shown++;
+    if (shown >= 3) {
+      break;
+    }
+    node = node->next;
+  } while (node != students->head);
+  printf("\n─── Subjects with Most Correlatives ───\n");
+  int maxCorrelatives = 0;
+  Subject *mostDemanding = NULL;
+  node = subjects->head;
+  if (!node) {
+    return;
+  }
+  do {
+    Subject *s = (Subject *)node->data;
+    int count = getSize(s->correlatives);
+    if (count > maxCorrelatives) {
+      maxCorrelatives = count;
+      mostDemanding = s;
+    }
+    node = node->next;
+  } while (node != subjects->head);
+  if (mostDemanding) {
+    printf("• %s (requires %d subject(s))\n", mostDemanding->name,
+           maxCorrelatives);
+  } else {
+    printf("• No subjects with correlatives.\n");
+  }
 }

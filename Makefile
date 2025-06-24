@@ -1,37 +1,37 @@
-# Variables
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Iinclude
 
-# Archivos fuente (agregado linked_list_test.c)
-SRC = src/main.c src/linked_list.c src/linked_list_test.c
+# Source files
+SRC = $(wildcard src/*.c)
 
-# Archivos objeto
+# Object files
 OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
 
-# Binario final
+# Output binary
 BIN = bin/app
 
-# Objetivo por defecto
+# Default goal
 .DEFAULT_GOAL := run
 
-# Compilación
+# Main target
 all: $(BIN)
 
-# Regla de ejecución
+# Run target
 run: all
 	@./$(BIN)
 	@rm -rf build bin
 
-# Regla para enlazar binario
+# Link object files
 $(BIN): $(OBJ)
 	@mkdir -p bin
 	$(CC) $(OBJ) -o $(BIN)
 
-# Regla para compilar archivos fuente a objetos
+# Compile source files
 build/%.o: src/%.c
 	@mkdir -p build
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Limpieza
+# Clean object and binary files
 clean:
-	rm -rf build/*.o $(BIN)
+	rm -rf build bin
