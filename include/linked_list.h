@@ -1,17 +1,19 @@
 #ifndef LINKED_LIST_H
+
 #define LINKED_LIST_H
+
 #include <stdbool.h>
 
 /**
- * @brief A node in a singly linked list.
+ * @brief A node structure in a singly linked list.
  *
  * This struct represents a single node in a doubly linked list, containing a
  * pointer to the data, the next node, and the previous node.
  */
 typedef struct DoubleLinkedNode {
-  void *data;                    ///< Pointer to the data stored in the node.
-  struct DoubleLinkedNode *next; ///< Pointer to the next node in the list.
-  struct DoubleLinkedNode *prev; ///< Pointer to the previous node in the list.
+  void *data;                    // Pointer to the data stored in the node.
+  struct DoubleLinkedNode *next; // Pointer to the next node in the list.
+  struct DoubleLinkedNode *prev; // Pointer to the previous node in the list.
 } DoubleLinkedNode;
 
 /**
@@ -53,8 +55,7 @@ DoubleLinkedNode *createNode(void *data);
  *
  * @return A pointer to the matching node if found, NULL otherwise.
  */
-DoubleLinkedNode *find(const CircularList *list, void *data, int *position,
-                       bool (*cmp)(void *, void *));
+DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool (*cmp)(void *, void *));
 
 /**
  * @brief Creates a new empty linked list.
@@ -184,6 +185,18 @@ bool isEmpty(const CircularList *list);
  */
 int getSize(const CircularList *list);
 
+/**
+ * @brief Applies a function to each element in the circular doubly linked list.
+ *
+ * Iterate through all nodes in the list and applies the specified action to the
+ * data of each node. This function is useful for performing operations such as
+ * printing, modifying, or freeing the contents of each node.
+ *
+ * @param list A pointer to the CircularList.
+ * @param action A function pointer that takes a void pointer to the data and
+ * performs an action on it. The function is applied to each element in the
+ * list.
+ */
 void forEach(CircularList *ist, void (*action)(void *));
 
 #endif

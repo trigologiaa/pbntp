@@ -1,11 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define INITIAL_BUFFER_SIZE 256
+
 #include "../include/linked_list.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
-#define _CRT_SECURE_NO_WARNINGS
-#define INITIAL_BUFFER_SIZE 256
 
 /**
  * @brief Creates a new node for a linked list.
@@ -42,8 +43,7 @@ DoubleLinkedNode *createNode(void *data) {
  *
  * @return A pointer to the matching node if found, NULL otherwise.
  */
-DoubleLinkedNode *find(const CircularList *list, void *data, int *position,
-                       bool (*cmp)(void *, void *)) {
+DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool (*cmp)(void *, void *)) {
   if (!list || list->head == NULL) {
     return NULL;
   }
@@ -340,7 +340,9 @@ char *listToString(CircularList *list, char *(*toString)(void *)) {
  *
  * @return true if the list is empty, false otherwise.
  */
-bool isEmpty(const CircularList *list) { return (!list || list->size == 0); }
+bool isEmpty(const CircularList *list) {
+  return (!list || list->size == 0);
+}
 
 /**
  * @brief Returns the number of elements in the list.
@@ -356,7 +358,19 @@ int getSize(const CircularList *list) {
   return list->size;
 }
 
-void forEach(CircularList *list, void(*action)(void *)) {
+/**
+ * @brief Applies a function to each element in the circular doubly linked list.
+ *
+ * Iterate through all nodes in the list and applies the specified action to the
+ * data of each node. This function is useful for performing operations such as
+ * printing, modifying, or freeing the contents of each node.
+ *
+ * @param list A pointer to the CircularList.
+ * @param action A function pointer that takes a void pointer to the data and
+ * performs an action on it. The function is applied to each element in the
+ * list.
+ */
+void forEach(CircularList *list, void (*action)(void *)) {
   if (!list || isEmpty(list) || !action) {
     return;
   }
