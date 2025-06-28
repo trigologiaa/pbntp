@@ -16,7 +16,9 @@ static int global_id_counter = 1;
  *
  * @return A unique integer ID.
  */
-int generate_unique_id() { return global_id_counter++; }
+int generate_unique_id() {
+  return global_id_counter++;
+}
 
 /**
  * @brief Waits for the user to press ENTER to continue.
@@ -38,10 +40,9 @@ void press_enter_to_continue() {
  * @param students A pointer to a CircularList containing Student elements.
  */
 void sort_students_by_average(CircularList *students) {
-  if (!students || students->size < 2){
+  if (!students || students->size < 2) {
     return;
   }
-
   DoubleLinkedNode *i = students->head;
   for (int x = 0; x < students->size - 1; x++) {
     DoubleLinkedNode *j = i->next;
@@ -83,9 +84,7 @@ void paginate_list(CircularList *list, int pageSize, char *(*toString)(void *)) 
   DoubleLinkedNode *node = list->head;
   while (currentIndex < total) {
     system("clear || cls");
-    printf("Showing items %d to %d of %d:\n", currentIndex + 1,
-           (currentIndex + pageSize > total ? total : currentIndex + pageSize),
-           total);
+    printf("Showing items %d to %d of %d:\n", currentIndex + 1, (currentIndex + pageSize > total ? total : currentIndex + pageSize), total);
     for (int i = 0; i < pageSize && currentIndex < total; i++) {
       char *str = toString(node->data);
       printf("%s\n", str);

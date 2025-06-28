@@ -58,10 +58,12 @@ void test_correlatives_list() {
   if (node) {
     do {
       int *val = (int *)node->data;
-      if (*val == 1)
+      if (*val == 1) {
         found1 = 1;
-      if (*val == 2)
+      }
+      if (*val == 2) {
         found2 = 1;
+      }
       node = node->next;
     } while (node != s->correlatives->head);
   }

@@ -52,8 +52,7 @@ void find_students_by_name(CircularList *students, const char *name) {
  * @param minAge The minimum age to include.
  * @param maxAge The maximum age to include.
  */
-void find_students_by_age_range(CircularList *students, int minAge,
-                                int maxAge) {
+void find_students_by_age_range(CircularList *students, int minAge, int maxAge) {
   if (!students) {
     return;
   }

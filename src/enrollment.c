@@ -148,7 +148,7 @@ bool record_exam(Student *student, int subjectId, float grade) {
   do {
     SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
     if (enrollment->subjectId == subjectId) {
-      if (enrollment->passed){
+      if (enrollment->passed) {
         return false;
       }
       enrollment->grade = grade;
@@ -172,14 +172,12 @@ bool record_exam(Student *student, int subjectId, float grade) {
  * @return The average grade of all passed subjects, or 0.0 if none are passed.
  */
 float obtain_student_average(Student *student){
-  if (!student || !student->enrollments || student->enrollments->size == 0){
+  if (!student || !student->enrollments || student->enrollments->size == 0) {
     return 0.0f;
   }
-
   DoubleLinkedNode *current = student->enrollments->head;
   float total = 0.0f;
   int passedSubj = 0;
-
   do {
     SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
     if (!enrollment) {
@@ -192,7 +190,5 @@ float obtain_student_average(Student *student){
     }
     current = current->next;
   } while (current != student->enrollments->head);
-
   return (passedSubj > 0)? (total / passedSubj) : 0.0f;
 }
-

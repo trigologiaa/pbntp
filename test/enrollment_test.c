@@ -120,8 +120,9 @@ void test_record_exam_success_and_failure() {
  */
 Student *create_test_student() {
   Student *s = malloc(sizeof(Student));
-  if (!s)
+  if (!s) {
     return NULL;
+  }
   s->id = 1;
   snprintf(s->name, sizeof(s->name), "Test Student");
   s->enrollments = create_list();
@@ -136,8 +137,9 @@ Student *create_test_student() {
  * @param s Pointer to the test student.
  */
 void destroy_test_student(Student *s) {
-  if (!s)
+  if (!s) {
     return;
+  }
   if (s->enrollments) {
     destroy_list(s->enrollments, destroy_enrollment);
   }

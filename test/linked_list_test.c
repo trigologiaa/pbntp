@@ -214,18 +214,24 @@ char *int_to_string(void *data) {
  * @param b Pointer to second integer.
  * @return true if integers are equal, false otherwise.
  */
-bool compare_ints(void *a, void *b) { return (*(int *)a == *(int *)b); }
+bool compare_ints(void *a, void *b) {
+  return (*(int *)a == *(int *)b);
+}
 
 /**
  * @brief Free memory allocated for an integer.
  *
  * @param data Pointer to the integer to free.
  */
-void free_int(void *data) { free(data); }
+void free_int(void *data) {
+  free(data);
+}
 
 /**
  * @brief Increment an integer by 1 (used in for_each test).
  *
  * @param data Pointer to the integer.
  */
-void increment(void *data) { (*(int *)data)++; }
+void increment(void *data) {
+  (*(int *)data)++;
+}

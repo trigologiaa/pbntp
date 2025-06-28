@@ -161,7 +161,9 @@ static Subject *make_subject(const char *name, int credits) {
  *
  * @param data Pointer to the student to destroy (void*).
  */
-static void destroy_student_wrapper(void *data) { destroy_student(data); }
+static void destroy_student_wrapper(void *data) {
+  destroy_student(data);
+}
 
 /**
  * @brief Wrapper function to destroy a subject, passed as void*, used by
@@ -169,4 +171,6 @@ static void destroy_student_wrapper(void *data) { destroy_student(data); }
  *
  * @param data Pointer to the subject to destroy (void*).
  */
-static void destroy_subject_wrapper(void *data) { destroy_subject(data); }
+static void destroy_subject_wrapper(void *data) {
+  destroy_subject(data);
+}

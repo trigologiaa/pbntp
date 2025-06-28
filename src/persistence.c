@@ -45,8 +45,7 @@ bool save_students_to_csv(CircularList *students, const char *filename) {
           e = e->next;
         } while (e != s->enrollments->head);
       }
-      fprintf(f, "%d,%s,%d,%.2f,%s\n", s->id, s->name, s->age, s->average,
-              subjectIds);
+      fprintf(f, "%d,%s,%d,%.2f,%s\n", s->id, s->name, s->age, s->average, subjectIds);
       node = node->next;
     } while (node != students->head);
   }
@@ -82,8 +81,7 @@ bool load_students_from_csv(CircularList *students, const char *filename) {
     Student *s = malloc(sizeof(Student));
     s->enrollments = create_list();
     char subjectsRaw[512];
-    sscanf(line, "%d,%49[^,],%d,%f,%511[^\n]", &s->id, s->name, &s->age,
-           &s->average, subjectsRaw);
+    sscanf(line, "%d,%49[^,],%d,%f,%511[^\n]", &s->id, s->name, &s->age, &s->average, subjectsRaw);
     char *token = strtok(subjectsRaw, ";");
     while (token) {
       int subId = atoi(token);
@@ -171,8 +169,7 @@ bool load_subjects_from_csv(CircularList *subjects, const char *filename) {
     Subject *s = malloc(sizeof(Subject));
     s->correlatives = create_list();
     char correlativesRaw[512];
-    sscanf(line, "%d,%49[^,],%d,%511[^\n]", &s->id, s->name, &s->credits,
-           correlativesRaw);
+    sscanf(line, "%d,%49[^,],%d,%511[^\n]", &s->id, s->name, &s->credits, correlativesRaw);
     char *token = strtok(correlativesRaw, ";");
     while (token) {
       int *cid = malloc(sizeof(int));

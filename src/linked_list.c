@@ -43,8 +43,7 @@ DoubleLinkedNode *create_node(void *data) {
  *
  * @return A pointer to the matching node if found, NULL otherwise.
  */
-DoubleLinkedNode *find(const CircularList *list, void *data, int *position,
-                       bool (*cmp)(void *, void *)) {
+DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool (*cmp)(void *, void *)) {
   if (!list || list->head == NULL) {
     return NULL;
   }
@@ -254,10 +253,12 @@ bool remove_data(CircularList *list, void *data, bool (*cmp)(void *, void *)) {
       if (list->size == 1) {
         list->head = list->tail = NULL;
       } else {
-        if (current == list->head)
+        if (current == list->head) {
           list->head = current->next;
-        if (current == list->tail)
+        }
+        if (current == list->tail) {
           list->tail = current->prev;
+        }
         current->prev->next = current->next;
         current->next->prev = current->prev;
       }
@@ -328,8 +329,7 @@ char *list_to_string(CircularList *list, char *(*toString)(void *)) {
     used += snprintf(buffer + used, bufferSize - used, "%s", itemStr);
     free(itemStr);
     current = current->next;
-    used += snprintf(buffer + used, bufferSize - used,
-                     current != list->head ? " <-> " : " <-\n");
+    used += snprintf(buffer + used, bufferSize - used, current != list->head ? " <-> " : " <-\n");
   } while (current != list->head);
   return buffer;
 }
@@ -341,7 +341,9 @@ char *list_to_string(CircularList *list, char *(*toString)(void *)) {
  *
  * @return true if the list is empty, false otherwise.
  */
-bool is_empty(const CircularList *list) { return (!list || list->size == 0); }
+bool is_empty(const CircularList *list) {
+  return (!list || list->size == 0);
+}
 
 /**
  * @brief Returns the number of elements in the list.

@@ -1,9 +1,9 @@
 id,name,credits,correlative_ids
-0,Curso de Ingreso,0,
-2,Cultura Contemporánea,4,0;
-3,Cuestiones de Sociología Economía y Política,4,0;
+0,Curso de Ingreso,0,0;
+2,Cultura Contemporánea,4,0;1;
+3,Cuestiones de Sociología Economía y Política,4,0;2;
 591,Problemas de Historia del Siglo XX,4,0;
-592,Introducción a la Problemática del Mundo Contempar,0,0;
+592,Introducción a la Problemática del Mundo Contem,0,0;
 1700,Introducción a la Ingeniería en Computación,4,0;
 1701,Algoritmos y Programación I,8,0;
 1702,Álgebra I,4,0;
@@ -52,3 +52,8 @@ id,name,credits,correlative_ids
 1727,Laboratorio de Electrónica,4,1723;
 700,Sistemas de Información Geográfica II,4,1723;
 1480,Gestion de los Servicios de Enfermería,4,1723;
+6,Matemática,5,1723;
+7,Historia,5,1723;
+8,Física,4,1723;
+9,Programación,4,1723;
+10,Química,5,1723;

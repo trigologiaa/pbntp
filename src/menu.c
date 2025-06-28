@@ -289,18 +289,15 @@ void tests_menu() {
     case 4:
       persistence_test_menu();
       break;
-    case 5: {
+    case 5:
       search_test_menu();
       break;
-    }
-    case 6: {
+    case 6:
       student_test_menu();
       break;
-    }
-    case 7: {
+    case 7:
       subject_test_menu();
       break;
-    }
     case 0:
       break;
     default:
@@ -337,14 +334,12 @@ void enrollment_test_menu() {
     case 4:
       test_can_enroll_with_correlatives();
       break;
-    case 5: {
+    case 5:
       test_enroll_student_success_and_duplicate();
       break;
-    }
-    case 6: {
+    case 6:
       test_record_exam_success_and_failure();
       break;
-    }
     case 0:
       break;
     default:
@@ -557,8 +552,9 @@ void subject_test_menu() {
 
 void enroll_and_grade(Student *s, CircularList *subjects, CircularList *allSubjects) {
   DoubleLinkedNode *node = subjects->head;
-  if (!node)
+  if (!node) {
     return;
+  }
   do {
     Subject *subject = (Subject *)node->data;
     if (can_enroll(s, subject, allSubjects)) {
