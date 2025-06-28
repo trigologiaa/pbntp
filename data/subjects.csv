@@ -1,6 +1,6 @@
 id,name,credits,correlative_ids
-6,Matemática,5,
-7,Historia,5,
-8,Física,4,
-9,Programación,4,
-10,Química,5,
+6,Matemática,5,6;
+7,Historia,5,6;
+8,Física,4,6;
+9,Programación,4,6;
+10,Química,5,6;

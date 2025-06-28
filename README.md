@@ -145,7 +145,7 @@ Cada estudiante tiene un **ID único**, **nombre**, **edad**, y una lista de **i
 
 ```c
 typedef struct Subject {
-  int id;
+  int   id;
   char  name[50];
   int   credits;
 } Subject;
