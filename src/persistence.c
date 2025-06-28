@@ -1,6 +1,6 @@
+#include "../include/persistence.h"
 #include "../include/enrollment.h"
 #include "../include/linked_list.h"
-#include "../include/persistence.h"
 #include "../include/student.h"
 #include "../include/subject.h"
 #include <stdio.h>
@@ -23,7 +23,9 @@ bool save_students_to_csv(CircularList *students, const char *filename) {
   if (!students || !filename) {
     return false;
   }
-  FILE *f = fopen(filename, "w");
+  char path[256];
+  snprintf(path, sizeof(path), "data/%s", filename);
+  FILE *f = fopen(path, "w");
   if (!f) {
     return false;
   }
@@ -68,7 +70,9 @@ bool load_students_from_csv(CircularList *students, const char *filename) {
   if (!students || !filename) {
     return false;
   }
-  FILE *f = fopen(filename, "r");
+  char path[256];
+  snprintf(path, sizeof(path), "data/%s", filename);
+  FILE *f = fopen(path, "r");
   if (!f) {
     return false;
   }
@@ -76,7 +80,7 @@ bool load_students_from_csv(CircularList *students, const char *filename) {
   fgets(line, sizeof(line), f);
   while (fgets(line, sizeof(line), f)) {
     Student *s = malloc(sizeof(Student));
-    s->enrollments = createList();
+    s->enrollments = create_list();
     char subjectsRaw[512];
     sscanf(line, "%d,%49[^,],%d,%f,%511[^\n]", &s->id, s->name, &s->age,
            &s->average, subjectsRaw);
@@ -109,7 +113,9 @@ bool save_subjects_to_csv(CircularList *subjects, const char *filename) {
   if (!subjects || !filename) {
     return false;
   }
-  FILE *f = fopen(filename, "w");
+  char path[256];
+  snprintf(path, sizeof(path), "data/%s", filename);
+  FILE *f = fopen(path, "w");
   if (!f) {
     return false;
   }
@@ -153,7 +159,9 @@ bool load_subjects_from_csv(CircularList *subjects, const char *filename) {
   if (!subjects || !filename) {
     return false;
   }
-  FILE *f = fopen(filename, "r");
+  char path[256];
+  snprintf(path, sizeof(path), "data/%s", filename);
+  FILE *f = fopen(path, "r");
   if (!f) {
     return false;
   }
@@ -161,7 +169,7 @@ bool load_subjects_from_csv(CircularList *subjects, const char *filename) {
   fgets(line, sizeof(line), f);
   while (fgets(line, sizeof(line), f)) {
     Subject *s = malloc(sizeof(Subject));
-    s->correlatives = createList();
+    s->correlatives = create_list();
     char correlativesRaw[512];
     sscanf(line, "%d,%49[^,],%d,%511[^\n]", &s->id, s->name, &s->credits,
            correlativesRaw);

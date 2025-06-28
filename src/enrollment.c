@@ -61,7 +61,7 @@ bool can_enroll(Student *student, Subject *subject, CircularList *allSubjects) {
     return false;
   }
   CircularList *correlatives = subject->correlatives;
-  if (isEmpty(correlatives)) {
+  if (is_empty(correlatives)) {
     return true;
   }
   bool has_all = true;
@@ -100,7 +100,8 @@ bool can_enroll(Student *student, Subject *subject, CircularList *allSubjects) {
  *
  * @return true if the student was successfully enrolled, false otherwise.
  */
-bool enroll_student(Student *student, Subject *subject, CircularList *allSubjects) {
+bool enroll_student(Student *student, Subject *subject,
+                    CircularList *allSubjects) {
   if (!student || !subject) {
     return false;
   }
@@ -148,7 +149,7 @@ bool record_exam(Student *student, int subjectId, float grade) {
   do {
     SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
     if (enrollment->subjectId == subjectId) {
-      enrollment->subjectId = grade;
+      enrollment->grade = grade;
       enrollment->passed = grade >= 6.0f;
       return true;
     }

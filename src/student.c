@@ -28,7 +28,7 @@ Student *create_student(const char *name, int age) {
   s->name[sizeof(s->name) - 1] = '\0';
   s->age = age;
   s->average = 0.0f;
-  s->enrollments = createList();
+  s->enrollments = create_list();
   return s;
 }
 
@@ -46,7 +46,7 @@ void destroy_student(void *student) {
   }
   Student *s = (Student *)student;
   if (s->enrollments) {
-    destroyList(s->enrollments, destroy_enrollment);
+    destroy_list(s->enrollments, destroy_enrollment);
   }
   free(s);
 }
@@ -72,7 +72,9 @@ char *student_to_string(void *student) {
   if (!buffer) {
     return NULL;
   }
-  snprintf(buffer, 256, "[ID: %d] Name: %s | Age: %d | Average: %.2f | Subjects: %d", s->id, s->name, s->age, s->average, getSize(s->enrollments));
+  snprintf(buffer, 256,
+           "[ID: %d] Name: %s | Age: %d | Average: %.2f | Subjects: %d", s->id,
+           s->name, s->age, s->average, get_size(s->enrollments));
   return buffer;
 }
 

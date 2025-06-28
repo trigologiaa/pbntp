@@ -71,7 +71,8 @@ bool can_enroll(Student *student, Subject *subject, CircularList *allSubjects);
  *
  * @return true if the student was successfully enrolled, false otherwise.
  */
-bool enroll_student(Student *student, Subject *subject, CircularList *allSubjects);
+bool enroll_student(Student *student, Subject *subject,
+                    CircularList *allSubjects);
 
 /**
  * @brief Records the grade of a student for a specific subject.

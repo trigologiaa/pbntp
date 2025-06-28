@@ -26,7 +26,7 @@ Subject *create_subject(const char *name, int credits) {
   strncpy(subject->name, name, sizeof(subject->name) - 1);
   subject->name[sizeof(subject->name) - 1] = '\0';
   subject->credits = credits;
-  subject->correlatives = createList();
+  subject->correlatives = create_list();
   return subject;
 }
 
@@ -43,7 +43,7 @@ void destroy_subject(void *subject) {
   }
   Subject *s = (Subject *)subject;
   if (s->correlatives) {
-    destroyList(s->correlatives, free);
+    destroy_list(s->correlatives, free);
   }
   free(s);
 }
@@ -69,7 +69,8 @@ char *subject_to_string(void *subject) {
   if (!buffer) {
     return NULL;
   }
-  snprintf(buffer, 256, "[ID: %d] %s | Credits: %d | Correlatives: %d", s->id, s->name, s->credits, getSize(s->correlatives));
+  snprintf(buffer, 256, "[ID: %d] %s | Credits: %d | Correlatives: %d", s->id,
+           s->name, s->credits, get_size(s->correlatives));
   return buffer;
 }
 

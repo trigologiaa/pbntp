@@ -19,7 +19,7 @@
  * @return A pointer to the newly created node, or NULL if memory allocation
  * fails.
  */
-DoubleLinkedNode *createNode(void *data) {
+DoubleLinkedNode *create_node(void *data) {
   DoubleLinkedNode *node = (DoubleLinkedNode *)malloc(sizeof(DoubleLinkedNode));
   if (!node) {
     return NULL;
@@ -43,7 +43,8 @@ DoubleLinkedNode *createNode(void *data) {
  *
  * @return A pointer to the matching node if found, NULL otherwise.
  */
-DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool (*cmp)(void *, void *)) {
+DoubleLinkedNode *find(const CircularList *list, void *data, int *position,
+                       bool (*cmp)(void *, void *)) {
   if (!list || list->head == NULL) {
     return NULL;
   }
@@ -71,7 +72,7 @@ DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool
  * @return A pointer to the newly created list, or NULL if memory allocation
  * fails.
  */
-CircularList *createList() {
+CircularList *create_list() {
   CircularList *list = (CircularList *)malloc(sizeof(CircularList));
   if (!list) {
     return NULL;
@@ -88,7 +89,7 @@ CircularList *createList() {
  *
  * @param list A pointer to the linked list to destroy.
  */
-void destroyList(CircularList *list, void (*destroyData)(void *)) {
+void destroy_list(CircularList *list, void (*destroyData)(void *)) {
   if (!list) {
     return;
   }
@@ -108,7 +109,7 @@ void clear(CircularList *list, void (*destroyData)(void *)) {
   if (!list) {
     return;
   }
-  while (!isEmpty(list)) {
+  while (!is_empty(list)) {
     DoubleLinkedNode *current = list->head;
     if (list->size == 1) {
       list->head = list->tail = NULL;
@@ -138,11 +139,11 @@ void prepend(CircularList *list, void *data) {
   if (!list) {
     return;
   }
-  DoubleLinkedNode *node = createNode(data);
+  DoubleLinkedNode *node = create_node(data);
   if (!node) {
     return;
   }
-  if (isEmpty(list)) {
+  if (is_empty(list)) {
     node->next = node->prev = node;
     list->head = list->tail = node;
   } else {
@@ -167,11 +168,11 @@ void append(CircularList *list, void *data) {
   if (!list) {
     return;
   }
-  DoubleLinkedNode *node = createNode(data);
+  DoubleLinkedNode *node = create_node(data);
   if (!node) {
     return;
   }
-  if (isEmpty(list)) {
+  if (is_empty(list)) {
     node->next = node->prev = node;
     list->head = list->tail = node;
   } else {
@@ -192,12 +193,12 @@ void append(CircularList *list, void *data) {
  *
  * @param list A pointer to the linked list.
  */
-void removeFirst(CircularList *list) {
-  if (!list || isEmpty(list)) {
+void remove_first(CircularList *list) {
+  if (!list || is_empty(list)) {
     return;
   }
   DoubleLinkedNode *temp = list->head;
-  if (getSize(list) == 1) {
+  if (get_size(list) == 1) {
     list->head = list->tail = NULL;
   } else {
     list->head = list->head->next;
@@ -215,12 +216,12 @@ void removeFirst(CircularList *list) {
  *
  * @param list A pointer to the linked list.
  */
-void removeLast(CircularList *list) {
-  if (!list || isEmpty(list)) {
+void remove_last(CircularList *list) {
+  if (!list || is_empty(list)) {
     return;
   }
   DoubleLinkedNode *temp = list->tail;
-  if (getSize(list) == 1) {
+  if (get_size(list) == 1) {
     list->head = list->tail = NULL;
   } else {
     list->tail = list->tail->prev;
@@ -243,8 +244,8 @@ void removeLast(CircularList *list) {
  *
  * @return true if the element was removed, false otherwise.
  */
-bool removeData(CircularList *list, void *data, bool (*cmp)(void *, void *)) {
-  if (!list || isEmpty(list)) {
+bool remove_data(CircularList *list, void *data, bool (*cmp)(void *, void *)) {
+  if (!list || is_empty(list)) {
     return false;
   }
   DoubleLinkedNode *current = list->head;
@@ -278,8 +279,8 @@ bool removeData(CircularList *list, void *data, bool (*cmp)(void *, void *)) {
  * @param list A pointer to the linked list.
  * @param toString Function that converts the data to a string representation.
  */
-void printList(CircularList *list, char *(*toString)(void *)) {
-  char *output = listToString(list, toString);
+void print_list(CircularList *list, char *(*toString)(void *)) {
+  char *output = list_to_string(list, toString);
   if (output) {
     printf("%s", output);
     free(output);
@@ -299,8 +300,8 @@ void printList(CircularList *list, char *(*toString)(void *)) {
  * @return A pointer to the newly allocated string representing the list, or
  * NULL if memory allocation fails.
  */
-char *listToString(CircularList *list, char *(*toString)(void *)) {
-  if (!list || isEmpty(list)) {
+char *list_to_string(CircularList *list, char *(*toString)(void *)) {
+  if (!list || is_empty(list)) {
     char *emptyStr = malloc(32);
     if (emptyStr) {
       snprintf(emptyStr, 32, "List: (empty)\n");
@@ -340,9 +341,7 @@ char *listToString(CircularList *list, char *(*toString)(void *)) {
  *
  * @return true if the list is empty, false otherwise.
  */
-bool isEmpty(const CircularList *list) {
-  return (!list || list->size == 0);
-}
+bool is_empty(const CircularList *list) { return (!list || list->size == 0); }
 
 /**
  * @brief Returns the number of elements in the list.
@@ -351,7 +350,7 @@ bool isEmpty(const CircularList *list) {
  *
  * @return The number of nodes currently in the list.
  */
-int getSize(const CircularList *list) {
+int get_size(const CircularList *list) {
   if (!list) {
     return 0;
   }
@@ -370,8 +369,8 @@ int getSize(const CircularList *list) {
  * performs an action on it. The function is applied to each element in the
  * list.
  */
-void forEach(CircularList *list, void (*action)(void *)) {
-  if (!list || isEmpty(list) || !action) {
+void for_each(CircularList *list, void (*action)(void *)) {
+  if (!list || is_empty(list) || !action) {
     return;
   }
   DoubleLinkedNode *current = list->head;

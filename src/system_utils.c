@@ -16,9 +16,7 @@ static int global_id_counter = 1;
  *
  * @return A unique integer ID.
  */
-int generate_unique_id() {
-  return global_id_counter++;
-}
+int generate_unique_id() { return global_id_counter++; }
 
 /**
  * @brief Waits for the user to press ENTER to continue.
@@ -66,11 +64,12 @@ void sort_students_by_average(CircularList *students) {
  * @param pageSize The number of items to display per page.
  * @param toString A function that converts a list item to a string.
  */
-void paginate_list(CircularList *list, int pageSize, char *(*toString)(void *)) {
+void paginate_list(CircularList *list, int pageSize,
+                   char *(*toString)(void *)) {
   if (!list || pageSize <= 0 || !toString) {
     return;
   }
-  int total = getSize(list);
+  int total = get_size(list);
   if (total == 0) {
     printf("No data to display.\n");
     return;
@@ -79,7 +78,9 @@ void paginate_list(CircularList *list, int pageSize, char *(*toString)(void *)) 
   DoubleLinkedNode *node = list->head;
   while (currentIndex < total) {
     system("clear || cls");
-    printf("Showing items %d to %d of %d:\n", currentIndex + 1, (currentIndex + pageSize > total ? total : currentIndex + pageSize), total);
+    printf("Showing items %d to %d of %d:\n", currentIndex + 1,
+           (currentIndex + pageSize > total ? total : currentIndex + pageSize),
+           total);
     for (int i = 0; i < pageSize && currentIndex < total; i++) {
       char *str = toString(node->data);
       printf("%s\n", str);

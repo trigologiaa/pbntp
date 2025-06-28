@@ -39,7 +39,7 @@ typedef struct CircularList {
  * @return A pointer to the newly created node, or NULL if memory allocation
  * fails.
  */
-DoubleLinkedNode *createNode(void *data);
+DoubleLinkedNode *create_node(void *data);
 
 /**
  * @brief Searches for the first node in the list with the given data.
@@ -55,7 +55,8 @@ DoubleLinkedNode *createNode(void *data);
  *
  * @return A pointer to the matching node if found, NULL otherwise.
  */
-DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool (*cmp)(void *, void *));
+DoubleLinkedNode *find(const CircularList *list, void *data, int *position,
+                       bool (*cmp)(void *, void *));
 
 /**
  * @brief Creates a new empty linked list.
@@ -66,7 +67,7 @@ DoubleLinkedNode *find(const CircularList *list, void *data, int *position, bool
  * @return A pointer to the newly created list, or NULL if memory allocation
  * fails.
  */
-CircularList *createList();
+CircularList *create_list();
 
 /**
  * @brief Destroys the list and frees all associated memory.
@@ -75,7 +76,7 @@ CircularList *createList();
  *
  * @param list A pointer to the linked list to destroy.
  */
-void destroyList(CircularList *list, void (*destroyData)(void *));
+void destroy_list(CircularList *list, void (*destroyData)(void *));
 
 /**
  * @brief Clears all elements from the list without deallocating the list
@@ -116,7 +117,7 @@ void append(CircularList *list, void *data);
  *
  * @param list A pointer to the linked list.
  */
-void removeFirst(CircularList *list);
+void remove_first(CircularList *list);
 
 /**
  * @brief Removes the last node from the list and frees its memory.
@@ -125,7 +126,7 @@ void removeFirst(CircularList *list);
  *
  * @param list A pointer to the linked list.
  */
-void removeLast(CircularList *list);
+void remove_last(CircularList *list);
 
 /**
  * @brief Removes the first occurrence of the specified data from the list.
@@ -139,7 +140,7 @@ void removeLast(CircularList *list);
  *
  * @return true if the element was removed, false otherwise.
  */
-bool removeData(CircularList *list, void *data, bool (*cmp)(void *, void *));
+bool remove_data(CircularList *list, void *data, bool (*cmp)(void *, void *));
 
 /**
  * @brief Prints the contents of the linked list.
@@ -150,7 +151,7 @@ bool removeData(CircularList *list, void *data, bool (*cmp)(void *, void *));
  * @param list A pointer to the linked list.
  * @param toString Function that converts the data to a string representation.
  */
-void printList(CircularList *list, char *(*toString)(void *));
+void print_list(CircularList *list, char *(*toString)(void *));
 
 /**
  * @brief Converts the linked list to a string representation.
@@ -165,7 +166,7 @@ void printList(CircularList *list, char *(*toString)(void *));
  * @return A pointer to the newly allocated string representing the list, or
  * NULL if memory allocation fails.
  */
-char *listToString(CircularList *list, char *(*toString)(void *));
+char *list_to_string(CircularList *list, char *(*toString)(void *));
 
 /**
  * @brief Checks whether the list is empty.
@@ -174,7 +175,7 @@ char *listToString(CircularList *list, char *(*toString)(void *));
  *
  * @return true if the list is empty, false otherwise.
  */
-bool isEmpty(const CircularList *list);
+bool is_empty(const CircularList *list);
 
 /**
  * @brief Returns the number of elements in the list.
@@ -183,7 +184,7 @@ bool isEmpty(const CircularList *list);
  *
  * @return The number of nodes currently in the list.
  */
-int getSize(const CircularList *list);
+int get_size(const CircularList *list);
 
 /**
  * @brief Applies a function to each element in the circular doubly linked list.
@@ -197,6 +198,6 @@ int getSize(const CircularList *list);
  * performs an action on it. The function is applied to each element in the
  * list.
  */
-void forEach(CircularList *ist, void (*action)(void *));
+void for_each(CircularList *ist, void (*action)(void *));
 
 #endif
