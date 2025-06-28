@@ -1,5 +1,7 @@
 # Informe del Trabajo Práctico Grupal - Grupo `int _(_(_(\*\*x[])(char_, int*(*)(char*)))[])(char\*\*, char*(\*)());`
 
+El nombre del grupo puede leerse como **x es un arreglo de punteros a funciones que reciben como parámetros un puntero a un caracter y un puntero a una función que recibe un puntero a un caracter y retorna un puntero a un entero. Estas funciones retornan un puntero a un arreglo de punteros a funciones que reciben como parámetros un puntero a un puntero a un caracter y un puntero a una función que retorna un puntero a un caracter, y devuelven un puntero a un entero**... es solo por diversión.
+
 ## Programación de Bajo Nivel - Primer Cuatrimestre 2025
 
 **Integrantes del Grupo:**
