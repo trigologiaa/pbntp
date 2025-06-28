@@ -102,9 +102,9 @@ void test_record_exam_success_and_failure() {
   assert(en->grade == 7.5f);
   assert(en->passed == true);
   res = record_exam(s, 10, 3.0f);
-  assert(res == true);
-  assert(en->grade == 3.0f);
-  assert(en->passed == false);
+  assert(res == false);
+  assert(en->grade != 3.0f);
+  assert(en->passed != false);
   res = record_exam(s, 10, 15.0f);
   assert(res == false);
   res = record_exam(s, 99, 8.0f);

@@ -61,7 +61,7 @@ bool can_enroll(Student *student, Subject *subject, CircularList *allSubjects) {
     return false;
   }
   CircularList *correlatives = subject->correlatives;
-  if (is_empty(correlatives)) {
+  if (!correlatives || is_empty(correlatives) ) {
     return true;
   }
   bool has_all = true;
@@ -182,7 +182,7 @@ float obtain_student_average(Student *student){
 
   do {
     SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
-    if (enrollment == NULL) {
+    if (!enrollment) {
       current = current->next;
       continue;
     }
