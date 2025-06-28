@@ -193,27 +193,27 @@ Implementación de una lista circular doblemente enlazada para gestionar tanto e
 
 - Creación y destrucción:
 
-  - _createList()_
-  - _destroyList()_
-  - _clear()_
+  - *create_list()*
+  - *destroy_list()*
+  - *clear()*
 
 - Manipulación de nodos:
 
-  - _prepend()_
-  - _append()_
-  - _removeFirst()_
-  - _removeLast()_
-  - _removeData()_
+  - *prepend()*
+  - *append()*
+  - *remove_first()*
+  - *remove_last()*
+  - *remove_data()*
 
 - Recorridos y búsqueda:
 
-  - _find()_
-  - _forEach()_
+  - *find()*
+  - *for_each()*
 
 - Consultas:
-  - _isEmpty()_
-  - _getSize()_
-  - _listToString()_
+  - *is_empty()*
+  - *get_size()*
+  - *list_to_string()*
 
 #### Módulo _student_
 
@@ -234,11 +234,11 @@ typedef struct Student {
 
 ##### Funciones clave
 
-- _createStudent()_
-- _destroyStudent()_
-- _studentToString()_
-- _compareStudentById()_
-- _compareStudentByName()_
+- *create_student()*
+- *destroy_student()*
+- *student_to_string()*
+- *compare_student_by_id()*
+- *compare_student_by_name()*
 
 #### Módulo _subject_
 
@@ -258,10 +258,10 @@ typedef struct Subject {
 
 ##### Funciones clave
 
-- _createSubject()_
-- _destroySubject()_
-- _subjectToString()_
-- _CompareSubjectById()_
+- *create_subject()*
+- *destroy_subject()*
+- *subject_to_string()*
+- *compare_subject_by_id()*
 
 #### Módulo _enrollment_
 
@@ -282,17 +282,17 @@ typedef struct SubjectEnrollment {
 
 - Inscripción:
 
-  - _canEnroll()_
-  - _enrollStudent()_
+  - *can_enroll()*
+  - *enroll_student()*
 
 - Rendición de examen:
 
-  - _recordExam()_
+  - *record_exam()*
 
 - Gestión de memoria:
 
-  - _createEnrollment()_
-  - _destroyEnrollment()_
+  - *create_enrollment()*
+  - *destroy_enrollment()*
 
 #### Módulo _search_
 
@@ -302,10 +302,10 @@ Búsquedas específicas de estudiantes y materias.
 
 ##### Funciones clave
 
-- _findStudentsByName()_
-- _findStudentsByAgeRange()_
-- _getStudentById()_
-- _getSubjectById()_
+- *find_student_by_name()*
+- *find_students_by_age_average()*
+- *get_student_by_id()*
+- *get_subject_by_id()*
 
 #### Módulo _persistence_
 
@@ -317,13 +317,13 @@ Persistencia de datos en archivos CSV.
 
 - Guardado y carga de estudiantes:
 
-  - _saveStudentsToCsv()_
-  - _loadStudentsFromCsv()_
+  - *save_students_to_csv()*
+  - *load_students_from_csv()*
 
 - Guardado y carga de materias:
 
-  - _saveSubjectsToCsv()_
-  - _loadSubjectsFromCsv()_
+  - *save_subjects_to_csv()*
+  - *load_subjects_from_csv()*
 
 ##### Formato de archivos
 
@@ -335,12 +335,12 @@ Persistencia de datos en archivos CSV.
 
 Cada módulo tiene su archivo de pruebas dedicado dentro de la carpeta _test/_, por ejemplo:
 
-- _linked_list_test.c_
-- _student_test.c_
-- _subject_test.c_
-- _enrollment_test.c_
-- _persistence_test.c_
-- _search_test.c_
+- *linked_list_test.c*
+- *student_test.c*
+- *subject_test.c*
+- *enrollment_test.c*
+- *persistence_test.c*
+- *search_test.c*
 
 Los tests se realizaron utilizando **assert** y ejecuciones manuales desde consola.
 
@@ -360,7 +360,7 @@ Las listas reciben punteros a funciones de comparación y conversión a string, 
 
 #### Persistencia en CSV
 
-Formato humano-legible, fácil de depurar y portabe entre ejecuciones.
+Formato humano-legible, fácil de depurar y portable entre ejecuciones.
 
 - Descripción general de la implementación.
 
