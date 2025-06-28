@@ -166,27 +166,9 @@ typedef struct SubjectEnrollment {
 
 Cada inscripción representa la relación de un estudiante con una materia, incluyendo la **nota si la cursó o rindió**.
 
-- Para cada módulo principal (Check-in, Gestión de Carga, Embarque, Despacho):
-- Descripción de las estructuras de datos utilizadas (pilas, colas, listas, colas de prioridad, árboles binarios, etc.).
-- Justificación de la elección de cada estructura de datos en función de los requerimientos del problema.
-- Diagramas de las estructuras de datos (si es pertinente).
-
-### 2.3. Algoritmos Implementados
-
-#### Para cada módulo principal
-
-- Descripción detallada de los algoritmos implementados para las tareas clave (simulación de llegada de pasajeros, gestión de colas de check-in, asignación de carga, cálculo de la línea del horizonte, compresión Huffman, asignación de zonas de embarque, gestión de la cola de prioridad para despacho, etc.).
-- Explicación del funcionamiento de cada algoritmo, incluyendo pseudocódigo o diagramas de flujo si es necesario.
-- Referencias a conceptos teóricos de algoritmos y estructuras de datos aplicados.
-
-### 2.4. Gestión de Datos de Entrada y Salida
-
-- Descripción de cómo se leen y procesan los datos de los archivos de entrada (`vuelos.txt`, `clientes.txt`, etc.).
-- Explicación del formato y contenido de los archivos de salida generados (`.huff`, `linea_horizonte.txt`).
-
 ## 3. Implementación
 
-La implementación del sistema fue realizada íntegramente en lenguaje **C (C99)**, siguiendo una estructura modular y utilizando listas doblemente enlazadas circulares como base para almacenar y manipular los listados de estudiantes y materias.
+La implementación del sistema fue realizada íntegramente en lenguaje **C**, siguiendo una estructura modular y utilizando listas doblemente enlazadas circulares como base para almacenar y manipular los listados de estudiantes y materias.
 
 ### 3.1. Estructura del Proyecto
 
@@ -362,7 +344,7 @@ Cada módulo tiene su archivo de pruebas dedicado dentro de la carpeta _test/_, 
 - _persistence_test.c_
 - _search_test.c_
 
-Los tests se realizaron utilizando **CUnit** y ejecuciones manuales desde consola.
+Los tests se realizaron utilizando **assert** y ejecuciones manuales desde consola.
 
 ### 3.4. Decisiones de Diseño
 
