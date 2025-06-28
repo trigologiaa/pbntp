@@ -100,8 +100,7 @@ bool can_enroll(Student *student, Subject *subject, CircularList *allSubjects) {
  *
  * @return true if the student was successfully enrolled, false otherwise.
  */
-bool enroll_student(Student *student, Subject *subject,
-                    CircularList *allSubjects) {
+bool enroll_student(Student *student, Subject *subject, CircularList *allSubjects) {
   if (!student || !subject) {
     return false;
   }
@@ -130,7 +129,7 @@ bool enroll_student(Student *student, Subject *subject,
  * @brief Records the grade of a student for a specific subject.
  *
  * Searches the student's enrollments for the given subject and updates the
- * grade and passed status. A grade of 6.0 or higher is considered passing.
+ * grade and passed status. A grade of 4.0 or higher is considered passing.
  *
  * @param student A pointer to the Student.
  * @param subjectId The ID of the subject.
@@ -150,7 +149,7 @@ bool record_exam(Student *student, int subjectId, float grade) {
     SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
     if (enrollment->subjectId == subjectId) {
       enrollment->grade = grade;
-      enrollment->passed = grade >= 6.0f;
+      enrollment->passed = grade >= 4.0f;
       return true;
     }
     current = current->next;

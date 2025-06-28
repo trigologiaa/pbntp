@@ -4,8 +4,10 @@
 #include "../include/student.h"
 #include "../include/subject.h"
 #include <stdio.h>
+// #include <windows.h>
 
 int main() {
+  // SetConsoleOutputCP(CP_UTF8);
   CircularList *students = create_list();
   CircularList *subjects = create_list();
   load_students_from_csv(students, "students.csv");

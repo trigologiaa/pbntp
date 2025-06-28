@@ -72,9 +72,7 @@ char *student_to_string(void *student) {
   if (!buffer) {
     return NULL;
   }
-  snprintf(buffer, 256,
-           "[ID: %d] Name: %s | Age: %d | Average: %.2f | Subjects: %d", s->id,
-           s->name, s->age, s->average, get_size(s->enrollments));
+  snprintf(buffer, 256, "[ID: %d] Name: %s | Age: %d | Average: %.2f | Subjects: %d", s->id, s->name, s->age, s->average, get_size(s->enrollments));
   return buffer;
 }
 

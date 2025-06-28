@@ -64,8 +64,7 @@ void sort_students_by_average(CircularList *students) {
  * @param pageSize The number of items to display per page.
  * @param toString A function that converts a list item to a string.
  */
-void paginate_list(CircularList *list, int pageSize,
-                   char *(*toString)(void *)) {
+void paginate_list(CircularList *list, int pageSize, char *(*toString)(void *)) {
   if (!list || pageSize <= 0 || !toString) {
     return;
   }

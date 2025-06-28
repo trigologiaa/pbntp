@@ -69,8 +69,7 @@ char *subject_to_string(void *subject) {
   if (!buffer) {
     return NULL;
   }
-  snprintf(buffer, 256, "[ID: %d] %s | Credits: %d | Correlatives: %d", s->id,
-           s->name, s->credits, get_size(s->correlatives));
+  snprintf(buffer, 256, "[ID: %d] %s | Credits: %d | Correlatives: %d", s->id, s->name, s->credits, get_size(s->correlatives));
   return buffer;
 }
 
