@@ -21,8 +21,6 @@ El nombre del grupo puede leerse como **x es un arreglo de punteros a funciones 
 - [2. Diseño del Sistema](#2-diseño-del-sistema)
   - [2.1. Arquitectura General](#21-arquitectura-general)
   - [2.2. Estructuras de Datos](#22-estructuras-de-datos)
-  - [2.3. Algoritmos Implementados](#23-algoritmos-implementados)
-  - [2.4. Gestión de Datos de Entrada y Salida](#24-gestión-de-datos-de-entrada-y-salida)
 - [3. Implementación](#3-implementación)
   - [3.1. Estructura del Proyecto](#31-estructura-del-proyecto)
   - [3.2. Módulos Principales](#32-módulos-principales)
