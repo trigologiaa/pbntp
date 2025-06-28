@@ -38,10 +38,14 @@ void press_enter_to_continue() {
  * @param students A pointer to a CircularList containing Student elements.
  */
 void sort_students_by_average(CircularList *students) {
-  if (!students || students->size < 2)
+  if (!students || students->size < 2){
     return;
-  for (DoubleLinkedNode *i = students->head; i != NULL; i = i->next) {
-    for (DoubleLinkedNode *j = i->next; j != NULL; j = j->next) {
+  }
+
+  DoubleLinkedNode *i = students->head;
+  for (int x = 0; x < students->size - 1; x++) {
+    DoubleLinkedNode *j = i->next;
+    for (int y = 0; y < students->size; y++) {
       Student *a = (Student *)i->data;
       Student *b = (Student *)j->data;
       if (a->average < b->average) {
@@ -49,7 +53,9 @@ void sort_students_by_average(CircularList *students) {
         i->data = j->data;
         j->data = tmp;
       }
+      j = j->next;
     }
+    i = i->next;
   }
 }
 

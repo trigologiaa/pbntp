@@ -78,7 +78,7 @@ bool enroll_student(Student *student, Subject *subject,
  * @brief Records the grade of a student for a specific subject.
  *
  * Searches the student's enrollments for the given subject and updates the
- * grade and passed status. A grade of 6.0 or higher is considered passing.
+ * grade and passed status. A grade of 4.0 or higher is considered passing.
  *
  * @param student A pointer to the Student.
  * @param subjectId The ID of the subject.
@@ -87,5 +87,17 @@ bool enroll_student(Student *student, Subject *subject,
  * @return true if the grade was recorded successfully, false otherwise.
  */
 bool record_exam(Student *student, int subjectId, float grade);
+
+/**
+ * @brief Calculates the student's average, based on their approved subjects.
+ * 
+ * Looks through the student's enrollments and computes the average of grades 
+ * for subjects that have been passed (grade >= 4).
+ * Enrollments without grade are ignored.
+ * 
+ * @param student A pointer to the student whose average is to be calculated.
+ * @return The average grade of all passed subjects, or 0.0 if none are passed.
+ */
+float obtain_student_average(Student *student);
 
 #endif

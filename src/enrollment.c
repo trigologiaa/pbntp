@@ -148,11 +148,51 @@ bool record_exam(Student *student, int subjectId, float grade) {
   do {
     SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
     if (enrollment->subjectId == subjectId) {
+      if (enrollment->passed){
+        return false;
+      }
       enrollment->grade = grade;
       enrollment->passed = grade >= 4.0f;
+      student->average = obtain_student_average(student);
       return true;
     }
     current = current->next;
   } while (current != student->enrollments->head);
   return false;
 }
+
+/**
+ * @brief Calculates the student's average, based on their approved subjects.
+ * 
+ * Looks through the student's enrollments and computes the average of grades 
+ * for subjects that have been passed (grade >= 4).
+ * Enrollments without grade are ignored.
+ * 
+ * @param student A pointer to the student whose average is to be calculated.
+ * @return The average grade of all passed subjects, or 0.0 if none are passed.
+ */
+float obtain_student_average(Student *student){
+  if (!student || !student->enrollments || student->enrollments->size == 0){
+    return 0.0f;
+  }
+
+  DoubleLinkedNode *current = student->enrollments->head;
+  float total = 0.0f;
+  int passedSubj = 0;
+
+  do {
+    SubjectEnrollment *enrollment = (SubjectEnrollment *)current->data;
+    if (enrollment == NULL) {
+      current = current->next;
+      continue;
+    }
+    if (enrollment->passed) {
+      total += enrollment->grade;
+      passedSubj++;
+    }
+    current = current->next;
+  } while (current != student->enrollments->head);
+
+  return (passedSubj > 0)? (total / passedSubj) : 0.0f;
+}
+
