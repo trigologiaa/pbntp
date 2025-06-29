@@ -46,7 +46,7 @@ void sort_students_by_average(CircularList *students) {
   DoubleLinkedNode *i = students->head;
   for (int x = 0; x < students->size - 1; x++) {
     DoubleLinkedNode *j = i->next;
-    for (int y = 0; y < students->size; y++) {
+    for (int y = x + 1; y < students->size; y++) {
       Student *a = (Student *)i->data;
       Student *b = (Student *)j->data;
       if (a->average < b->average) {
